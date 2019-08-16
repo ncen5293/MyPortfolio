@@ -1,3 +1,54 @@
 .projects-button {
+  border-style: solid;
+  border-width: 1vh;
+  border-top: 3vh solid transparent;
+  border-bottom: 3vh solid transparent;
+  border-top-right-radius: 6.66vh;
+  border-bottom-right-radius: 6.66vh;
+  border-top-left-radius: .75vh;
+  border-bottom-left-radius: .75vh;
+  width: 18vh;
+  height: 13vh;
+}
 
+.inner-projects-button {
+  margin-left: -15vh;
+  font-size: 3vh;
+  text-align: left;
+}
+
+.top-left {
+  transform: rotate(19deg);
+  margin-bottom: -3.2vh;
+  margin-left: 1.6vh;
+  border-left: 18vh solid #ED4C67;
+  border-right: solid #ED4C67;
+}
+
+.top-left:hover {
+  cursor: pointer;
+  transform: scale3d(1.1, 1.1, 1.1) rotate(19deg);
+}
+
+.middle-left {
+  border-left: 18vh solid #1289A7;
+  border-right: solid #1289A7;
+}
+
+.middle-left:hover {
+  cursor: pointer;
+  transform: scale3d(1.1, 1.1, 1.1);
+}
+
+.bottom-left {
+  border-left: 18vh solid #FFC312;
+  border-right: solid #FFC312;
+  transform: rotate(-19deg);
+  margin-top: -3.2vh;
+  margin-left: 1.6vh;
+}
+
+.bottom-left:hover {
+  cursor: pointer;
+  transform: scale3d(1.1, 1.1, 1.1) rotate(-19deg);
 }
