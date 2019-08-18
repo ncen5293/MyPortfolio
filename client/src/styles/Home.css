@@ -9,6 +9,21 @@
   border-bottom-left-radius: .75vh;
   width: 18vh;
   height: 13vh;
+  float: left;
+}
+
+.right-projects-button {
+  border-style: solid;
+  border-width: 1vh;
+  border-top: 3vh solid transparent;
+  border-bottom: 3vh solid transparent;
+  border-top-left-radius: 6.66vh;
+  border-bottom-left-radius: 6.66vh;
+  border-top-right-radius: .75vh;
+  border-bottom-right-radius: .75vh;
+  width: 18vh;
+  height: 13vh;
+  float: right;
 }
 
 .inner-projects-button {
@@ -17,27 +32,64 @@
   text-align: left;
 }
 
+.right-inner-projects-button {
+  margin-right: -15vh;
+  font-size: 3vh;
+  text-align: right;
+}
+
 .top-left {
   transform: rotate(19deg);
   margin-bottom: -3.2vh;
-  margin-left: 1.6vh;
   border-left: 18vh solid #ED4C67;
   border-right: solid #ED4C67;
+  margin-right: 29vh;
+  z-index: 0;
+}
+
+.top-right {
+  transform: rotate(-19deg);
+  margin-bottom: -3.2vh;
+  border-right: 18vh solid #44bd32;
+  border-left: solid #44bd32;
+  z-index: 0;
 }
 
 .top-left:hover {
   cursor: pointer;
   transform: scale3d(1.1, 1.1, 1.1) rotate(19deg);
+  z-index: 999;
+}
+
+.top-right:hover {
+  cursor: pointer;
+  transform: scale3d(1.1, 1.1, 1.1) rotate(-19deg);
+  z-index: 999;
 }
 
 .middle-left {
   border-left: 18vh solid #1289A7;
   border-right: solid #1289A7;
+  margin-right: 32vh;
+  z-index: 1;
+}
+
+.middle-right {
+  border-right: 18vh solid #182C61;
+  border-left: solid #182C61;
+  z-index: 1;
 }
 
 .middle-left:hover {
   cursor: pointer;
   transform: scale3d(1.1, 1.1, 1.1);
+  z-index: 999;
+}
+
+.middle-right:hover {
+  cursor: pointer;
+  transform: scale3d(1.1, 1.1, 1.1);
+  z-index: 999;
 }
 
 .bottom-left {
@@ -45,10 +97,26 @@
   border-right: solid #FFC312;
   transform: rotate(-19deg);
   margin-top: -3.2vh;
-  margin-left: 1.6vh;
+  margin-right: 29vh;
+  z-index: 0;
+}
+
+.bottom-right {
+  border-right: 18vh solid #B33771;
+  border-left: solid #B33771;
+  transform: rotate(19deg);
+  margin-top: -3.2vh;
+  z-index: 0;
 }
 
 .bottom-left:hover {
   cursor: pointer;
   transform: scale3d(1.1, 1.1, 1.1) rotate(-19deg);
+  z-index: 999;
+}
+
+.bottom-right:hover {
+  cursor: pointer;
+  transform: scale3d(1.1, 1.1, 1.1) rotate(19deg);
+  z-index: 999;
 }
