@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Transition } from 'semantic-ui-react';
 import HomeButtons from './HomeButtons';
+import AbilitiesPage from './AbilitiesPage';
+import ProjectsPage from './ProjectsPage';
+import HobbiesPage from './HobbiesPage';
 import '../styles/Home.css';
 
 class Home extends Component {
@@ -10,7 +13,10 @@ class Home extends Component {
       visibleProjectButton: false,
       visibleAbilitiesButton: false,
       visibleHobbiesButton: false,
-      buttonClicked: false
+      buttonClicked: false,
+      visibleProjectsPage: false,
+      visibleAbilitiesPage: false,
+      visibleHobbiesPage: false
     }
     this.onButtonClick = this.onButtonClick.bind(this);
     this.toggleButtonVisibility = this.toggleButtonVisibility.bind(this);
@@ -36,7 +42,15 @@ class Home extends Component {
   }
 
   changePage = (type) => {
-    this.setState(prevState => ({ visibleButtonPage: !prevState.visibleButtonPage }));
+    if (type === 'My Projects') {
+      window.setTimeout(() => {this.setState(prevState => ({ visibleProjectsPage: !prevState.visibleProjectsPage }));}, 700);
+    } else if (type === 'My Hobbies') {
+      window.setTimeout(() => {this.setState(prevState => ({ visibleHobbiesPage: !prevState.visibleHobbiesPage }));}, 700);
+    } else if (type === 'My Abilities') {
+      window.setTimeout(() => {this.setState(prevState => ({ visibleAbilitiesPage: !prevState.visibleAbilitiesPage }));}, 700);
+    } else {
+      this.toggleButtonVisibility();
+    }
   }
 
   render() {
@@ -44,6 +58,9 @@ class Home extends Component {
     const visibleAbilitiesButton = this.state.visibleAbilitiesButton;
     const visibleHobbiesButton = this.state.visibleHobbiesButton;
     const visibleButtonPage = this.state.visibleButtonPage;
+    const visibleProjectsPage = this.state.visibleProjectsPage;
+    const visibleAbilitiesPage = this.state.visibleAbilitiesPage;
+    const visibleHobbiesPage = this.state.visibleHobbiesPage;
     return (
       <div className='App-header'>
         <h1>
@@ -69,6 +86,15 @@ class Home extends Component {
           leftButton='My Abilities'
           rightButton='Coming Soon'
           position='bottom'
+        />
+        <ProjectsPage
+          visible={visibleProjectsPage}
+        />
+        <AbilitiesPage
+          visible={visibleAbilitiesPage}
+        />
+        <HobbiesPage
+          visible={visibleHobbiesPage}
         />
       </div>
     )
