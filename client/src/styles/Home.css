@@ -120,3 +120,17 @@
   transform: scale3d(1.1, 1.1, 1.1) rotate(19deg);
   z-index: 999;
 }
+
+@media only screen and (max-width: 1000px) {
+  .top-left {
+    margin-right: 5vh;
+  }
+
+  .middle-left {
+    margin-right: 8vh;
+  }
+
+  .bottom-left {
+    margin-right: 5vh;
+  }
+}
