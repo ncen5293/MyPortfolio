@@ -8,7 +8,10 @@ class HomeButtons extends Component {
     const visibleAbilitiesButton = this.props.visibleAbilitiesButton;
     const visibleHobbiesButton = this.props.visibleHobbiesButton;
     return (
-      <div>
+      <div className='App-header'>
+        <h1>
+          Nicky Cen
+        </h1>
         <Transition visible={visibleProjectButton} animation='vertical flip' duration={500}>
           <div>
             <div className='projects-button top-left' onClick={() => this.props.onButtonClick('projects')} >

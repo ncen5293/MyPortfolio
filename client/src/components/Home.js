@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, Transition } from 'semantic-ui-react';
-import HomeButtons from 'HomeButtons';
+import HomeButtons from './HomeButtons';
 import '../styles/Home.css';
 
 class Home extends Component {
@@ -32,10 +32,7 @@ class Home extends Component {
     const visibleAbilitiesButton = this.state.visibleAbilitiesButton;
     const visibleHobbiesButton = this.state.visibleHobbiesButton;
     return (
-      <div className='App-header'>
-        <h1>
-          Nicky Cen
-        </h1>
+      <div>
         <HomeButtons
           visibleProjectButton={visibleProjectButton}
           visibleAbilitiesButton={visibleAbilitiesButton}
