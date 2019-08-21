@@ -32,9 +32,24 @@ class Home extends Component {
     this.toggleButtonVisibility();
   }
 
+  allPagesClosed = () => {
+    const visibleProjectsPage = this.state.visibleProjectsPage;
+    const visibleAbilitiesPage = this.state.visibleAbilitiesPage;
+    const visibleHobbiesPage = this.state.visibleHobbiesPage;
+    console.log(visibleProjectsPage, visibleAbilitiesPage, visibleHobbiesPage);
+    if (!visibleProjectsPage && !visibleAbilitiesPage && !visibleHobbiesPage) {
+      console.log('true')
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   onButtonClick = (type) => {
     this.toggleButtonVisibility();
-    this.changePage(type);
+    if (!this.changePage(type)) {
+      this.toggleButtonVisibility();
+    }
   }
 
   toggleButtonVisibility = () => {
@@ -48,13 +63,40 @@ class Home extends Component {
 
   changePage = (type) => {
     if (type === 'My Projects') {
-      window.setTimeout(() => {this.setState(prevState => ({ visibleProjectsPage: !prevState.visibleProjectsPage }));}, 700);
+      window.setTimeout(() => {this.setState(prevState => ({
+          visibleProjectsPage: !prevState.visibleProjectsPage,
+          visibleHobbiesPage: false,
+          visibleAbilitiesPage: false
+        }));
+        if (this.allPagesClosed()) {
+          this.toggleButtonVisibility();
+        }
+      }, 700);
+      return true;
     } else if (type === 'My Hobbies') {
-      window.setTimeout(() => {this.setState(prevState => ({ visibleHobbiesPage: !prevState.visibleHobbiesPage }));}, 700);
+      window.setTimeout(() => {this.setState(prevState => ({
+          visibleHobbiesPage: !prevState.visibleHobbiesPage,
+          visibleProjectsPage: false,
+          visibleAbilitiesPage: false
+        }));
+        if (this.allPagesClosed()) {
+          this.toggleButtonVisibility();
+        }
+      }, 700);
+      return true;
     } else if (type === 'My Abilities') {
-      window.setTimeout(() => {this.setState(prevState => ({ visibleAbilitiesPage: !prevState.visibleAbilitiesPage }));}, 700);
+      window.setTimeout(() => {this.setState(prevState => ({
+          visibleAbilitiesPage: !prevState.visibleAbilitiesPage,
+          visibleHobbiesPage: false,
+          visibleProjectsPage: false
+        }));
+        if (this.allPagesClosed()) {
+          this.toggleButtonVisibility();
+        }
+      }, 700);
+      return true;
     } else {
-      this.toggleButtonVisibility();
+      return false;
     }
   }
 
@@ -81,7 +123,6 @@ class Home extends Component {
     const visibleProjectButton = this.state.visibleProjectButton;
     const visibleAbilitiesButton = this.state.visibleAbilitiesButton;
     const visibleHobbiesButton = this.state.visibleHobbiesButton;
-    const visibleButtonPage = this.state.visibleButtonPage;
     const visibleProjectsPage = this.state.visibleProjectsPage;
     const visibleAbilitiesPage = this.state.visibleAbilitiesPage;
     const visibleHobbiesPage = this.state.visibleHobbiesPage;

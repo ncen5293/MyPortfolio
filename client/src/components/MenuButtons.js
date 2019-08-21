@@ -9,35 +9,36 @@ class MenuButtons extends Component {
     return (
       <div>
         <Button icon='list' onClick={this.props.onMenuToggle}>Menu</Button>
-        <Modal
+        <Modal basic
           open={this.props.open}
           closeOnEscape={true}
           closeOnDimmerClick={true}
           onClose={this.props.onMenuToggle}
-          size='fullscreen'
         >
           <Modal.Content>
-            <HomeButtons
-              visibleButton={this.props.visibleProjectModalButton}
-              onButtonClick={this.props.onButtonClick}
-              leftButton='My Projects'
-              rightButton='Coming Soon'
-              position='top'
-            />
-            <HomeButtons
-              visibleButton={this.props.visibleAbilitiesModalButton}
-              onButtonClick={this.props.onButtonClick}
-              leftButton='My Hobbies'
-              rightButton='Coming Soon'
-              position='middle'
-            />
-            <HomeButtons
-              visibleButton={this.props.visibleHobbiesModalButton}
-              onButtonClick={this.props.onButtonClick}
-              leftButton='My Abilities'
-              rightButton='Coming Soon'
-              position='bottom'
-            />
+            <div>
+              <HomeButtons
+                visibleButton={this.props.visibleProjectModalButton}
+                onButtonClick={this.props.onButtonClick}
+                leftButton='My Projects'
+                rightButton='Coming Soon'
+                position='top'
+              />
+              <HomeButtons
+                visibleButton={this.props.visibleAbilitiesModalButton}
+                onButtonClick={this.props.onButtonClick}
+                leftButton='My Hobbies'
+                rightButton='Coming Soon'
+                position='middle'
+              />
+              <HomeButtons
+                visibleButton={this.props.visibleHobbiesModalButton}
+                onButtonClick={this.props.onButtonClick}
+                leftButton='My Abilities'
+                rightButton='Coming Soon'
+                position='bottom'
+              />
+            </div>
           </Modal.Content>
         </Modal>
       </div>
