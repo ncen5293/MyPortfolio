@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Transition, Segment } from 'semantic-ui-react';
+import { Header, Icon, Image, Transition, Segment } from 'semantic-ui-react';
 import '../styles/Home.css';
 
 class ProjectsPage extends Component {
@@ -8,11 +8,13 @@ class ProjectsPage extends Component {
     return (
       <Transition visible={visible} animation='browse' duration={500}>
         <Segment raised>
-          Projects
+          <Header as='h2' icon textAlign='center' dividing>
+            <Icon name='file code outline' circular />
+            <Header.Content>Projects</Header.Content>
+          </Header>
         </Segment>
       </Transition>
     )
-
   }
 }
 

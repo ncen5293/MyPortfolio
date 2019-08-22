@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Transition, Segment } from 'semantic-ui-react';
+import { Header, Icon, Image, Transition, Segment } from 'semantic-ui-react';
 import '../styles/Home.css';
 
 class AbilitiesPage extends Component {
@@ -8,7 +8,10 @@ class AbilitiesPage extends Component {
     return (
       <Transition visible={visible} animation='browse' duration={500}>
         <Segment raised>
-          Skills
+          <Header as='h2' icon textAlign='center' dividing>
+            <Icon name='id card outline' circular />
+            <Header.Content>Skills</Header.Content>
+          </Header>
         </Segment>
       </Transition>
     )
