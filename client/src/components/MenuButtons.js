@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Icon, Modal } from 'semantic-ui-react';
+import { Button, Icon, Modal, Transition } from 'semantic-ui-react';
 import HomeButtons from './HomeButtons';
 import '../styles/Home.css';
 
@@ -8,7 +8,9 @@ class MenuButtons extends Component {
     const visible = this.props.visible;
     return (
       <div>
-        <Button icon='list' onClick={this.props.onMenuToggle}>Menu</Button>
+        <Transition visible={this.props.visibleMenu} animation='browse' duration={500} >
+          <Button icon='th' onClick={this.props.onMenuToggle}/>
+        </Transition>
         <Modal basic
           open={this.props.open}
           closeOnEscape={true}

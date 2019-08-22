@@ -22,6 +22,7 @@ class Home extends Component {
       visibleProjectModalButton: false,
       visibleAbilitiesModalButton: false,
       visibleHobbiesModalButton: false,
+      visibleMenu: false
     }
     this.onButtonClick = this.onButtonClick.bind(this);
     this.toggleButtonVisibility = this.toggleButtonVisibility.bind(this);
@@ -66,9 +67,11 @@ class Home extends Component {
       window.setTimeout(() => {this.setState(prevState => ({
           visibleProjectsPage: !prevState.visibleProjectsPage,
           visibleHobbiesPage: false,
-          visibleAbilitiesPage: false
+          visibleAbilitiesPage: false,
+          visibleMenu: true
         }));
         if (this.allPagesClosed()) {
+          this.setState({visibleMenu: false});
           this.toggleButtonVisibility();
         }
       }, 700);
@@ -77,9 +80,11 @@ class Home extends Component {
       window.setTimeout(() => {this.setState(prevState => ({
           visibleHobbiesPage: !prevState.visibleHobbiesPage,
           visibleProjectsPage: false,
-          visibleAbilitiesPage: false
+          visibleAbilitiesPage: false,
+          visibleMenu: true
         }));
         if (this.allPagesClosed()) {
+          this.setState({visibleMenu: false});
           this.toggleButtonVisibility();
         }
       }, 700);
@@ -88,9 +93,11 @@ class Home extends Component {
       window.setTimeout(() => {this.setState(prevState => ({
           visibleAbilitiesPage: !prevState.visibleAbilitiesPage,
           visibleHobbiesPage: false,
-          visibleProjectsPage: false
+          visibleProjectsPage: false,
+          visibleMenu: true
         }));
         if (this.allPagesClosed()) {
+          this.setState({visibleMenu: false});
           this.toggleButtonVisibility();
         }
       }, 700);
@@ -129,6 +136,7 @@ class Home extends Component {
     const visibleProjectModalButton = this.state.visibleProjectModalButton;
     const visibleAbilitiesModalButton = this.state.visibleAbilitiesModalButton;
     const visibleHobbiesModalButton = this.state.visibleHobbiesModalButton;
+    const visibleMenu = this.state.visibleMenu;
     return (
       <div className='App-header'>
         <h1>
@@ -156,6 +164,7 @@ class Home extends Component {
           position='bottom'
         />
         <MenuButtons
+          visibleMenu={visibleMenu}
           onMenuToggle={this.onMenuToggle}
           open={this.state.isMenuOpen}
           visibleProjectModalButton={visibleProjectModalButton}
