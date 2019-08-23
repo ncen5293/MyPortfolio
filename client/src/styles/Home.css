@@ -1,4 +1,4 @@
-.projects-button {
+.left-projects-button {
   border-style: solid;
   border-width: 1vh;
   border-top: 3vh solid transparent;
@@ -9,7 +9,6 @@
   border-bottom-left-radius: .75vh;
   width: 18vh;
   height: 13vh;
-  float: left;
 }
 
 .right-projects-button {
@@ -23,7 +22,6 @@
   border-bottom-right-radius: .75vh;
   width: 18vh;
   height: 13vh;
-  float: right;
 }
 
 .inner-projects-button {
@@ -43,7 +41,6 @@
   margin-bottom: -3.2vh;
   border-left: 18vh solid #ED4C67;
   border-right: solid #ED4C67;
-  margin-right: 29vh;
   z-index: 0;
 }
 
@@ -70,7 +67,6 @@
 .middle-left {
   border-left: 18vh solid #1289A7;
   border-right: solid #1289A7;
-  margin-right: 32vh;
   z-index: 1;
 }
 
@@ -97,7 +93,6 @@
   border-right: solid #FFC312;
   transform: rotate(-19deg);
   margin-top: -3.2vh;
-  margin-right: 29vh;
   z-index: 0;
 }
 
@@ -121,16 +116,54 @@
   z-index: 999;
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 750px) {
   .top-left {
     margin-right: 5vh;
   }
 
   .middle-left {
-    margin-right: 8vh;
+    margin-right: 7vh;
   }
 
   .bottom-left {
     margin-right: 5vh;
+  }
+
+  .left-projects-button {
+    float: left;
+  }
+
+  .right-projects-button {
+    float: right;
+  }
+}
+
+@media only screen and (min-width: 751px) {
+  .left-projects-button {
+    position: absolute;
+  }
+
+  .bottom-left {
+    margin-top: .1vh;
+  }
+
+  .middle-left {
+    margin-left: -1.5vh;
+  }
+
+  .middle-right {
+    margin-left: 1vh;
+  }
+
+  .right-projects-button {
+    left: 63%;
+    position: relative;
+  }
+
+  .button-row {
+    display: inline-block;
+    vertical-align: middle;
+    width: 65%;
+    margin-left: 25%;
   }
 }

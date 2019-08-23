@@ -9,7 +9,7 @@ class MenuButtons extends Component {
     return (
       <div>
         <Transition visible={this.props.visibleMenu} animation='browse' duration={500} >
-          <Button icon='th' onClick={this.props.onMenuToggle}/>
+          <Button icon='th' onClick={this.props.onMenuToggle} className='menu-button' />
         </Transition>
         <Modal basic
           open={this.props.open}

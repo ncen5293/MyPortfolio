@@ -19,6 +19,7 @@ class Home extends Component {
       visibleAbilitiesPage: false,
       visibleHobbiesPage: false,
       isMenuOpen: false,
+      menuChanging: false,
       visibleProjectModalButton: false,
       visibleAbilitiesModalButton: false,
       visibleHobbiesModalButton: false,
@@ -107,23 +108,25 @@ class Home extends Component {
     }
   }
 
-  onMenuToggle = () => {
-    if (this.state.isMenuOpen) {
+  onMenuToggle = (type) => {
+    if (this.state.isMenuOpen && !this.state.menuChanging) {
+      this.setState({ menuChanging: true });
+      this.changePage(type);
       window.setTimeout(() => {this.setState(prevState => ({ visibleProjectModalButton: !prevState.visibleProjectModalButton }));}, 50);
       window.setTimeout(() => {this.setState(prevState => ({ visibleAbilitiesModalButton: !prevState.visibleAbilitiesModalButton }));}, 125);
       window.setTimeout(() => {this.setState(prevState => ({ visibleHobbiesModalButton: !prevState.visibleHobbiesModalButton }));}, 200);
-      window.setTimeout(() => {this.setState({ isMenuOpen: false });}, 700);
-    } else {
-      this.setState({ isMenuOpen: true });
+      window.setTimeout(() => {this.setState({ isMenuOpen: false, menuChanging: false });}, 700);
+    } else if (!this.state.isMenuOpen && !this.state.menuChanging) {
+      this.setState({ isMenuOpen: true, menuChanging: true });
       window.setTimeout(() => {this.setState(prevState => ({ visibleProjectModalButton: !prevState.visibleProjectModalButton }));}, 50);
       window.setTimeout(() => {this.setState(prevState => ({ visibleAbilitiesModalButton: !prevState.visibleAbilitiesModalButton }));}, 125);
       window.setTimeout(() => {this.setState(prevState => ({ visibleHobbiesModalButton: !prevState.visibleHobbiesModalButton }));}, 200);
+      window.setTimeout(() => {this.setState({ menuChanging: false });}, 700);
     }
   }
 
   onMenuButtonClick = (type) => {
-    this.onMenuToggle();
-    this.changePage(type);
+    this.onMenuToggle(type);
   }
 
   render() {

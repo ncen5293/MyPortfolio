@@ -18,7 +18,7 @@ class HobbiesPage extends Component {
                 <Header as='h3' icon textAlign='center' dividing>
                   <Header.Content>Games</Header.Content>
                 </Header>
-                <Card.Group itemsPerRow={3}>
+                <Card.Group itemsPerRow={2}>
                   <Card raised color='red'>
                     <Card.Content>
                       <Card.Header>Persona 5</Card.Header>
