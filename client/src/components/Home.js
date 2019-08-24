@@ -163,7 +163,6 @@ class Home extends Component {
             { }
           </Menu.Item>
         </Menu>
-
         <HomeButtons
           visibleButton={visibleProjectButton}
           onButtonClick={this.onButtonClick}
