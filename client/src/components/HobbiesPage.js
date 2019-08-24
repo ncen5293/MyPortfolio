@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Grid, Header, Icon, Image, Transition, Segment } from 'semantic-ui-react';
+import HobbiesCard from './HobbiesCard';
 import '../styles/Home.css';
 
 class HobbiesPage extends Component {
@@ -12,82 +13,70 @@ class HobbiesPage extends Component {
             <Icon name='game' circular />
             <Header.Content>Hobbies</Header.Content>
           </Header>
-          <Grid columns={3} divided>
+          <Grid columns={2} divided doubling>
             <Grid.Row>
               <Grid.Column>
                 <Header as='h3' icon textAlign='center' dividing>
                   <Header.Content>Games</Header.Content>
                 </Header>
                 <Card.Group itemsPerRow={2}>
-                  <Card raised color='red'>
-                    <Card.Content>
-                      <Card.Header>Persona 5</Card.Header>
-                      <Card.Meta>Favorite JRPG</Card.Meta>
-                      <Card.Description>
-                        I like this
-                      </Card.Description>
-                    </Card.Content>
-                    <Card.Content extra>
-                      <p>
-                        (Further) Fire Emblem: Three Houses
-                      </p>
-                    </Card.Content>
-                  </Card>
-                  <Card raised color='blue'>
-                    <Card.Content>
-                      <Card.Header>Devil May Cry 5</Card.Header>
-                      <Card.Meta>Favorite Stylish Action Game</Card.Meta>
-                      <Card.Description>
-                        I like this
-                      </Card.Description>
-                    </Card.Content>
-                    <Card.Content extra>
-                      <p>
-                        (Further) Dark Souls 3, Monster Hunter: World
-                      </p>
-                    </Card.Content>
-                  </Card>
+                  <HobbiesCard
+                    cardColor='red'
+                    title='Persona 5'
+                    genre='Favorite JRPG'
+                    desc='Great blend of dungeon crawling and social gameplay'
+                    mentions='(Further) Fire Emblem: Three Houses'
+                  />
+                  <HobbiesCard
+                    cardColor='blue'
+                    title='Devil May Cry 5'
+                    genre='Favorite *Stylish* Action Game'
+                    desc='Exciting game to get SSS combos'
+                    mentions='(Further) Dark Souls 3, Monster Hunter: World'
+                  />
+                  <HobbiesCard
+                    cardColor='pink'
+                    title='Kirby Series'
+                    genre='Favorite Sidescroller'
+                    desc='Cute and fun Eldritch Horror'
+                    mentions='(Further) Iconoclasts'
+                  />
+                  <HobbiesCard
+                    cardColor='black'
+                    title='The Witcher 3: Wild Hunt'
+                    genre='Favorite Western RPG'
+                    desc='Great characters and interesting dialogue choices'
+                    mentions='(Further) Divinity: Original Sin 2'
+                  />
                 </Card.Group>
               </Grid.Column>
               <Grid.Column>
                 <Header as='h3' icon textAlign='center' dividing>
-                  <Header.Content>Shows</Header.Content>
+                  <Header.Content>Shows & Movies</Header.Content>
                 </Header>
                 <Card.Group itemsPerRow={2}>
-                  <Card raised color='red'>
-                    <Card.Content>
-                      <Card.Header>The Travelers</Card.Header>
-                      <Card.Meta>Favorite Sci-fi Show</Card.Meta>
-                      <Card.Description>
-                        I like this
-                      </Card.Description>
-                    </Card.Content>
-                    <Card.Content extra>
-                      <p>
-                        (Further) Agents of S.H.I.E.L.D
-                      </p>
-                    </Card.Content>
-                  </Card>
-                  <Card raised color='red'>
-                    <Card.Content>
-                      <Card.Header>JoJo's Bizarre Adventure</Card.Header>
-                      <Card.Meta>Favorite Anime</Card.Meta>
-                      <Card.Description>
-                        I like this
-                      </Card.Description>
-                    </Card.Content>
-                    <Card.Content extra>
-                      <p>
-                        (Further) Persona 4: The Animation
-                      </p>
-                    </Card.Content>
-                  </Card>
+                  <HobbiesCard
+                    cardColor='yellow'
+                    title='The Travelers'
+                    genre='Favorite Sci-fi Show'
+                    desc='Great time travel show'
+                    mentions='(Further) Agents of S.H.I.E.L.D'
+                  />
+                  <HobbiesCard
+                    cardColor='pink'
+                    title="JoJo's Bizarre Adventure"
+                    genre='Favorite Anime'
+                    desc='Over the top action'
+                    mentions='(Further) Persona 4: The Animation'
+                  />
+                  <HobbiesCard
+                    cardColor='blue'
+                    title='Captain America: Winter Soldier'
+                    genre='Favorite Superhero Movie'
+                    desc='Amazing spy-thriller superhero movie'
+                    mentions='(Further) Avengers: Infinity War'
+                  />
                 </Card.Group>
-              </Grid.Column>
-              <Grid.Column>
-                <Header as='h3' icon textAlign='center' dividing>
-                  <Header.Content>Other</Header.Content>
-                </Header>
               </Grid.Column>
             </Grid.Row>
           </Grid>

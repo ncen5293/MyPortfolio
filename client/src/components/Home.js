@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Transition } from 'semantic-ui-react';
+import { Menu, Transition } from 'semantic-ui-react';
 import HomeButtons from './HomeButtons';
 import AbilitiesPage from './AbilitiesPage';
 import ProjectsPage from './ProjectsPage';
@@ -142,9 +142,28 @@ class Home extends Component {
     const visibleMenu = this.state.visibleMenu;
     return (
       <div className='App-header'>
-        <h1>
-          Nicky Cen
-        </h1>
+        <Menu widths={3}>
+          <Menu.Item>
+            <MenuButtons
+              visibleMenu={visibleMenu}
+              onMenuToggle={this.onMenuToggle}
+              open={this.state.isMenuOpen}
+              visibleProjectModalButton={visibleProjectModalButton}
+              visibleAbilitiesModalButton={visibleAbilitiesModalButton}
+              visibleHobbiesModalButton={visibleHobbiesModalButton}
+              onButtonClick={this.onMenuButtonClick}
+            />
+          </Menu.Item>
+          <Menu.Item>
+            <h2>
+              Nicky Cen
+            </h2>
+          </Menu.Item>
+          <Menu.Item>
+            { }
+          </Menu.Item>
+        </Menu>
+
         <HomeButtons
           visibleButton={visibleProjectButton}
           onButtonClick={this.onButtonClick}
@@ -165,15 +184,6 @@ class Home extends Component {
           leftButton='My Abilities'
           rightButton='Coming Soon'
           position='bottom'
-        />
-        <MenuButtons
-          visibleMenu={visibleMenu}
-          onMenuToggle={this.onMenuToggle}
-          open={this.state.isMenuOpen}
-          visibleProjectModalButton={visibleProjectModalButton}
-          visibleAbilitiesModalButton={visibleAbilitiesModalButton}
-          visibleHobbiesModalButton={visibleHobbiesModalButton}
-          onButtonClick={this.onMenuButtonClick}
         />
         <ProjectsPage
           visible={visibleProjectsPage}
