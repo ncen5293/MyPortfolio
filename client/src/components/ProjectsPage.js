@@ -6,7 +6,7 @@ class ProjectsPage extends Component {
   render() {
     const visible = this.props.visible;
     return (
-      <Transition visible={visible} animation='browse' duration={500}>
+      <Transition visible={visible} animation='fly down' duration={500}>
         <Segment raised>
           <Header as='h2' icon textAlign='center' dividing>
             <Icon name='file code outline' circular />

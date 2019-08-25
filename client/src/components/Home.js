@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Transition } from 'semantic-ui-react';
+import { Menu, Transition, Checkbox } from 'semantic-ui-react';
 import HomeButtons from './HomeButtons';
 import AbilitiesPage from './AbilitiesPage';
 import ProjectsPage from './ProjectsPage';
@@ -23,7 +23,8 @@ class Home extends Component {
       visibleProjectModalButton: false,
       visibleAbilitiesModalButton: false,
       visibleHobbiesModalButton: false,
-      visibleMenu: false
+      visibleMenu: false,
+      onePagePortfolio: false
     }
     this.onButtonClick = this.onButtonClick.bind(this);
     this.toggleButtonVisibility = this.toggleButtonVisibility.bind(this);
@@ -129,17 +130,22 @@ class Home extends Component {
     this.onMenuToggle(type);
   }
 
+  handlePageChange = () => {
+    this.setState(prevState => ({ onePagePortfolio: !prevState.onePagePortfolio }));
+  }
+
   render() {
-    const visibleProjectButton = this.state.visibleProjectButton;
-    const visibleAbilitiesButton = this.state.visibleAbilitiesButton;
-    const visibleHobbiesButton = this.state.visibleHobbiesButton;
-    const visibleProjectsPage = this.state.visibleProjectsPage;
-    const visibleAbilitiesPage = this.state.visibleAbilitiesPage;
-    const visibleHobbiesPage = this.state.visibleHobbiesPage;
+    const onePagePortfolio = this.state.onePagePortfolio;
+    const visibleProjectButton = onePagePortfolio ? !onePagePortfolio : this.state.visibleProjectButton;
+    const visibleAbilitiesButton = onePagePortfolio ? !onePagePortfolio : this.state.visibleAbilitiesButton;
+    const visibleHobbiesButton = onePagePortfolio ? !onePagePortfolio : this.state.visibleHobbiesButton;
+    const visibleProjectsPage = onePagePortfolio ? onePagePortfolio : this.state.visibleProjectsPage;
+    const visibleAbilitiesPage = onePagePortfolio ? onePagePortfolio : this.state.visibleAbilitiesPage;
+    const visibleHobbiesPage = onePagePortfolio ? onePagePortfolio : this.state.visibleHobbiesPage;
     const visibleProjectModalButton = this.state.visibleProjectModalButton;
     const visibleAbilitiesModalButton = this.state.visibleAbilitiesModalButton;
     const visibleHobbiesModalButton = this.state.visibleHobbiesModalButton;
-    const visibleMenu = this.state.visibleMenu;
+    const visibleMenu = onePagePortfolio ? onePagePortfolio : this.state.visibleMenu;
     return (
       <div className='App-header'>
         <Menu widths={3}>
@@ -160,7 +166,11 @@ class Home extends Component {
             </h2>
           </Menu.Item>
           <Menu.Item>
-            { }
+            <Checkbox
+              checked={onePagePortfolio}
+              label='Portfolio on one page'
+              onChange={this.handlePageChange}
+            />
           </Menu.Item>
         </Menu>
         <HomeButtons

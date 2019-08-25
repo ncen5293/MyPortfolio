@@ -6,7 +6,7 @@ class AbilitiesPage extends Component {
   render() {
     const visible = this.props.visible;
     return (
-      <Transition visible={visible} animation='browse' duration={500}>
+      <Transition visible={visible} animation='fly up' duration={500}>
         <Segment raised>
           <Header as='h2' icon textAlign='center' dividing>
             <Icon name='id card outline' circular />

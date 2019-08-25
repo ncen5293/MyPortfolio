@@ -7,7 +7,7 @@ class HobbiesPage extends Component {
   render() {
     const visible = this.props.visible;
     return (
-      <Transition visible={visible} animation='browse' duration={500}>
+      <Transition visible={visible} animation='fly left' duration={500}>
         <Segment raised>
           <Header as='h2' icon textAlign='center' dividing>
             <Icon name='game' circular />
@@ -24,28 +24,28 @@ class HobbiesPage extends Component {
                     cardColor='red'
                     title='Persona 5'
                     genre='Favorite JRPG'
-                    desc='Great blend of dungeon crawling and social gameplay'
+                    desc='Great blend of dungeon crawling and social gameplay. Looking cool, Joker!'
                     mentions='(Further) Fire Emblem: Three Houses'
                   />
                   <HobbiesCard
                     cardColor='blue'
                     title='Devil May Cry 5'
                     genre='Favorite *Stylish* Action Game'
-                    desc='Exciting game to get SSS combos'
+                    desc='Exciting game to get SSS combos. Foolishness Dante.'
                     mentions='(Further) Dark Souls 3, Monster Hunter: World'
                   />
                   <HobbiesCard
                     cardColor='pink'
                     title='Kirby Series'
                     genre='Favorite Sidescroller'
-                    desc='Cute and fun Eldritch Horror'
+                    desc='Cute and fun Eldritch Horror. Poyo'
                     mentions='(Further) Iconoclasts'
                   />
                   <HobbiesCard
                     cardColor='black'
                     title='The Witcher 3: Wild Hunt'
                     genre='Favorite Western RPG'
-                    desc='Great characters and interesting dialogue choices'
+                    desc='Great characters and interesting dialogue choices. I hate portals.'
                     mentions='(Further) Divinity: Original Sin 2'
                   />
                 </Card.Group>
