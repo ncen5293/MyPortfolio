@@ -9,6 +9,9 @@ class App extends Component {
       <div className="App">
         <BrowserRouter>
           <Route exact path = "/" component = {Home} />
+          <Route exact path = "/aws" component = {Home} />
+          <Route exact path = "/game" component = {Home} />
+          <Route exact path = "/comments" component = {Home} />
         </BrowserRouter>
       </div>
     );
