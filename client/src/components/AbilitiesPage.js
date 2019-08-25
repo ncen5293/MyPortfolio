@@ -81,7 +81,7 @@ class AbilitiesPage extends Component {
             <Statistic.Value>
               Hunter College
             </Statistic.Value>
-            <Statistic.Label>2015-2019</Statistic.Label>
+            <Statistic.Label>2015-2019 (3.4 GPA)</Statistic.Label>
           </Statistic>
           <Statistic color='blue'>
             <Statistic.Value>

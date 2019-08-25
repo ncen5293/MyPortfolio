@@ -168,7 +168,7 @@ class Home extends Component {
           <Menu.Item>
             <Checkbox
               checked={onePagePortfolio}
-              label='Portfolio on one page'
+              label='On One Page'
               onChange={this.handlePageChange}
             />
           </Menu.Item>
