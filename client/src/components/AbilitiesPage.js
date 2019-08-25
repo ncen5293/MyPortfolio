@@ -12,37 +12,37 @@ class AbilitiesPage extends Component {
             <Icon name='id card outline' circular />
             <Header.Content>Skills</Header.Content>
           </Header>
-          <Statistic>
+          <Statistic color='blue'>
             <Statistic.Value>
               C++
             </Statistic.Value>
             <Statistic.Label>4+ Years</Statistic.Label>
           </Statistic>
-          <Statistic>
+          <Statistic color='yellow'>
             <Statistic.Value>
               Javascript
             </Statistic.Value>
             <Statistic.Label>2+ Years</Statistic.Label>
           </Statistic>
-          <Statistic>
+          <Statistic color='teal'>
             <Statistic.Value>
               React.JS
             </Statistic.Value>
             <Statistic.Label>2+ Years</Statistic.Label>
           </Statistic>
-          <Statistic>
+          <Statistic color='green'>
             <Statistic.Value>
               Node.JS
             </Statistic.Value>
             <Statistic.Label>2+ Years</Statistic.Label>
           </Statistic>
-          <Statistic>
+          <Statistic color='yellow'>
             <Statistic.Value>
               Python
             </Statistic.Value>
             <Statistic.Label>2+ Years</Statistic.Label>
           </Statistic>
-          <Statistic>
+          <Statistic color='orange'>
             <Statistic.Value>
               HTML/CSS
             </Statistic.Value>
@@ -54,25 +54,41 @@ class AbilitiesPage extends Component {
             </Statistic.Value>
             <Statistic.Label>3+ Years</Statistic.Label>
           </Statistic>
-          <Statistic>
+          <Statistic color='green'>
             <Statistic.Value>
               MongoDB
             </Statistic.Value>
             <Statistic.Label>1+ Years</Statistic.Label>
           </Statistic>
-          <Statistic>
+          <Statistic color='orange'>
             <Statistic.Value>
               SQL
             </Statistic.Value>
             <Statistic.Label>{'<'}1 Year</Statistic.Label>
           </Statistic>
-          <Statistic>
+          <Statistic color='purple'>
             <Statistic.Value>
               C#
             </Statistic.Value>
             <Statistic.Label>{'<'}1 Year</Statistic.Label>
           </Statistic>
           <Divider />
+          <Header as='h2' icon textAlign='center' dividing>
+            <Icon name='id card outline' circular />
+            <Header.Content>Education</Header.Content>
+          </Header>
+          <Statistic color='purple'>
+            <Statistic.Value>
+              Hunter College
+            </Statistic.Value>
+            <Statistic.Label>2015-2019</Statistic.Label>
+          </Statistic>
+          <Statistic color='blue'>
+            <Statistic.Value>
+              CUNY Tech Prep
+            </Statistic.Value>
+            <Statistic.Label>2018-2019</Statistic.Label>
+          </Statistic>
         </Segment>
       </Transition>
     )
