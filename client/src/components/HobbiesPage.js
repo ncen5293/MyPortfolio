@@ -31,7 +31,7 @@ class HobbiesPage extends Component {
                     cardColor='blue'
                     title='Devil May Cry 5'
                     genre='Favorite *Stylish* Action Game'
-                    desc='Exciting game to get SSS combos. Foolishness Dante.'
+                    desc='Exciting game to get SSS combos. Jackpot.'
                     mentions='(Further) Dark Souls 3, Monster Hunter: World'
                   />
                   <HobbiesCard
