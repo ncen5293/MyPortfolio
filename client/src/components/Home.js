@@ -5,6 +5,7 @@ import AbilitiesPage from './AbilitiesPage';
 import ProjectsPage from './ProjectsPage';
 import HobbiesPage from './HobbiesPage';
 import MenuButtons from './MenuButtons';
+import Statement from './Statement';
 import '../styles/Home.css';
 
 class Home extends Component {
@@ -173,6 +174,9 @@ class Home extends Component {
             />
           </Menu.Item>
         </Menu>
+        <Statement
+          visible={onePagePortfolio ? onePagePortfolio : visibleProjectButton}
+        />
         <HomeButtons
           visibleButton={visibleProjectButton}
           onButtonClick={this.onButtonClick}
