@@ -1,0 +1,16 @@
+{
+  "name": "nickycenportfolio",
+  "version": "0.1.0",
+  "description": "my portfolio to show my skills",
+  "author": "Nicky Cen <nickycen74@gmail.com>",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.1",
+    "mongoose": "^5.6.3",
+    "nodemon": "^1.19.1"
+  }
+}
