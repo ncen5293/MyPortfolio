@@ -8,7 +8,7 @@ router.get("/", function(req, res, next) {
     res.send(databaseConnection);
 });
 
-mongoose.connect("mongodb://localhost:27017/stock");
+mongoose.connect("mongodb://localhost:27017/portfolio");
 
 const database = mongoose.connection;
 
@@ -34,7 +34,8 @@ router.put("/hobbys/:title/like", (req,res) => {
         return handleError(err);
       }
       if (!hobby) {
-        let newHobby = { Likes: 1 }
+        console.log('creating new hobby');
+        let newHobby = { Likes: 1, Title: req.query.title }
         newHobby._id = mongoose.Types.ObjectId();
         let newHobbyModel = new HobbyModel(newHobby);
         newHobbyModel.save((err) => {
@@ -42,22 +43,23 @@ router.put("/hobbys/:title/like", (req,res) => {
             return handleError(err);
           }
         });
-        res.send({newHobby.Likes});
+        res.send({likes: newHobby.Likes});
       } else {
-        res.send({hobby.Likes});
+        res.send({likes: hobby.Likes});
       }
   });
 })
 
 router.get("/hobbys/:title/like", (req,res) => {
   console.log(req.query);
-  UserPortfolioModel.findOne({ "Title": req.query.title },
+  HobbyModel.findOne({ "Title": req.query.title },
     (err, hobby) => {
       if (err) {
         return handleError(err);
       }
       if (!hobby) {
-        let newHobby = { Likes: 0 }
+        console.log('creating new hobby');
+        let newHobby = { Likes: 0, Title: req.query.title }
         newHobby._id = mongoose.Types.ObjectId();
         let newHobbyModel = new HobbyModel(newHobby);
         newHobbyModel.save((err) => {
@@ -65,9 +67,9 @@ router.get("/hobbys/:title/like", (req,res) => {
             return handleError(err);
           }
         });
-        res.status(201).json({ error: null, newHobby.Likes });
+        res.status(201).json({ error: null, likes: newHobby.Likes });
       } else {
-        res.status(201).json({ error: null, hobby.Likes });
+        res.status(201).json({ error: null, likes: hobby.Likes });
       }
   });
 })

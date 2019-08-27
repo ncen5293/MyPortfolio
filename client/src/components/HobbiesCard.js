@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Button, Label } from 'semantic-ui-react';
+import axios from 'axios';
 import '../styles/Home.css';
 
 class HobbiesCard extends Component {
@@ -12,11 +13,30 @@ class HobbiesCard extends Component {
 
   componentDidMount = () => {
     console.log(`get backend likes for ${this.props.title}`);
+    axios.get(`http://localhost:8080/portfolio/hobbys/${this.props.title}/like`, {params: { title: this.props.title }})
+      .then(res => {
+        this.setState({ likeCounter: res.data.likes });
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   onLikeClick = (title) => {
     console.log(`I liked ${title}`);
-    this.setState(prevState => ({ likeCounter: prevState.likeCounter+1 }));
+    axios.put(`http://localhost:8080/portfolio/hobbys/${this.props.title}/like`, {
+        title: this.props.title,
+        likeCounter: this.state.likeCounter
+      })
+      .then(res => {
+        console.log(res.data);
+        if (res.data.likes) {
+          this.setState({ likeCounter: res.data.likes });
+        }
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   render() {
