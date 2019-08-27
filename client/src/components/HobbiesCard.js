@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { Card, Button, Label } from 'semantic-ui-react';
 import axios from 'axios';
+import LikeModal from './LikeModal';
 import '../styles/Home.css';
 
 class HobbiesCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      likeCounter: 0
+      likeCounter: 0,
+      isLikeModalOpen: false
     }
   }
 
@@ -24,30 +26,46 @@ class HobbiesCard extends Component {
 
   onLikeClick = (title) => {
     console.log(`I liked ${title}`);
-    axios.put(`http://localhost:8080/portfolio/hobbys/${this.props.title}/like`, {
-        title: this.props.title,
-        likeCounter: this.state.likeCounter
-      })
-      .then(res => {
-        console.log(res.data);
-        if (res.data.likes) {
-          this.setState({ likeCounter: res.data.likes });
-        }
-      })
-      .catch(error => {
-        console.error(error)
-      })
+    if (localStorage.getItem(`${this.props.title}`) !== 'liked') {
+      axios.put(`http://localhost:8080/portfolio/hobbys/${this.props.title}/like`, {
+          title: this.props.title,
+          likeCounter: this.state.likeCounter
+        })
+        .then(res => {
+          console.log(res.data);
+          if (res.data.likes) {
+            this.setState({ likeCounter: res.data.likes });
+            this.onMenuToggle();
+            localStorage.setItem(`${this.props.title}`, 'liked');
+          }
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    }
+  }
+
+  onMenuToggle = () => {
+    this.setState(prevState => ({ isLikeModalOpen: !prevState.isLikeModalOpen }));
+    window.setTimeout(() => {this.setState(prevState => ({ isLikeModalOpen: !prevState.isLikeModalOpen }));}, 1250);
   }
 
   render() {
+    let canLike = localStorage.getItem(`${this.props.title}`) !== 'liked';
     return (
       <Card raised color={this.props.cardColor}>
         <Card.Content>
           <Button
             circular
+            disabled={!canLike}
             icon='thumbs up outline'
             color={this.props.cardColor}
             onClick={() => this.onLikeClick(this.props.title)}
+          />
+          <LikeModal
+            open={this.state.isLikeModalOpen}
+            onMenuToggle={this.onMenuToggle}
+            title={this.props.title}
           />
           <Label basic pointing='left'>
             {this.state.likeCounter}
