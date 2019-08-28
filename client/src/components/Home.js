@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Transition, Checkbox } from 'semantic-ui-react';
+import { Menu, Transition, Checkbox, Icon } from 'semantic-ui-react';
 import HomeButtons from './HomeButtons';
 import AbilitiesPage from './AbilitiesPage';
 import ProjectsPage from './ProjectsPage';
@@ -164,6 +164,12 @@ class Home extends Component {
           <Menu.Item>
             <h2>
               Nicky Cen
+              <a href='https://www.linkedin.com/in/nicky-cen/'>
+                <Icon link name='linkedin' />
+              </a>
+              <a href='https://github.com/ncen5293'>
+                <Icon link name='github' />
+              </a>
             </h2>
           </Menu.Item>
           <Menu.Item>
