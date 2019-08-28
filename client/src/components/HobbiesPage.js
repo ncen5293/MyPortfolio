@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Grid, Header, Icon, Image, Transition, Segment } from 'semantic-ui-react';
+import { Card, Grid, Header, Icon, Transition, Segment } from 'semantic-ui-react';
 import HobbiesCard from './HobbiesCard';
 import '../styles/Home.css';
 
