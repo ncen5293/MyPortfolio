@@ -74,7 +74,7 @@ class AbilitiesPage extends Component {
           </Statistic>
           <Divider />
           <Header as='h2' icon textAlign='center' dividing>
-            <Icon name='id card outline' circular />
+            <Icon name='book' circular />
             <Header.Content>Education</Header.Content>
           </Header>
           <Statistic color='purple'>
@@ -88,6 +88,16 @@ class AbilitiesPage extends Component {
               CUNY Tech Prep
             </Statistic.Value>
             <Statistic.Label>2018-2019</Statistic.Label>
+          </Statistic>
+          <Header as='h2' icon textAlign='center' dividing>
+            <Icon name='pencil alternate' circular />
+            <Header.Content>Work Experience</Header.Content>
+          </Header>
+          <Statistic color='purple'>
+            <Statistic.Value>
+              Teaching Assistant @ Hunter College
+            </Statistic.Value>
+            <Statistic.Label>2017-2019 beginner Python and C++</Statistic.Label>
           </Statistic>
         </Segment>
       </Transition>
