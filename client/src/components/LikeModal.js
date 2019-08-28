@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { Modal } from 'semantic-ui-react';
+import { Modal, Image } from 'semantic-ui-react';
+import dmc5sss from '../images/dmc5sss.png';
+import jojomenacing from '../images/jojomenacing.png';
+import kirbyinhale from '../images/kirbyinhale.png';
+import persona5lookingcooljoker from '../images/persona5lookingcooljoker.PNG';
+import liked from '../images/thumbsup.png';
 import '../styles/Home.css';
 
 const dialogue = {
@@ -11,11 +16,15 @@ const dialogue = {
 
 class LikeModal extends Component {
   render() {
-    let likeDialogue = '';
-    if (dialogue[this.props.title]) {
-      likeDialogue = dialogue[this.props.title];
-    } else {
-      likeDialogue = 'Looking Cool, Joker!';
+    let likeDialogue = liked;
+    if (this.props.title === 'Persona 5') {
+      likeDialogue = persona5lookingcooljoker;
+    } else if (this.props.title === 'Devil May Cry 5') {
+      likeDialogue = dmc5sss;
+    } else if (this.props.title === 'Kirby Series') {
+      likeDialogue = kirbyinhale;
+    } else if (this.props.title === "JoJo's Bizarre Adventure") {
+      likeDialogue = jojomenacing;
     }
     return (
       <Modal basic
@@ -23,7 +32,7 @@ class LikeModal extends Component {
         onClose={this.props.onMenuToggle}
       >
         <Modal.Content>
-          {likeDialogue}
+          <Image src={likeDialogue} />
         </Modal.Content>
       </Modal>
     )

@@ -26,7 +26,7 @@ class HobbiesCard extends Component {
 
   onLikeClick = (title) => {
     console.log(`I liked ${title}`);
-    if (localStorage.getItem(`${this.props.title}`) !== 'liked') {
+    if (localStorage.getItem(`${this.props.title}`) !== 'aliked') {
       axios.put(`http://localhost:8080/portfolio/hobbys/${this.props.title}/like`, {
           title: this.props.title,
           likeCounter: this.state.likeCounter
@@ -57,7 +57,7 @@ class HobbiesCard extends Component {
         <Card.Content>
           <Button
             circular
-            disabled={!canLike}
+
             icon='thumbs up outline'
             color={this.props.cardColor}
             onClick={() => this.onLikeClick(this.props.title)}
