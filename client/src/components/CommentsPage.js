@@ -3,13 +3,17 @@ import { Menu, Icon } from 'semantic-ui-react';
 import axios from 'axios';
 import MenuButtons from './MenuButtons';
 import Statement from './Statement';
+import CommentForm from './CommentForm';
+import Comments from './Comments';
 import '../styles/Home.css';
 
 class CommentsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      comments: []
+      comments: [],
+      name: '',
+      comment: ''
     }
   }
 
@@ -43,7 +47,8 @@ class CommentsPage extends Component {
   getComments = async () => {
     await axios.get(`http://localhost:8080/portfolio/comments`)
       .then(res => {
-        this.setState({ comments: res.data });
+        console.log(res.data);
+        this.setState({ comments: res.data.comments });
       })
       .catch(error => {
         console.error(error)
@@ -64,11 +69,24 @@ class CommentsPage extends Component {
       })
   }
 
+  onNameChange = (event) => {
+
+  }
+
+  onCommentChange = (event) => {
+
+  }
+
+  submitComment = (event) => {
+
+  }
+
   render() {
     const visibleProjectModalButton = this.state.visibleProjectModalButton;
     const visibleAbilitiesModalButton = this.state.visibleAbilitiesModalButton;
     const visibleHobbiesModalButton = this.state.visibleHobbiesModalButton;
     const visibleMenu = this.state.visibleMenu;
+    const comments = this.state.comments;
     return (
       <div className='App-header'>
         <Menu widths={3}>
@@ -95,11 +113,17 @@ class CommentsPage extends Component {
             </h2>
           </Menu.Item>
           <Menu.Item>
-            -
+            <span>Comments Page</span>
           </Menu.Item>
         </Menu>
         <Statement
           visible={true}
+        />
+        <Comments comments={comments} />
+        <CommentForm
+          onSubmit={this.submitComment}
+          onNameChange={this.onNameChange}
+          onCommentChange={this.onCommentChange}
         />
       </div>
     )
