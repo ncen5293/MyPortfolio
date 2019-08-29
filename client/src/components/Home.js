@@ -105,6 +105,8 @@ class Home extends Component {
         }
       }, 700);
       return true;
+    } else if (type === 'Comments Page') {
+      window.location.replace('/comments');
     } else {
       return false;
     }
@@ -201,7 +203,7 @@ class Home extends Component {
           visibleButton={visibleHobbiesButton}
           onButtonClick={this.onButtonClick}
           leftButton='My Abilities'
-          rightButton='Coming Soon'
+          rightButton='Comments Page'
           position='bottom'
         />
         <ProjectsPage

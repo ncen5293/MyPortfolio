@@ -37,7 +37,7 @@ class MenuButtons extends Component {
                 visibleButton={this.props.visibleHobbiesModalButton}
                 onButtonClick={this.props.onButtonClick}
                 leftButton='My Abilities'
-                rightButton='Coming Soon'
+                rightButton='Comments Page'
                 position='bottom'
               />
             </div>

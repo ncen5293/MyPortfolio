@@ -31,7 +31,7 @@ class ProjectsPage extends Component {
             <ProjectCard
               title='EscapeNLP'
               timeWorked='Spring 2019'
-              desc='A Full-stack web application that enables up to five users play a text-based escape room using the natural language interpreter for free form actions using the text chat'
+              desc='A Full-stack web application that enables up to five users play a text-based escape room using the natural language interpreter for free form actions via the text chat'
               stack='React.Js, Node.Js, Socket.Io, NLP.JS, javascript, HTML, CSS'
               link='https://github.com/MariaVolpe/EscapeNLP'
             />
