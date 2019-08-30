@@ -23,10 +23,13 @@ class CommentsPage extends Component {
 
   changePage = (type) => {
     if (type === 'My Projects') {
+      localStorage.setItem('redirect', 'projects');
       window.location.replace('/');
     } else if (type === 'My Hobbies') {
+      localStorage.setItem('redirect', 'hobbies');
       window.location.replace('/');
     } else if (type === 'My Abilities') {
+      localStorage.setItem('redirect', 'abilities');
       window.location.replace('/');
     } else if (type === 'Comments Page') {
       window.location.replace('/comments');

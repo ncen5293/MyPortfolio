@@ -34,7 +34,31 @@ class Home extends Component {
   }
 
   componentDidMount = () => {
-    this.toggleButtonVisibility();
+    if (localStorage.getItem('redirect') === 'projects') {
+      this.setState(prevState => ({
+          visibleProjectsPage: true,
+          visibleHobbiesPage: false,
+          visibleAbilitiesPage: false,
+          visibleMenu: true
+        }));
+    } else if (localStorage.getItem('redirect') === 'abilities') {
+      this.setState(prevState => ({
+          visibleProjectsPage: false,
+          visibleHobbiesPage: false,
+          visibleAbilitiesPage: true,
+          visibleMenu: true
+        }));
+    } else if (localStorage.getItem('redirect') === 'hobbies') {
+      this.setState(prevState => ({
+          visibleProjectsPage: false,
+          visibleHobbiesPage: true,
+          visibleAbilitiesPage: false,
+          visibleMenu: true
+        }));
+    } else {
+      this.toggleButtonVisibility();
+    }
+    localStorage.setItem('redirect', 'portfolio');
   }
 
   allPagesClosed = () => {
@@ -69,7 +93,7 @@ class Home extends Component {
   changePage = (type) => {
     if (type === 'My Projects') {
       if (this.state.onePagePortfolio) {
-        scrollToComponent(this.projects, { offset: 0, align: 'top', duration: 1500})
+        scrollToComponent(this.projects, { offset: 0, align: 'top', duration: 1000})
       } else {
         window.setTimeout(() => {this.setState(prevState => ({
             visibleProjectsPage: !prevState.visibleProjectsPage,
@@ -86,7 +110,7 @@ class Home extends Component {
       return true;
     } else if (type === 'My Hobbies') {
       if (this.state.onePagePortfolio) {
-        scrollToComponent(this.hobbies, { offset: 0, align: 'top', duration: 1500})
+        scrollToComponent(this.hobbies, { offset: 0, align: 'top', duration: 1000})
       } else {
         window.setTimeout(() => {this.setState(prevState => ({
             visibleHobbiesPage: !prevState.visibleHobbiesPage,
@@ -103,7 +127,7 @@ class Home extends Component {
       return true;
     } else if (type === 'My Abilities') {
       if (this.state.onePagePortfolio) {
-        scrollToComponent(this.abilities, { offset: 0, align: 'top', duration: 1500})
+        scrollToComponent(this.abilities, { offset: 0, align: 'top', duration: 1000})
       } else {
         window.setTimeout(() => {this.setState(prevState => ({
             visibleAbilitiesPage: !prevState.visibleAbilitiesPage,
