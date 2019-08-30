@@ -11,8 +11,8 @@ class CommentForm extends Component {
             <Header.Content>Create a Comment</Header.Content>
           </Header>
           <Form onSubmit={this.props.onSubmit}>
-            <Form.Input fluid label='Screen Name' placeholder='Screen Name' onChange={this.props.onNameChange} />
-            <Form.TextArea label='Comment' placeholder='Type your comment here...' onChange={this.props.onCommentChange} />
+            <Form.Input fluid label='Screen Name' placeholder='Screen Name' value={this.props.name} onChange={this.props.onNameChange} />
+            <Form.TextArea label='Comment' placeholder='Type your comment here...' value={this.props.comment} onChange={this.props.onCommentChange} />
             <Form.Button content='Submit' />
           </Form>
         </Segment>

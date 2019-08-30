@@ -55,30 +55,27 @@ class CommentsPage extends Component {
       })
   }
 
-  createComment = (name,comment) => {
+  onNameChange = (event) => {
+    this.setState({name: event.target.value});
+  }
+
+  onCommentChange = (event) => {
+    this.setState({comment: event.target.value});
+  }
+
+  submitComment = (event) => {
     axios.post(`http://localhost:8080/portfolio/comments`,
       {
-        name: name,
-        comment: comment
+        name: this.state.name,
+        comment: this.state.comment
       })
       .then(res => {
+        this.setState({ comment: '', name: '' });
         this.getComments();
       })
       .catch(error => {
         console.error(error)
       })
-  }
-
-  onNameChange = (event) => {
-
-  }
-
-  onCommentChange = (event) => {
-
-  }
-
-  submitComment = (event) => {
-
   }
 
   render() {
@@ -124,6 +121,8 @@ class CommentsPage extends Component {
           onSubmit={this.submitComment}
           onNameChange={this.onNameChange}
           onCommentChange={this.onCommentChange}
+          name={this.state.name}
+          comment={this.state.comment}
         />
       </div>
     )

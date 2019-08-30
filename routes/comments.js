@@ -26,11 +26,12 @@ const CommentModel = mongoose.model('comment', CommentSchema);
 
 router.post("/comments", (req,res) => {
   console.log(req.body);
-  let postDate = new Date();
+  let date = new Date();
+  let postDate = date.getTime();
   let newComment = {
     _id: mongoose.Types.ObjectId(),
-    Name: res.body.name,
-    Comment: res.body.comment,
+    Name: req.body.name,
+    Comment: req.body.comment,
     Date: postDate
   }
   let newCommentModel = new CommentModel(newComment);
