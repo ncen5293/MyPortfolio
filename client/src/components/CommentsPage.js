@@ -116,7 +116,6 @@ class CommentsPage extends Component {
         <Statement
           visible={true}
         />
-        <Comments comments={comments} />
         <CommentForm
           onSubmit={this.submitComment}
           onNameChange={this.onNameChange}
@@ -124,6 +123,7 @@ class CommentsPage extends Component {
           name={this.state.name}
           comment={this.state.comment}
         />
+        <Comments comments={comments} />
       </div>
     )
   }

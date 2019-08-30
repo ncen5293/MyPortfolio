@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Menu, Transition, Checkbox, Icon } from 'semantic-ui-react';
+import scrollToComponent from 'react-scroll-to-component';
 import HomeButtons from './HomeButtons';
 import AbilitiesPage from './AbilitiesPage';
 import ProjectsPage from './ProjectsPage';
@@ -67,43 +68,55 @@ class Home extends Component {
 
   changePage = (type) => {
     if (type === 'My Projects') {
-      window.setTimeout(() => {this.setState(prevState => ({
-          visibleProjectsPage: !prevState.visibleProjectsPage,
-          visibleHobbiesPage: false,
-          visibleAbilitiesPage: false,
-          visibleMenu: true
-        }));
-        if (this.allPagesClosed()) {
-          this.setState({visibleMenu: false});
-          this.toggleButtonVisibility();
-        }
-      }, 700);
+      if (this.state.onePagePortfolio) {
+        scrollToComponent(this.projects, { offset: 0, align: 'top', duration: 1500})
+      } else {
+        window.setTimeout(() => {this.setState(prevState => ({
+            visibleProjectsPage: !prevState.visibleProjectsPage,
+            visibleHobbiesPage: false,
+            visibleAbilitiesPage: false,
+            visibleMenu: true
+          }));
+          if (this.allPagesClosed()) {
+            this.setState({visibleMenu: false});
+            this.toggleButtonVisibility();
+          }
+        }, 700);
+      }
       return true;
     } else if (type === 'My Hobbies') {
-      window.setTimeout(() => {this.setState(prevState => ({
-          visibleHobbiesPage: !prevState.visibleHobbiesPage,
-          visibleProjectsPage: false,
-          visibleAbilitiesPage: false,
-          visibleMenu: true
-        }));
-        if (this.allPagesClosed()) {
-          this.setState({visibleMenu: false});
-          this.toggleButtonVisibility();
-        }
-      }, 700);
+      if (this.state.onePagePortfolio) {
+        scrollToComponent(this.hobbies, { offset: 0, align: 'top', duration: 1500})
+      } else {
+        window.setTimeout(() => {this.setState(prevState => ({
+            visibleHobbiesPage: !prevState.visibleHobbiesPage,
+            visibleProjectsPage: false,
+            visibleAbilitiesPage: false,
+            visibleMenu: true
+          }));
+          if (this.allPagesClosed()) {
+            this.setState({visibleMenu: false});
+            this.toggleButtonVisibility();
+          }
+        }, 700);
+      }
       return true;
     } else if (type === 'My Abilities') {
-      window.setTimeout(() => {this.setState(prevState => ({
-          visibleAbilitiesPage: !prevState.visibleAbilitiesPage,
-          visibleHobbiesPage: false,
-          visibleProjectsPage: false,
-          visibleMenu: true
-        }));
-        if (this.allPagesClosed()) {
-          this.setState({visibleMenu: false});
-          this.toggleButtonVisibility();
-        }
-      }, 700);
+      if (this.state.onePagePortfolio) {
+        scrollToComponent(this.abilities, { offset: 0, align: 'top', duration: 1500})
+      } else {
+        window.setTimeout(() => {this.setState(prevState => ({
+            visibleAbilitiesPage: !prevState.visibleAbilitiesPage,
+            visibleHobbiesPage: false,
+            visibleProjectsPage: false,
+            visibleMenu: true
+          }));
+          if (this.allPagesClosed()) {
+            this.setState({visibleMenu: false});
+            this.toggleButtonVisibility();
+          }
+        }, 700);
+      }
       return true;
     } else if (type === 'Comments Page') {
       window.location.replace('/comments');
@@ -208,12 +221,15 @@ class Home extends Component {
         />
         <ProjectsPage
           visible={visibleProjectsPage}
+          ref={(section) => { this.projects = section }}
         />
         <AbilitiesPage
           visible={visibleAbilitiesPage}
+          ref={(section) => { this.abilities = section }}
         />
         <HobbiesPage
           visible={visibleHobbiesPage}
+          ref={(section) => { this.hobbies = section }}
         />
       </div>
     )
