@@ -7,7 +7,7 @@ import CommentForm from './CommentForm';
 import Comments from './Comments';
 import '../styles/Home.css';
 
-class CommentsPage extends Component {
+class GamePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,8 +35,6 @@ class CommentsPage extends Component {
       window.location.replace('/comments');
     } else if (type === 'Portfolio Page') {
       window.location.replace('/');
-    } else if (type === 'GAME PAGE') {
-      window.location.replace('/game');
     } else {
       return false;
     }
@@ -136,4 +134,4 @@ class CommentsPage extends Component {
   }
 }
 
-export default CommentsPage;
+export default GamePage;

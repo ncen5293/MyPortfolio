@@ -144,6 +144,10 @@ class Home extends Component {
       return true;
     } else if (type === 'Comments Page') {
       window.location.replace('/comments');
+    } else if (type === 'Portfolio Page') {
+      window.location.replace('/');
+    } else if (type === 'GAME PAGE') {
+      window.location.replace('/game');
     } else {
       return false;
     }
@@ -226,14 +230,14 @@ class Home extends Component {
           visibleButton={visibleProjectButton}
           onButtonClick={this.onButtonClick}
           leftButton='My Projects'
-          rightButton='Coming Soon'
+          rightButton='Portfolio Page'
           position='top'
         />
         <HomeButtons
           visibleButton={visibleAbilitiesButton}
           onButtonClick={this.onButtonClick}
           leftButton='My Hobbies'
-          rightButton='Coming Soon'
+          rightButton='GAME PAGE'
           position='middle'
         />
         <HomeButtons
