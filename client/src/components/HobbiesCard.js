@@ -59,25 +59,9 @@ class HobbiesCard extends Component {
 
   render() {
     let canLike = localStorage.getItem(`${this.props.title}`) !== 'liked';
-    let logo = <div/>;
-    if (this.props.title === 'Persona 5') {
-      logo = <Image src={persona5logo} wrapped ui={false} />;
-    } else if (this.props.title === 'Devil May Cry 5') {
-      logo = <Image src={dmc5logo} wrapped ui={false} />;
-    } else if (this.props.title === 'Kirby Series') {
-      logo = <Image src={kirbylogo} wrapped ui={false} />;
-    } else if (this.props.title === "The Witcher 3: Wild Hunt") {
-      logo = <Image src={witcher3logo} wrapped ui={false} />;
-    } else if (this.props.title === 'The Travelers') {
-      logo = <Image src={travelerstv} wrapped ui={false} />;
-    } else if (this.props.title === "JoJo's Bizarre Adventure") {
-      logo = <Image src={jojologo} wrapped ui={false} />;
-    } else if (this.props.title === 'Captain America: Winter Soldier') {
-      logo = <Image src={captainamericalogo} wrapped ui={false} />;
-    }
     return (
       <Card raised color={this.props.cardColor}>
-        {logo}
+        <Image src={this.props.logo} wrapped ui={false} />
         <Card.Content>
           <Button
             circular
@@ -90,6 +74,7 @@ class HobbiesCard extends Component {
             open={this.state.isLikeModalOpen}
             onMenuToggle={this.onMenuToggle}
             title={this.props.title}
+            likePopup={this.props.likePopup}
           />
           <Label basic pointing='left'>
             {this.state.likeCounter}

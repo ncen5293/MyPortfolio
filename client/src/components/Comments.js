@@ -13,8 +13,7 @@ class Comments extends Component {
                   </Header>);
     } else {
       comments = this.props.comments.map((comment, i) => {
-        console.log(comment);
-        return (<Card raised>
+        return (<Card raised key={i} >
                   <Card.Content>
                     <Card.Header>
                       {comment.Name}

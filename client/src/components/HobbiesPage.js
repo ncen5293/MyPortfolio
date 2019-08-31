@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 import { Card, Grid, Header, Icon, Transition, Segment } from 'semantic-ui-react';
 import HobbiesCard from './HobbiesCard';
+import dmc5logo from '../images/dmc5logo.png';
+import witcher3logo from '../images/witcher3logo.png';
+import kirbylogo from '../images/kirbylogo.png';
+import persona5logo from '../images/persona5logo.png';
+import captainamericalogo from '../images/captainamericalogo.jpg';
+import jojologo from '../images/jojologo.png';
+import travelerstv from '../images/travelerstv.jpg';
+import dmc5sss from '../images/dmc5sss.png';
+import jojomenacing from '../images/jojomenacing.png';
+import kirbyinhale from '../images/kirbyinhale.png';
+import persona5lookingcooljoker from '../images/persona5lookingcooljoker.PNG';
+import liked from '../images/thumbsup.png';
 import '../styles/Home.css';
 
 class HobbiesPage extends Component {
@@ -26,13 +38,17 @@ class HobbiesPage extends Component {
                     genre='Favorite JRPG'
                     desc='Great blend of dungeon crawling and social gameplay. Looking cool, Joker!'
                     mentions='(Further) Fire Emblem: Three Houses'
+                    logo={persona5logo}
+                    likePopup={persona5lookingcooljoker}
                   />
                   <HobbiesCard
                     cardColor='blue'
                     title='Devil May Cry 5'
                     genre='Favorite *Stylish* Action Game'
                     desc='Exciting game to get SSS combos. Jackpot.'
-                    mentions='(Further) Dark Souls 3, Monster Hunter: World'
+                    mentions='(Further) Bayonetta'
+                    logo={dmc5logo}
+                    likePopup={dmc5sss}
                   />
                   <HobbiesCard
                     cardColor='pink'
@@ -40,6 +56,8 @@ class HobbiesPage extends Component {
                     genre='Favorite Sidescroller'
                     desc='Cute and fun Eldritch Horror. Poyo'
                     mentions='(Further) Iconoclasts'
+                    logo={kirbylogo}
+                    likePopup={kirbyinhale}
                   />
                   <HobbiesCard
                     cardColor='black'
@@ -47,6 +65,8 @@ class HobbiesPage extends Component {
                     genre='Favorite Western RPG'
                     desc='Great characters and interesting dialogue choices. I hate portals.'
                     mentions='(Further) Divinity: Original Sin 2'
+                    logo={witcher3logo}
+                    likePopup={liked}
                   />
                 </Card.Group>
               </Grid.Column>
@@ -61,6 +81,8 @@ class HobbiesPage extends Component {
                     genre='Favorite Sci-fi Show'
                     desc='Great time travel show'
                     mentions='(Further) Agents of S.H.I.E.L.D'
+                    logo={travelerstv}
+                    likePopup={liked}
                   />
                   <HobbiesCard
                     cardColor='pink'
@@ -68,6 +90,8 @@ class HobbiesPage extends Component {
                     genre='Favorite Anime'
                     desc='Over the top action'
                     mentions='(Further) Persona 4: The Animation'
+                    logo={jojologo}
+                    likePopup={jojomenacing}
                   />
                   <HobbiesCard
                     cardColor='blue'
@@ -75,6 +99,8 @@ class HobbiesPage extends Component {
                     genre='Favorite Superhero Movie'
                     desc='Amazing spy-thriller superhero movie'
                     mentions='(Further) Avengers: Infinity War'
+                    logo={captainamericalogo}
+                    likePopup={liked}
                   />
                 </Card.Group>
               </Grid.Column>

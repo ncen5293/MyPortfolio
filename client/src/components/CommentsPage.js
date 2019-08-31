@@ -13,7 +13,9 @@ class CommentsPage extends Component {
     this.state = {
       comments: [],
       name: '',
-      comment: ''
+      comment: '',
+      commentSubmitted: false,
+      unableToComment: false
     }
   }
 
@@ -71,18 +73,25 @@ class CommentsPage extends Component {
   }
 
   submitComment = (event) => {
-    axios.post(`http://localhost:8080/portfolio/comments`,
-      {
-        name: this.state.name,
-        comment: this.state.comment
-      })
-      .then(res => {
-        this.setState({ comment: '', name: '' });
-        this.getComments();
-      })
-      .catch(error => {
-        console.error(error)
-      })
+    const name = this.state.name;
+    const comment = this.state.comment;
+    if (name.length === 0 || comment.length === 0) {
+      this.setState({ unableToComment: true, commentSubmitted: false });
+    } else {
+      axios.post(`http://localhost:8080/portfolio/comments`,
+        {
+          name: this.state.name,
+          comment: this.state.comment
+        })
+        .then(res => {
+          this.setState({ comment: '', name: '', unableToComment: false, commentSubmitted: true });
+          console.log(this.state.commentSubmitted);
+          this.getComments();
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    }
   }
 
   render() {
@@ -129,6 +138,8 @@ class CommentsPage extends Component {
           onCommentChange={this.onCommentChange}
           name={this.state.name}
           comment={this.state.comment}
+          commentSubmitted={this.state.commentSubmitted}
+          unableToComment={this.state.unableToComment}
         />
         <Comments comments={comments} />
       </div>
