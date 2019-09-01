@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Checkbox, Icon } from 'semantic-ui-react';
+import { Menu, Checkbox, Icon, Image } from 'semantic-ui-react';
 import scrollToComponent from 'react-scroll-to-component';
 import HomeButtons from './HomeButtons';
 import AbilitiesPage from './AbilitiesPage';
@@ -7,6 +7,7 @@ import ProjectsPage from './ProjectsPage';
 import HobbiesPage from './HobbiesPage';
 import MenuButtons from './MenuButtons';
 import Statement from './Statement';
+import profilepicture from '../images/profilepicture.png';
 import '../styles/Home.css';
 
 class Home extends Component {
@@ -226,6 +227,7 @@ class Home extends Component {
         <Statement
           visible={onePagePortfolio ? onePagePortfolio : visibleProjectButton}
         />
+        <img src={profilepicture} className='profile-pic' />
         <HomeButtons
           visibleButton={visibleProjectButton}
           onButtonClick={this.onButtonClick}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal, Transition } from 'semantic-ui-react';
 import HomeButtons from './HomeButtons';
+import profilepicture from '../images/profilepicture.png';
 import '../styles/Home.css';
 
 class MenuButtons extends Component {
@@ -18,6 +19,7 @@ class MenuButtons extends Component {
         >
           <Modal.Content>
             <div>
+              <img src={profilepicture} className='profile-pic' />
               <HomeButtons
                 visibleButton={this.props.visibleProjectModalButton}
                 onButtonClick={this.props.onButtonClick}
