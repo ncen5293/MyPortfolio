@@ -29,7 +29,7 @@ class MenuButtons extends Component {
                 visibleButton={this.props.visibleAbilitiesModalButton}
                 onButtonClick={this.props.onButtonClick}
                 leftButton='My Hobbies'
-                rightButton='GAME PAGE'
+                rightButton='Coming Soon'
                 position='middle'
               />
               <HomeButtons

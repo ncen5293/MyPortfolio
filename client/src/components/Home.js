@@ -146,8 +146,8 @@ class Home extends Component {
       window.location.replace('/comments');
     } else if (type === 'Portfolio Page') {
       window.location.replace('/');
-    } else if (type === 'GAME PAGE') {
-      window.location.replace('/game');
+    } else if (type === 'Coming Soon') {
+      window.location.replace('/soon');
     } else {
       return false;
     }
@@ -237,7 +237,7 @@ class Home extends Component {
           visibleButton={visibleAbilitiesButton}
           onButtonClick={this.onButtonClick}
           leftButton='My Hobbies'
-          rightButton='GAME PAGE'
+          rightButton='Coming Soon'
           position='middle'
         />
         <HomeButtons

@@ -37,8 +37,8 @@ class CommentsPage extends Component {
       window.location.replace('/comments');
     } else if (type === 'Portfolio Page') {
       window.location.replace('/');
-    } else if (type === 'GAME PAGE') {
-      window.location.replace('/game');
+    } else if (type === 'Coming Soon') {
+      window.location.replace('/soon');
     } else {
       return false;
     }
