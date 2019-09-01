@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Button, Icon, Modal, Transition } from 'semantic-ui-react';
+import { Button, Modal, Transition } from 'semantic-ui-react';
 import HomeButtons from './HomeButtons';
 import '../styles/Home.css';
 
 class MenuButtons extends Component {
   render() {
-    const visible = this.props.visible;
     return (
       <div>
         <Transition visible={this.props.visibleMenu} animation='browse' duration={500} >

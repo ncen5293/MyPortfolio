@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Icon, Image, Segment, Menu, Header, Button } from 'semantic-ui-react';
+import { Icon, Menu, Button } from 'semantic-ui-react';
 import GameWindow from './GameWindow';
 import '../styles/Home.css';
 

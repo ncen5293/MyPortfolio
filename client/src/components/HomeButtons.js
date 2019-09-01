@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Transition } from 'semantic-ui-react';
+import { Transition } from 'semantic-ui-react';
 import '../styles/Home.css';
 
 class HomeButtons extends Component {

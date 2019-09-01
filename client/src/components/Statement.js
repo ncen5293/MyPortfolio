@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Icon, Image, Transition, Segment } from 'semantic-ui-react';
+import { Transition, Segment } from 'semantic-ui-react';
 import '../styles/Home.css';
 
 class ProjectsPage extends Component {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Icon, Image, Segment, Menu, Header, Button, Transition } from 'semantic-ui-react';
+import { Grid, Image, Segment, Header, Transition } from 'semantic-ui-react';
 import '../styles/Home.css';
 
 class GameWindow extends Component {
@@ -11,7 +11,7 @@ class GameWindow extends Component {
   }
 
   componentDidMount = () => {
-    
+
   }
 
   render() {
@@ -24,51 +24,51 @@ class GameWindow extends Component {
           <Grid.Row columns={3}>
             <Grid.Column>
               <Transition>
-                <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />
+                <Image />
               </Transition>
             </Grid.Column>
             <Grid.Column>
               <Transition>
-                <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />
+                <Image />
               </Transition>
             </Grid.Column>
             <Grid.Column>
               <Transition>
-                <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />
-              </Transition>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row columns={3}>
-            <Grid.Column>
-              <Transition>
-                <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />
-              </Transition>
-            </Grid.Column>
-            <Grid.Column>
-              <Transition>
-                <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />
-              </Transition>
-            </Grid.Column>
-            <Grid.Column>
-              <Transition>
-                <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />
+                <Image />
               </Transition>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row columns={3}>
             <Grid.Column>
               <Transition>
-                <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />
+                <Image />
               </Transition>
             </Grid.Column>
             <Grid.Column>
               <Transition>
-                <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />
+                <Image />
               </Transition>
             </Grid.Column>
             <Grid.Column>
               <Transition>
-                <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />
+                <Image />
+              </Transition>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row columns={3}>
+            <Grid.Column>
+              <Transition>
+                <Image />
+              </Transition>
+            </Grid.Column>
+            <Grid.Column>
+              <Transition>
+                <Image />
+              </Transition>
+            </Grid.Column>
+            <Grid.Column>
+              <Transition>
+                <Image />
               </Transition>
             </Grid.Column>
           </Grid.Row>

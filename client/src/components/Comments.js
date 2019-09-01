@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Transition, Segment, Header, Icon, Card } from 'semantic-ui-react';
-import axios from 'axios';
 import '../styles/Home.css';
 
 class Comments extends Component {

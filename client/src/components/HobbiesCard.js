@@ -2,13 +2,6 @@ import React, { Component } from 'react';
 import { Card, Button, Label, Image } from 'semantic-ui-react';
 import axios from 'axios';
 import LikeModal from './LikeModal';
-import dmc5logo from '../images/dmc5logo.png';
-import witcher3logo from '../images/witcher3logo.png';
-import kirbylogo from '../images/kirbylogo.png';
-import persona5logo from '../images/persona5logo.png';
-import captainamericalogo from '../images/captainamericalogo.jpg';
-import jojologo from '../images/jojologo.png';
-import travelerstv from '../images/travelerstv.jpg';
 import '../styles/Home.css';
 
 class HobbiesCard extends Component {

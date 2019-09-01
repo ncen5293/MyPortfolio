@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Transition, Checkbox, Icon } from 'semantic-ui-react';
+import { Menu, Checkbox, Icon } from 'semantic-ui-react';
 import scrollToComponent from 'react-scroll-to-component';
 import HomeButtons from './HomeButtons';
 import AbilitiesPage from './AbilitiesPage';
