@@ -8,8 +8,7 @@ router.get("/", function(req, res, next) {
     res.send(databaseConnection);
 });
 
-mongoose.connect("mongodb://localhost:27017/portfolio");
-
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/portfolio");
 const database = mongoose.connection;
 
 const Schema = mongoose.Schema;

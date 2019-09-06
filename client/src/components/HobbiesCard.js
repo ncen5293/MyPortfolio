@@ -15,7 +15,7 @@ class HobbiesCard extends Component {
 
   componentDidMount = () => {
     console.log(`get backend likes for ${this.props.title}`);
-    axios.get(`http://localhost:8080/portfolio/hobbys/${this.props.title}/like`, {params: { title: this.props.title }})
+    axios.get(`/portfolio/hobbys/${this.props.title}/like`, {params: { title: this.props.title }})
       .then(res => {
         this.setState({ likeCounter: res.data.likes });
       })
@@ -27,7 +27,7 @@ class HobbiesCard extends Component {
   onLikeClick = (title) => {
     console.log(`I liked ${title}`);
     if (localStorage.getItem(`${this.props.title}`) !== 'liked') {
-      axios.put(`http://localhost:8080/portfolio/hobbys/${this.props.title}/like`, {
+      axios.put(`/portfolio/hobbys/${this.props.title}/like`, {
           title: this.props.title,
           likeCounter: this.state.likeCounter
         })

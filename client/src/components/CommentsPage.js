@@ -54,7 +54,7 @@ class CommentsPage extends Component {
   }
 
   getComments = async () => {
-    await axios.get(`http://localhost:8080/portfolio/comments`)
+    await axios.get('/portfolio/comments')
       .then(res => {
         console.log(res.data);
         this.setState({ comments: res.data.comments });
@@ -78,7 +78,7 @@ class CommentsPage extends Component {
     if (name.length === 0 || comment.length === 0) {
       this.setState({ unableToComment: true, commentSubmitted: false });
     } else {
-      axios.post(`http://localhost:8080/portfolio/comments`,
+      axios.post('/portfolio/comments',
         {
           name: this.state.name,
           comment: this.state.comment
