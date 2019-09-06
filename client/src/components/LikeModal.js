@@ -8,6 +8,8 @@ class LikeModal extends Component {
       <Modal basic
         open={this.props.open}
         onClose={this.props.onMenuToggle}
+        closeOnEscape={false}
+        closeOnDimmerClick={false}
       >
         <Modal.Content>
           <Image src={this.props.likePopup} />
