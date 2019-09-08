@@ -7,7 +7,7 @@ import ProjectsPage from './ProjectsPage';
 import HobbiesPage from './HobbiesPage';
 import MenuButtons from './MenuButtons';
 import Statement from './Statement';
-import profilepicture from '../images/profilepicture.png';
+import profilepicture from '../images/profilepic2.png';
 import '../styles/Home.css';
 
 class Home extends Component {
