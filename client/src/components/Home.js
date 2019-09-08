@@ -191,6 +191,10 @@ class Home extends Component {
     const visibleAbilitiesModalButton = this.state.visibleAbilitiesModalButton;
     const visibleHobbiesModalButton = this.state.visibleHobbiesModalButton;
     const visibleMenu = onePagePortfolio ? onePagePortfolio : this.state.visibleMenu;
+    let buttonTopMargin = '0%';
+    if (visibleProjectButton) {
+      buttonTopMargin = '6%';
+    }
     return (
       <div className='App-header'>
         <Menu widths={3}>
@@ -228,27 +232,29 @@ class Home extends Component {
           visible={onePagePortfolio ? onePagePortfolio : visibleProjectButton}
         />
         <img src={profilepicture} alt='profile' className='profile-pic' />
-        <HomeButtons
-          visibleButton={visibleProjectButton}
-          onButtonClick={this.onButtonClick}
-          leftButton='My Projects'
-          rightButton='Portfolio Page'
-          position='top'
-        />
-        <HomeButtons
-          visibleButton={visibleAbilitiesButton}
-          onButtonClick={this.onButtonClick}
-          leftButton='My Hobbies'
-          rightButton='Coming Soon'
-          position='middle'
-        />
-        <HomeButtons
-          visibleButton={visibleHobbiesButton}
-          onButtonClick={this.onButtonClick}
-          leftButton='My Abilities'
-          rightButton='Comments Page'
-          position='bottom'
-        />
+        <div style={{'marginTop': buttonTopMargin}}>
+          <HomeButtons
+            visibleButton={visibleProjectButton}
+            onButtonClick={this.onButtonClick}
+            leftButton='My Projects'
+            rightButton='Portfolio Page'
+            position='top'
+          />
+          <HomeButtons
+            visibleButton={visibleAbilitiesButton}
+            onButtonClick={this.onButtonClick}
+            leftButton='My Hobbies'
+            rightButton='Coming Soon'
+            position='middle'
+          />
+          <HomeButtons
+            visibleButton={visibleHobbiesButton}
+            onButtonClick={this.onButtonClick}
+            leftButton='My Abilities'
+            rightButton='Comments Page'
+            position='bottom'
+          />
+        </div>
         <ProjectsPage
           visible={visibleProjectsPage}
           ref={(section) => { this.projects = section }}

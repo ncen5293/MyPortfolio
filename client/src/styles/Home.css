@@ -146,7 +146,7 @@
   }
 }
 
-@media only screen and (min-width: 751px) {
+@media only screen and (min-width: 1025px) {
   .left-projects-button {
     position: absolute;
   }
@@ -173,5 +173,35 @@
     vertical-align: middle;
     width: 65%;
     margin-left: 25%;
+  }
+}
+
+@media only screen and (max-width: 1024px) and (min-width: 751px) {
+  .left-projects-button {
+    position: absolute;
+  }
+
+  .bottom-left {
+    margin-top: .1vh;
+  }
+
+  .middle-left {
+    margin-left: -1.5vh;
+  }
+
+  .middle-right {
+    margin-left: 1vh;
+  }
+
+  .right-projects-button {
+    left: 63%;
+    position: relative;
+  }
+
+  .button-row {
+    display: inline-block;
+    vertical-align: middle;
+    width: 65%;
+    margin-left: 20%;
   }
 }
