@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Image, Segment, Header, Transition } from 'semantic-ui-react';
+import { Image, Segment, Header } from 'semantic-ui-react';
 import takeyourtime from '../images/takeyourtime.gif'
 import '../styles/Home.css';
 

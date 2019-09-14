@@ -26,19 +26,19 @@ class CommentsPage extends Component {
   changePage = (type) => {
     if (type === 'My Projects') {
       localStorage.setItem('redirect', 'projects');
-      window.location.replace('/');
+      this.props.history.push('/');
     } else if (type === 'My Hobbies') {
       localStorage.setItem('redirect', 'hobbies');
-      window.location.replace('/');
+      this.props.history.push('/');
     } else if (type === 'My Abilities') {
       localStorage.setItem('redirect', 'abilities');
-      window.location.replace('/');
+      this.props.history.push('/');
     } else if (type === 'Comments Page') {
-      window.location.replace('/comments');
+      this.props.history.push('/comments');
     } else if (type === 'Portfolio Page') {
-      window.location.replace('/');
+      this.props.history.push('/');
     } else if (type === 'Coming Soon') {
-      window.location.replace('/soon');
+      this.props.history.push('/soon');
     } else {
       return false;
     }
