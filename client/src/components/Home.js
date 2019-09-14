@@ -144,11 +144,11 @@ class Home extends Component {
       }
       return true;
     } else if (type === 'Comments Page') {
-      window.location.replace('/comments');
+      this.props.history.push('/comments');
     } else if (type === 'Portfolio Page') {
-      window.location.replace('/');
+      this.props.history.push('/');
     } else if (type === 'Coming Soon') {
-      window.location.replace('/soon');
+      this.props.history.push('/soon');
     } else {
       return false;
     }

@@ -9,7 +9,7 @@ class GamePage extends Component {
       <div className='App-header'>
         <Menu widths={3}>
           <Menu.Item>
-            <Button primary onClick={() => {window.location.replace('/')} }>Home Page</Button>
+            <Button primary onClick={() => {this.props.history.push('/')} }>Home Page</Button>
           </Menu.Item>
           <Menu.Item>
             <h2>
@@ -23,7 +23,7 @@ class GamePage extends Component {
             </h2>
           </Menu.Item>
           <Menu.Item>
-            <Button secondary onClick={() => {window.location.replace('/comments')} }>Comments Page</Button>
+            <Button secondary onClick={() => {this.props.history.push('/comments')} }>Comments Page</Button>
           </Menu.Item>
         </Menu>
         <GameWindow />
