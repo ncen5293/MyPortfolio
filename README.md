@@ -1,2 +1,6 @@
 # MyPortfolio
-To showcase my experience and projects
+To showcase my experience, projects, and hobbies
+
+Deployed @ http://nickycen.herokuapp.com/
+
+Uses React.Js, Node.Js, and MongoDB
