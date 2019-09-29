@@ -41,7 +41,6 @@
   margin-bottom: -3.2vh;
   border-left: 18vh solid #ED4C67;
   border-right: solid #ED4C67;
-  z-index: 0;
 }
 
 .top-right {
@@ -49,43 +48,38 @@
   margin-bottom: -3.2vh;
   border-right: 18vh solid #44bd32;
   border-left: solid #44bd32;
-  z-index: 0;
 }
 
 .top-left:hover {
   cursor: pointer;
   transform: scale3d(1.1, 1.1, 1.1) rotate(19deg);
-  z-index: 999;
 }
 
 .top-right:hover {
   cursor: pointer;
   transform: scale3d(1.1, 1.1, 1.1) rotate(-19deg);
-  z-index: 999;
 }
 
 .middle-left {
   border-left: 18vh solid #1289A7;
   border-right: solid #1289A7;
-  z-index: 1;
+  transform: rotate(0deg);
 }
 
 .middle-right {
   border-right: 18vh solid #182C61;
   border-left: solid #182C61;
-  z-index: 1;
+  transform: rotate(0deg);
 }
 
 .middle-left:hover {
   cursor: pointer;
   transform: scale3d(1.1, 1.1, 1.1);
-  z-index: 999;
 }
 
 .middle-right:hover {
   cursor: pointer;
   transform: scale3d(1.1, 1.1, 1.1);
-  z-index: 999;
 }
 
 .bottom-left {
@@ -93,7 +87,6 @@
   border-right: solid #FFC312;
   transform: rotate(-19deg);
   margin-top: -3.2vh;
-  z-index: 0;
 }
 
 .bottom-right {
@@ -101,19 +94,16 @@
   border-left: solid #B33771;
   transform: rotate(19deg);
   margin-top: -3.2vh;
-  z-index: 0;
 }
 
 .bottom-left:hover {
   cursor: pointer;
   transform: scale3d(1.1, 1.1, 1.1) rotate(-19deg);
-  z-index: 999;
 }
 
 .bottom-right:hover {
   cursor: pointer;
   transform: scale3d(1.1, 1.1, 1.1) rotate(19deg);
-  z-index: 999;
 }
 
 .profile-pic {
