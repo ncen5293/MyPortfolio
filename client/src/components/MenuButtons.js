@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal, Transition } from 'semantic-ui-react';
 import HomeButtons from './HomeButtons';
-import profilepicture from '../images/profilepic2.png';
+import profilepicture from '../images/profilepic2.0.png';
 import '../styles/Home.css';
 
 class MenuButtons extends Component {
