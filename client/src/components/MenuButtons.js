@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal, Transition } from 'semantic-ui-react';
 import HomeButtons from './HomeButtons';
-import profilepicture from '../images/profilepicture.png';
+import profilepicture from '../images/profilepic2.png';
 import '../styles/Home.css';
 
 class MenuButtons extends Component {
@@ -18,30 +18,33 @@ class MenuButtons extends Component {
           onClose={this.props.onMenuToggle}
         >
           <Modal.Content>
-            <div>
               <img src={profilepicture} className='profile-pic' />
-              <HomeButtons
-                visibleButton={this.props.visibleProjectModalButton}
-                onButtonClick={this.props.onButtonClick}
-                leftButton='My Projects'
-                rightButton='Portfolio Page'
-                position='top'
-              />
-              <HomeButtons
-                visibleButton={this.props.visibleAbilitiesModalButton}
-                onButtonClick={this.props.onButtonClick}
-                leftButton='My Hobbies'
-                rightButton='Coming Soon'
-                position='middle'
-              />
-              <HomeButtons
-                visibleButton={this.props.visibleHobbiesModalButton}
-                onButtonClick={this.props.onButtonClick}
-                leftButton='My Abilities'
-                rightButton='Comments Page'
-                position='bottom'
-              />
-            </div>
+              <div className='modal-buttons' >
+                <HomeButtons
+                  visibleButton={this.props.visibleProjectModalButton}
+                  onButtonClick={this.props.onButtonClick}
+                  leftButton='My Projects'
+                  rightButton='Portfolio Page'
+                  position='top'
+                  modal={true}
+                />
+                <HomeButtons
+                  visibleButton={this.props.visibleAbilitiesModalButton}
+                  onButtonClick={this.props.onButtonClick}
+                  leftButton='My Hobbies'
+                  rightButton='Coming Soon'
+                  position='middle'
+                  modal={true}
+                />
+                <HomeButtons
+                  visibleButton={this.props.visibleHobbiesModalButton}
+                  onButtonClick={this.props.onButtonClick}
+                  leftButton='My Abilities'
+                  rightButton='Comments Page'
+                  position='bottom'
+                  modal={true}
+                />
+              </div>
           </Modal.Content>
         </Modal>
       </div>

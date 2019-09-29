@@ -7,8 +7,12 @@ class HomeButtons extends Component {
     const visibleButton = this.props.visibleButton;
     const leftButton = this.props.leftButton;
     const rightButton = this.props.rightButton;
-    const leftButtonStyle = 'left-projects-button ' + this.props.position + '-left';
-    const rightButtonStyle = 'right-projects-button ' + this.props.position + '-right';
+    const position = this.props.position;
+    const leftButtonStyle = 'left-projects-button ' + position + '-left nav-button';
+    let rightButtonStyle = 'right-projects-button ' + position + '-right nav-button';
+    if (this.props.modal) {
+      rightButtonStyle += ' right-modal-button';
+    }
     return (
       <Transition visible={visibleButton} animation='vertical flip' duration={500}>
         <div className='button-row'>
