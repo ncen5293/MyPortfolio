@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Image } from 'semantic-ui-react';
+import { Modal, Image, Card } from 'semantic-ui-react';
 import '../styles/Home.css';
 
 class LikeModal extends Component {
@@ -11,9 +11,7 @@ class LikeModal extends Component {
         closeOnEscape={false}
         closeOnDimmerClick={false}
       >
-        <Modal.Content>
-          <Image src={this.props.likePopup} />
-        </Modal.Content>
+        <Image src={this.props.likePopup} className='like-popup' />
       </Modal>
     )
 

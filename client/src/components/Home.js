@@ -227,28 +227,30 @@ class Home extends Component {
         <Statement
           visible={onePagePortfolio ? onePagePortfolio : visibleProjectButton}
         />
-        <img src={profilepicture} className='profile-pic' />
-        <HomeButtons
-          visibleButton={visibleProjectButton}
-          onButtonClick={this.onButtonClick}
-          leftButton='My Projects'
-          rightButton='Portfolio Page'
-          position='top'
-        />
-        <HomeButtons
-          visibleButton={visibleAbilitiesButton}
-          onButtonClick={this.onButtonClick}
-          leftButton='My Hobbies'
-          rightButton='Coming Soon'
-          position='middle'
-        />
-        <HomeButtons
-          visibleButton={visibleHobbiesButton}
-          onButtonClick={this.onButtonClick}
-          leftButton='My Abilities'
-          rightButton='Comments Page'
-          position='bottom'
-        />
+        <div className='home-buttons'>
+          <img src={profilepicture} className='profile-pic' />
+          <HomeButtons
+            visibleButton={visibleProjectButton}
+            onButtonClick={this.onButtonClick}
+            leftButton='My Projects'
+            rightButton='Portfolio Page'
+            position='top'
+          />
+          <HomeButtons
+            visibleButton={visibleAbilitiesButton}
+            onButtonClick={this.onButtonClick}
+            leftButton='My Hobbies'
+            rightButton='Coming Soon'
+            position='middle'
+          />
+          <HomeButtons
+            visibleButton={visibleHobbiesButton}
+            onButtonClick={this.onButtonClick}
+            leftButton='My Abilities'
+            rightButton='Comments Page'
+            position='bottom'
+          />
+        </div>
         <ProjectsPage
           visible={visibleProjectsPage}
           ref={(section) => { this.projects = section }}

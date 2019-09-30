@@ -124,6 +124,15 @@
   float: right;
 }
 
+.like-popup {
+  position: fixed;
+  margin: auto;
+}
+
+.home-buttons {
+  border-top: 2vh solid #282c34;
+}
+
 @media only screen and (max-width: 750px) {
   .left-projects-button {
     margin-right: 7vh;
