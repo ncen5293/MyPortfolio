@@ -228,7 +228,7 @@ class Home extends Component {
           visible={onePagePortfolio ? onePagePortfolio : visibleProjectButton}
         />
         <div className='home-buttons'>
-          <img src={profilepicture} className='profile-pic' />
+          <img src={profilepicture} alt='profile' className='profile-pic' />
           <HomeButtons
             visibleButton={visibleProjectButton}
             onButtonClick={this.onButtonClick}

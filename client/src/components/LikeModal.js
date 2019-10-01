@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Image, Card } from 'semantic-ui-react';
+import { Modal, Image } from 'semantic-ui-react';
 import '../styles/Home.css';
 
 class LikeModal extends Component {

@@ -97,7 +97,16 @@ class AbilitiesPage extends Component {
             <Statistic.Value>
               Teaching Assistant @ Hunter College
             </Statistic.Value>
-            <Statistic.Label>2017-2019 beginner Python and C++</Statistic.Label>
+            <br/>
+            <Statistic.Label>
+              - Assist ~20 students per class in understanding Python and C++ and basic MIPS, Binary, and hexadecimal concepts
+            </Statistic.Label>
+            <br/>
+            <Statistic.Label>
+              - Taught 10 students problem solving methods to use throughout their computer science courses per lab hour
+            </Statistic.Label>
+            <br/>
+            <Statistic.Label>2017-2019</Statistic.Label>
           </Statistic>
         </Segment>
       </Transition>

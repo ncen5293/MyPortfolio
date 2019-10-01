@@ -18,7 +18,7 @@ class MenuButtons extends Component {
           onClose={this.props.onMenuToggle}
         >
           <Modal.Content>
-              <img src={profilepicture} className='profile-pic' />
+              <img src={profilepicture} alt='profile' className='profile-pic' />
               <div className='modal-buttons' >
                 <HomeButtons
                   visibleButton={this.props.visibleProjectModalButton}

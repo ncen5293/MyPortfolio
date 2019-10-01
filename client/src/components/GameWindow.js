@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import socketIOClient from 'socket.io-client';
 import { Image, Segment, Header } from 'semantic-ui-react';
-import takeyourtime from '../images/takeyourtime.gif'
+import takeyourtime from '../images/takeyourtime.gif';
 import '../styles/Home.css';
 
 class GameWindow extends Component {
@@ -9,6 +10,7 @@ class GameWindow extends Component {
     this.state = {
 
     }
+    this.socket = socketIOClient('http://localhost:8080');
   }
 
   componentDidMount = () => {

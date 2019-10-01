@@ -17,8 +17,15 @@ app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
 
-module.exports = app;
+const io = require('socket.io')(server);
+
+module.exports = {
+  app,
+  io
+};
+
+require('./socket/socket');
