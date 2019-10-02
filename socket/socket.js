@@ -4,9 +4,12 @@ io.on('connection', (socket) => {
   console.log('connected');
 
   socket.on('joinRoom', (roomName) => {
-    console.log(roomName);
+    const rooms = Object.keys(socket.rooms);
+    rooms.forEach((room) => {
+      socket.leave(room);
+    })
     socket.join(roomName, () => {
-      const playerNum = io.sockets.adapter.rooms[roomName].sockets.length;
+      socket.name = 'Player';
       io.in(roomName).emit('joinRoom', io.sockets.adapter.rooms[roomName].sockets);
     })
   });

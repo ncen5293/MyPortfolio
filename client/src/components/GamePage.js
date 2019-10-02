@@ -12,17 +12,21 @@ class GamePage extends Component {
     }
     this.socket = socketIOClient('http://localhost:8080');
 
-    this.socket.on('joinRoom', (message) => {
+    this.socket.on('joinRoom', (players) => {
+      players = Object.keys(players);
       this.setState((prevState) => ({
-        players: prevState.players.concat(message)
+        players
       }));
-      console.log(message);
+      console.log(players);
     });
   }
 
   componentDidMount = () => {
-    const roomName = 'world';
-    this.socket.emit('joinRoom', (roomName));
+    this.socket.emit('joinRoom', ('world'));
+  }
+
+  componentWillUnmount = () => {
+    this.socket.disconnect();
   }
 
   render() {
@@ -49,6 +53,7 @@ class GamePage extends Component {
         </Menu>
         <GameWindow
         />
+        {this.state.players}
       </div>
     )
   }
