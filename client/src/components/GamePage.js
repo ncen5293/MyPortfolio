@@ -1,9 +1,30 @@
 import React, { Component } from 'react';
+import socketIOClient from 'socket.io-client';
 import { Icon, Menu, Button } from 'semantic-ui-react';
 import GameWindow from './GameWindow';
 import '../styles/Home.css';
 
 class GamePage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      players: []
+    }
+    this.socket = socketIOClient('http://localhost:8080');
+
+    this.socket.on('joinRoom', (message) => {
+      this.setState((prevState) => ({
+        players: prevState.players.concat(message)
+      }));
+      console.log(message);
+    });
+  }
+
+  componentDidMount = () => {
+    const roomName = 'world';
+    this.socket.emit('joinRoom', (roomName));
+  }
+
   render() {
     return (
       <div className='App-header'>
@@ -26,7 +47,8 @@ class GamePage extends Component {
             <Button secondary onClick={() => {this.props.history.push('/comments')} }>Comments Page</Button>
           </Menu.Item>
         </Menu>
-        <GameWindow />
+        <GameWindow
+        />
       </div>
     )
   }
