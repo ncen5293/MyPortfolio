@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
 import { Icon, Menu, Button } from 'semantic-ui-react';
 import GameWindow from './GameWindow';
+import CreateNameModal from './CreateNameModal';
 import '../styles/Home.css';
 
 class GamePage extends Component {
@@ -12,8 +13,7 @@ class GamePage extends Component {
     }
     this.socket = socketIOClient('http://localhost:8080');
 
-    this.socket.on('joinRoom', (players) => {
-      players = Object.keys(players);
+    this.socket.on('updateRoom', (players) => {
       this.setState((prevState) => ({
         players
       }));
@@ -22,14 +22,38 @@ class GamePage extends Component {
   }
 
   componentDidMount = () => {
-    this.socket.emit('joinRoom', ('world'));
+    const joinInfo = {
+      screenName: localStorage.getItem('screenName'),
+      roomName: 'world'
+    }
+    this.socket.emit('joinRoom', (joinInfo));
+    // localStorage.removeItem('screenName');
   }
 
   componentWillUnmount = () => {
     this.socket.disconnect();
   }
 
+  onNameModalClose = () => {
+    localStorage.setItem('screenName', this.state.screenName);
+    this.socket.emit('updatePlayerName', localStorage.getItem('screenName'));
+  }
+
+  onSubmitName = () => {
+    this.onNameModalClose();
+  }
+
+  onCancelNameClick = () => {
+    this.props.history.goBack();
+  }
+
+  onNameChange = (event) => {
+    this.setState({screenName: event.target.value});
+    console.log(this.state.screenName);
+  }
+
   render() {
+    const hasSetName = localStorage.getItem('screenName') !== null;
     return (
       <div className='App-header'>
         <Menu widths={3}>
@@ -52,6 +76,14 @@ class GamePage extends Component {
           </Menu.Item>
         </Menu>
         <GameWindow
+        />
+        <CreateNameModal
+          open={!hasSetName}
+          screenName={this.state.screenName}
+          onNameChange={this.onNameChange}
+          onClose={this.onNameModalClose}
+          onSubmitName={this.onSubmitName}
+          onCancelNameClick={this.onCancelNameClick}
         />
         {this.state.players}
       </div>
