@@ -12,7 +12,7 @@ io.on('connection', (socket) => {
 
   const joinCurrentRoom = (roomName, screenName) => {
     socket.join(roomName, () => {
-      if (screenName === undefined) {
+      if (screenName === null || screenName === undefined) {
         socket.name = 'Player';
       } else {
         socket.name = screenName;

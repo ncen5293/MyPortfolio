@@ -9,7 +9,10 @@ class GamePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      players: []
+      players: [],
+      screenName: '',
+      badInfo: false,
+      badDesc: ''
     }
     this.socket = socketIOClient('http://localhost:8080');
 
@@ -27,7 +30,7 @@ class GamePage extends Component {
       roomName: 'world'
     }
     this.socket.emit('joinRoom', (joinInfo));
-    // localStorage.removeItem('screenName');
+    localStorage.removeItem('screenName');
   }
 
   componentWillUnmount = () => {
@@ -35,8 +38,25 @@ class GamePage extends Component {
   }
 
   onNameModalClose = () => {
-    localStorage.setItem('screenName', this.state.screenName);
-    this.socket.emit('updatePlayerName', localStorage.getItem('screenName'));
+    const screenName = this.state.screenName;
+    const players = this.state.players;
+    let nameInUse = false;
+    if (screenName.length >= 3 && screenName.length <= 20) {
+      players.forEach((player) => {
+        console.log(player);
+        if (player === screenName) {
+          nameInUse = true;
+          this.setState({ badInfo: true, badDesc: 'Name is already in use!' });
+        }
+      })
+      if (!nameInUse) {
+        this.setState({ badInfo: false });
+        localStorage.setItem('screenName', screenName);
+        this.socket.emit('updatePlayerName', localStorage.getItem('screenName'));
+      }
+    } else {
+      this.setState({ badInfo: true, badDesc: 'Name needs to be between 3-20 characters!' });
+    }
   }
 
   onSubmitName = () => {
@@ -76,6 +96,7 @@ class GamePage extends Component {
           </Menu.Item>
         </Menu>
         <GameWindow
+          players={this.state.players}
         />
         <CreateNameModal
           open={!hasSetName}
@@ -84,8 +105,9 @@ class GamePage extends Component {
           onClose={this.onNameModalClose}
           onSubmitName={this.onSubmitName}
           onCancelNameClick={this.onCancelNameClick}
+          badInfo={this.state.badInfo}
+          badDesc={this.state.badDesc}
         />
-        {this.state.players}
       </div>
     )
   }
