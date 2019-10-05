@@ -3,6 +3,7 @@ import socketIOClient from 'socket.io-client';
 import { Icon, Menu, Button } from 'semantic-ui-react';
 import GameWindow from './GameWindow';
 import CreateNameModal from './CreateNameModal';
+import PlayerList from './PlayerList';
 import '../styles/Home.css';
 
 class GamePage extends Component {
@@ -30,7 +31,7 @@ class GamePage extends Component {
       roomName: 'world'
     }
     this.socket.emit('joinRoom', (joinInfo));
-    localStorage.removeItem('screenName');
+    // localStorage.removeItem('screenName');
   }
 
   componentWillUnmount = () => {
@@ -95,8 +96,11 @@ class GamePage extends Component {
             <Button secondary onClick={() => {this.props.history.push('/comments')} }>Comments Page</Button>
           </Menu.Item>
         </Menu>
-        <GameWindow
+        <PlayerList
           players={this.state.players}
+        />
+        <GameWindow
+
         />
         <CreateNameModal
           open={!hasSetName}
