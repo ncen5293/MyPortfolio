@@ -31,6 +31,7 @@ class GamePage extends Component {
       this.setState((prevState) => ({
         messages: prevState.messages.concat(message)
       }));
+      this.scrollToBottom();
     })
   }
 
@@ -79,7 +80,6 @@ class GamePage extends Component {
 
   onNameChange = (event) => {
     this.setState({screenName: event.target.value});
-    console.log(this.state.screenName);
   }
 
   toggleChat = (type) => {
@@ -98,8 +98,17 @@ class GamePage extends Component {
   }
 
   chatChange = (event) => {
-    console.log(event.target.value);
-    this.setState({ chatInput: event.target.value});
+    if (event.target.value.length <= 23) {
+      this.setState({ chatInput: event.target.value.toLowerCase()});
+    }
+  }
+
+  scrollToBottom = () => {
+    let scrollElement = document.getElementsByClassName("chat-list");
+    if (scrollElement[0]) {
+      scrollElement[0].scrollTop = scrollElement[0].scrollHeight;
+    }
+
   }
 
   render() {

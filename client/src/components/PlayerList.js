@@ -50,7 +50,7 @@ class PlayerList extends Component {
               <Button onClick={() => this.props.toggleChat('players')}>Players</Button>
             </Button.Group>
           </div>
-          <div className='player-list' >
+          <div className='player-list chat-list' >
             <List divided>
               <List.Item>
                 <List.Icon name='discussions' />

@@ -14,7 +14,7 @@
 
 .player-list {
   height: 87%;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 .chat-input {
