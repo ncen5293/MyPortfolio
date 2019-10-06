@@ -1,10 +1,18 @@
-.player-list {
+.group-box {
   position: fixed;
   float: left;
-  width: 12%;
+  width: 15%;
   height: 80%;
   background-color: white;
   color: black;
   font-size: small;
   overflow: scroll;
+}
+
+.player-list {
+  height: 95%;
+}
+
+.chat-input {
+  height: auto;
 }

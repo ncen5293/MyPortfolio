@@ -13,7 +13,9 @@ class GamePage extends Component {
       players: [],
       screenName: '',
       badInfo: false,
-      badDesc: ''
+      badDesc: '',
+      chatType: 'global',
+      chatInput: ''
     }
     this.socket = socketIOClient('http://localhost:8080');
 
@@ -73,6 +75,19 @@ class GamePage extends Component {
     console.log(this.state.screenName);
   }
 
+  toggleChat = (type) => {
+    this.setState({ chatType: type });
+  }
+
+  chatMessage = (event) => {
+    console.log(event);
+  }
+
+  chatChange = (event) => {
+    console.log(event.target.value);
+    this.setState({ chatInput: event.target.value});
+  }
+
   render() {
     const hasSetName = localStorage.getItem('screenName') !== null;
     return (
@@ -98,6 +113,10 @@ class GamePage extends Component {
         </Menu>
         <PlayerList
           players={this.state.players}
+          toggleChat={this.toggleChat}
+          chatType={this.state.chatType}
+          chatMessage={this.chatMessage}
+          chatChange={this.chatChange}
         />
         <GameWindow
 
