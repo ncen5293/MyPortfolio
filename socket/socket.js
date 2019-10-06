@@ -6,7 +6,9 @@ io.on('connection', (socket) => {
   const leavePreviousRooms = () => {
     const rooms = Object.keys(socket.rooms);
     rooms.forEach((room) => {
-      socket.leave(room);
+      if (room !== 'world') {
+        socket.leave(room);
+      }
     })
   }
 
@@ -41,6 +43,16 @@ io.on('connection', (socket) => {
     socket.name = updatedName;
     const roomName = socket.currentRoom;
     io.in(roomName).emit('updateRoom', getAllPlayers(Object.keys(io.sockets.adapter.rooms[roomName].sockets)));
+  })
+
+  socket.on('chatMessage', (message) => {
+    message.name = socket.name;
+    if (message.where === 'world') {
+      io.in('world').emit('chatMessage', message);
+    } else {
+      const roomName = socket.currentRoom;
+      io.in(roomName).emit('chatMessage', message);
+    }
   })
 
   socket.on('disconnect', () => {

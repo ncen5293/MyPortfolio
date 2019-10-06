@@ -11,6 +11,7 @@ class GamePage extends Component {
     super(props);
     this.state = {
       players: [],
+      messages: [],
       screenName: '',
       badInfo: false,
       badDesc: '',
@@ -25,6 +26,12 @@ class GamePage extends Component {
       }));
       console.log(players);
     });
+
+    this.socket.on('chatMessage', (message) => {
+      this.setState((prevState) => ({
+        messages: prevState.messages.concat(message)
+      }));
+    })
   }
 
   componentDidMount = () => {
@@ -80,7 +87,14 @@ class GamePage extends Component {
   }
 
   chatMessage = (event) => {
-    console.log(event);
+    if (event.key === 'Enter') {
+      const message = {
+        mess: this.state.chatInput,
+        where: 'world'
+      }
+      this.socket.emit('chatMessage', message);
+      this.setState({ chatInput: '' })
+    }
   }
 
   chatChange = (event) => {
@@ -117,6 +131,8 @@ class GamePage extends Component {
           chatType={this.state.chatType}
           chatMessage={this.chatMessage}
           chatChange={this.chatChange}
+          chatInput={this.state.chatInput}
+          messages={this.state.messages}
         />
         <GameWindow
 

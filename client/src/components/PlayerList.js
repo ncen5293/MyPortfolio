@@ -12,36 +12,50 @@ class PlayerList extends Component {
       });
 
       return (
-        <div className='group-box' >
-          <List divided>
-            <List.Item>
+        <div className='group-box'>
+          <div className='list-buttons'>
             <Button.Group basic size='mini'>
               <Button onClick={() => this.props.toggleChat('global')}>Global</Button>
               <Button onClick={() => this.props.toggleChat('players')}>Players</Button>
             </Button.Group>
-            </List.Item>
-            <List.Item>
-              <List.Icon name='users' />
-            </List.Item>
-            {playerList}
-          </List>
-        </div>
-      );
-    } else if (this.props.chatType === 'global') {
-      return (
-        <div className='group-box'>
+          </div>
           <div className='player-list' >
             <List divided>
               <List.Item>
-              <Button.Group basic size='mini'>
-                <Button onClick={() => this.props.toggleChat('global')}>Global</Button>
-                <Button onClick={() => this.props.toggleChat('players')}>Players</Button>
-              </Button.Group>
+                <List.Icon name='users' />
               </List.Item>
+              {playerList}
+            </List>
+          </div>
+          <div className='chat-input'>
+            Users Online: {this.props.players.length}
+          </div>
+        </div>
+      );
+    } else if (this.props.chatType === 'global') {
+      const messageList = this.props.messages.map((message, i) => {
+        return (<List.Item key={i}>
+                  <List.Content>
+                    <List.Header>{message.name}:</List.Header>
+                    {message.mess}
+                  </List.Content>
+                </List.Item>)
+      });
+
+      return (
+        <div className='group-box'>
+          <div className='list-buttons'>
+            <Button.Group basic size='mini'>
+              <Button onClick={() => this.props.toggleChat('global')}>Global</Button>
+              <Button onClick={() => this.props.toggleChat('players')}>Players</Button>
+            </Button.Group>
+          </div>
+          <div className='player-list' >
+            <List divided>
               <List.Item>
                 <List.Icon name='discussions' />
               </List.Item>
-
+              {messageList}
             </List>
           </div>
           <div className='chat-input'>
@@ -52,6 +66,7 @@ class PlayerList extends Component {
               style={{'width': '95%'}}
               onChange={this.props.chatChange}
               onKeyPress={this.props.chatMessage}
+              value={this.props.chatInput}
             />
           </div>
         </div>
