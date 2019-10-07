@@ -16,7 +16,7 @@ class PlayerList extends Component {
           <div className='list-buttons'>
             <Button.Group basic size='mini'>
               <Button onClick={() => this.props.toggleChat('global')}>Global</Button>
-              <Button onClick={() => this.props.toggleChat('players')}>Players</Button>
+              <Button active onClick={() => this.props.toggleChat('players')}>Players</Button>
             </Button.Group>
           </div>
           <div className='player-list' >
@@ -46,7 +46,7 @@ class PlayerList extends Component {
         <div className='group-box'>
           <div className='list-buttons'>
             <Button.Group basic size='mini'>
-              <Button onClick={() => this.props.toggleChat('global')}>Global</Button>
+              <Button active onClick={() => this.props.toggleChat('global')}>Global</Button>
               <Button onClick={() => this.props.toggleChat('players')}>Players</Button>
             </Button.Group>
           </div>

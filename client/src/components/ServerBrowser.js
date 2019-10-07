@@ -13,6 +13,7 @@ class ServerBrowser extends Component {
               <Table.HeaderCell>Lobby Name</Table.HeaderCell>
               <Table.HeaderCell>Type</Table.HeaderCell>
               <Table.HeaderCell>Players</Table.HeaderCell>
+              <Table.HeaderCell></Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 
@@ -30,6 +31,9 @@ class ServerBrowser extends Component {
               <Table.Cell textAlign='right'>
                 1/4
               </Table.Cell>
+              <Table.Cell>
+                Join
+              </Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell>
@@ -43,6 +47,9 @@ class ServerBrowser extends Component {
               </Table.Cell>
               <Table.Cell textAlign='right'>
                 4/10
+              </Table.Cell>
+              <Table.Cell>
+                Join
               </Table.Cell>
             </Table.Row>
           </Table.Body>
