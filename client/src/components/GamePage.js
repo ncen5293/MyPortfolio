@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
 import { Icon, Menu, Button } from 'semantic-ui-react';
-import GameWindow from './GameWindow';
+import ServerBrowser from './ServerBrowser';
 import CreateNameModal from './CreateNameModal';
 import PlayerList from './PlayerList';
 import '../styles/Home.css';
@@ -82,6 +82,12 @@ class GamePage extends Component {
     this.setState({screenName: event.target.value});
   }
 
+  onNameSubmit = (event) => {
+    if (event.key === 'Enter') {
+      this.onNameModalClose();
+    }
+  }
+
   toggleChat = (type) => {
     this.setState({ chatType: type });
   }
@@ -143,13 +149,14 @@ class GamePage extends Component {
           chatInput={this.state.chatInput}
           messages={this.state.messages}
         />
-        <GameWindow
+        <ServerBrowser
 
         />
         <CreateNameModal
           open={!hasSetName}
           screenName={this.state.screenName}
           onNameChange={this.onNameChange}
+          onNameSubmit={this.onNameSubmit}
           onClose={this.onNameModalClose}
           onSubmitName={this.onSubmitName}
           onCancelNameClick={this.onCancelNameClick}

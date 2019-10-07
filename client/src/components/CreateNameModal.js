@@ -21,6 +21,7 @@ class CreateNameModal extends Component {
             placeholder='Screen Name'
             style={{'width': '100%'}}
             onChange={this.props.onNameChange}
+            onKeyPress={this.props.onNameSubmit}
           />
         </Modal.Content>
         <Modal.Actions>
