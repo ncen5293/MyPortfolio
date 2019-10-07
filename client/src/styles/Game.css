@@ -1,22 +1,42 @@
 .group-box {
-  position: fixed;
-  float: right;
-  width: 15%;
-  height: 80%;
   background-color: white;
   color: black;
-  font-size: small;
-}
-
-.list-buttons {
-  height: 7%;
+  position: fixed;
 }
 
 .player-list {
-  height: 87%;
   overflow-y: scroll;
+  width: 100%;
 }
 
 .chat-input {
   height: auto;
+}
+
+@media only screen and (min-width: 1025px) {
+  .group-box {
+    float: right;
+    width: 15%;
+    height: 80%;
+    font-size: small;
+  }
+
+  .list-buttons {
+    height: 7%;
+  }
+
+  .player-list {
+    height: 87%;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .group-box {
+    height: 50%;
+    width: 100%;
+  }
+
+  .player-list {
+    height: 75%;
+  }
 }

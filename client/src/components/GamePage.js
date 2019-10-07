@@ -98,7 +98,7 @@ class GamePage extends Component {
   }
 
   chatChange = (event) => {
-    if (event.target.value.length <= 23) {
+    if (event.target.value.length < 20) {
       this.setState({ chatInput: event.target.value.toLowerCase()});
     }
   }
