@@ -4,7 +4,7 @@ import { Icon, Menu, Button } from 'semantic-ui-react';
 import ServerBrowser from './ServerBrowser';
 import CreateNameModal from './CreateNameModal';
 import PlayerList from './PlayerList';
-import '../styles/Home.css';
+import '../styles/Game.css';
 
 class GamePage extends Component {
   constructor(props) {
@@ -120,7 +120,7 @@ class GamePage extends Component {
   render() {
     const hasSetName = localStorage.getItem('screenName') !== null;
     return (
-      <div className='App-header'>
+      <div className='App-header browser-page'>
         <Menu widths={3}>
           <Menu.Item>
             <Button primary onClick={() => {this.props.history.push('/')} }>Home Page</Button>
@@ -140,6 +140,9 @@ class GamePage extends Component {
             <Button secondary onClick={() => {this.props.history.push('/comments')} }>Comments Page</Button>
           </Menu.Item>
         </Menu>
+        <ServerBrowser
+
+        />
         <PlayerList
           players={this.state.players}
           toggleChat={this.toggleChat}
@@ -148,9 +151,6 @@ class GamePage extends Component {
           chatChange={this.chatChange}
           chatInput={this.state.chatInput}
           messages={this.state.messages}
-        />
-        <ServerBrowser
-
         />
         <CreateNameModal
           open={!hasSetName}

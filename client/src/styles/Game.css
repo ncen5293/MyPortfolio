@@ -1,7 +1,6 @@
 .group-box {
   background-color: white;
   color: black;
-  position: fixed;
 }
 
 .player-list {
@@ -15,8 +14,10 @@
 
 @media only screen and (min-width: 1025px) {
   .group-box {
+    margin-left: 1%;
     width: 15%;
     height: 80%;
+    position: fixed;
     font-size: small;
   }
 
