@@ -36,7 +36,7 @@ class PlayerList extends Component {
       const messageList = this.props.messages.map((message, i) => {
         return (<List.Item key={i}>
                   <List.Content>
-                    <List.Header>{message.name}:</List.Header>
+                    <List.Header>{message.name} ({message.time}) :</List.Header>
                     {message.mess}
                   </List.Content>
                 </List.Item>)

@@ -33,6 +33,13 @@ io.on('connection', (socket) => {
     return playerNames;
   }
 
+  const toTwoDigitString = (number) => {
+    if (number < 10) {
+      number = '0' + number.toString();
+    }
+    return number;
+  }
+
   socket.on('joinRoom', (joinInfo) => {
     console.log(joinInfo)
     leavePreviousRooms();
@@ -46,7 +53,12 @@ io.on('connection', (socket) => {
   })
 
   socket.on('chatMessage', (message) => {
+    const date = new Date();
+    const min = toTwoDigitString(date.getMinutes());
+    const sec = toTwoDigitString(date.getSeconds());
+    const time = `${date.getHours()}:${min}:${sec}`;
     message.name = socket.name;
+    message.time = time;
     if (message.where === 'world') {
       io.in('world').emit('chatMessage', message);
     } else {
