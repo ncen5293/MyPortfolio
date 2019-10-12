@@ -115,7 +115,10 @@ class GamePage extends Component {
     if (scrollElement[0]) {
       scrollElement[0].scrollTop = scrollElement[0].scrollHeight;
     }
+  }
 
+  joinLobby = (lobbyId) => {
+    this.socket.emit('joinLobby', lobbyId);
   }
 
   render() {
@@ -143,6 +146,7 @@ class GamePage extends Component {
         </Menu>
         <ServerBrowser
           lobbyList={this.state.lobbyList}
+          joinLobby={this.joinLobby}
         />
         <PlayerList
           players={this.state.players}

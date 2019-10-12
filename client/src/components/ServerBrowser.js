@@ -24,7 +24,9 @@ class ServerBrowser extends Component {
             {lobby.playerCount}/{lobby.lobbySize}
           </Table.Cell>
           <Table.Cell>
-            <Button />
+            <Button onClick={() => this.props.joinLobby(lobby.id)}>
+              Join
+            </Button>
           </Table.Cell>
         </Table.Row>
       )
@@ -71,11 +73,13 @@ class ServerBrowser extends Component {
               <Table.Cell>
                 Something
               </Table.Cell>
-              <Table.Cell textAlign='right'>
+              <Table.Cell>
                 1/4
               </Table.Cell>
               <Table.Cell>
-                Join
+                <Button>
+                  Join
+                </Button>
               </Table.Cell>
             </Table.Row>
             <Table.Row>
@@ -88,11 +92,13 @@ class ServerBrowser extends Component {
               <Table.Cell>
                 Tabletop
               </Table.Cell>
-              <Table.Cell textAlign='right'>
+              <Table.Cell>
                 4/10
               </Table.Cell>
               <Table.Cell>
-                Join
+                <Button>
+                  Join
+                </Button>
               </Table.Cell>
             </Table.Row>
             {lobbies}
