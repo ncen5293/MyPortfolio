@@ -17,7 +17,9 @@ class GamePage extends Component {
       badInfo: false,
       badDesc: '',
       chatType: 'global',
-      chatInput: ''
+      chatInput: '',
+      hideFullLobbies: false,
+      filterInput: ''
     }
     this.socket = socketIOClient('http://localhost:8080');
 
@@ -121,6 +123,22 @@ class GamePage extends Component {
     this.socket.emit('joinLobby', lobbyId);
   }
 
+  onLobbiesCheckChange = () => {
+    this.setState((prevState) => ({
+      hideFullLobbies: !prevState.hideFullLobbies
+    }));
+  }
+
+  onFilterKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      this.setState({ filterInput: '' })
+    }
+  }
+
+  onFilterChange = (event) => {
+    this.setState({ filterInput: event.target.value});
+  }
+
   render() {
     const hasSetName = localStorage.getItem('screenName') !== null;
     return (
@@ -147,6 +165,11 @@ class GamePage extends Component {
         <ServerBrowser
           lobbyList={this.state.lobbyList}
           joinLobby={this.joinLobby}
+          hideFullLobbies={this.state.hideFullLobbies}
+          onLobbiesCheckChange={this.onLobbiesCheckChange}
+          filterInput={this.state.filterInput}
+          onFilterKeyPress={this.onFilterKeyPress}
+          onFilterChange={this.onFilterChange}
         />
         <PlayerList
           players={this.state.players}
