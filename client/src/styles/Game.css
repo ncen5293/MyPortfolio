@@ -46,6 +46,16 @@
   }
 
   .player-list {
-    height: 75%;
+    height: 25vh;
+  }
+
+  .chat-input {
+    font-size: small;
+  }
+
+  .server-list {
+    height: 50vh;
+    background-color: white;
+    overflow-y: scroll;
   }
 }

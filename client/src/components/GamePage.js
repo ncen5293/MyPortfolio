@@ -12,6 +12,7 @@ class GamePage extends Component {
     this.state = {
       players: [],
       messages: [],
+      lobbyList: [],
       screenName: '',
       badInfo: false,
       badDesc: '',
@@ -141,7 +142,7 @@ class GamePage extends Component {
           </Menu.Item>
         </Menu>
         <ServerBrowser
-
+          lobbyList={this.state.lobbyList}
         />
         <PlayerList
           players={this.state.players}

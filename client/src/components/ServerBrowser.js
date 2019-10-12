@@ -1,9 +1,52 @@
 import React, { Component } from 'react';
-import { Header, Table } from 'semantic-ui-react';
+import { Header, Table, Icon, Button } from 'semantic-ui-react';
 import '../styles/Game.css';
 
 class ServerBrowser extends Component {
   render() {
+    const lobbies = this.props.lobbyList.map((lobby, i) => {
+      let locked = 'lock open';
+      if (lobby.isLocked) {
+        locked = 'lock';
+      }
+      return (
+        <Table.Row>
+          <Table.Cell>
+            <Header as='h2' textAlign='center'>
+              <Icon name={locked} />
+            </Header>
+          </Table.Cell>
+          <Table.Cell>{lobby.name}</Table.Cell>
+          <Table.Cell>
+            {lobby.type}
+          </Table.Cell>
+          <Table.Cell textAlign='right'>
+            {lobby.playerCount}/{lobby.lobbySize}
+          </Table.Cell>
+          <Table.Cell>
+            <Button />
+          </Table.Cell>
+        </Table.Row>
+      )
+    });
+    const rowTest = <Table.Row>
+      <Table.Cell>
+        <Header as='h2' textAlign='center'>
+          A
+        </Header>
+      </Table.Cell>
+      <Table.Cell singleLine>Lobby 1</Table.Cell>
+      <Table.Cell>
+        Something
+      </Table.Cell>
+      <Table.Cell textAlign='right'>
+        1/4
+      </Table.Cell>
+      <Table.Cell>
+        Join
+      </Table.Cell>
+    </Table.Row>;
+
     return (
       <div className='server-list'>
         <Table celled padded>
@@ -52,6 +95,7 @@ class ServerBrowser extends Component {
                 Join
               </Table.Cell>
             </Table.Row>
+            {lobbies}
           </Table.Body>
         </Table>
       </div>
