@@ -19,7 +19,10 @@ class GamePage extends Component {
       chatType: 'global',
       chatInput: '',
       hideFullLobbies: false,
-      filterInput: ''
+      filterInput: '',
+      isCreateLobbyOpen: false,
+      lobbyPassword: '',
+      lobbyName: ''
     }
     this.socket = socketIOClient('http://localhost:8080');
 
@@ -137,6 +140,25 @@ class GamePage extends Component {
     this.setState({ filterInput: event.target.value});
   }
 
+  onSubmitLobby = (event) => {
+    console.log(this.state.lobbyName, this.state.lobbyPassword);
+    this.onLobbyCreateToggle();
+  }
+
+  onLobbyCreateToggle = (event) => {
+    this.setState((prevState) => ({
+      isCreateLobbyOpen: !prevState.isCreateLobbyOpen
+    }));
+  }
+
+  onPasswordChange = (event) => {
+    this.setState({ lobbyPassword: event.target.value});
+  }
+
+  onLobbyNameChange = (event) => {
+    this.setState({ lobbyName: event.target.value});
+  }
+
   render() {
     const hasSetName = localStorage.getItem('screenName') !== null;
     return (
@@ -168,6 +190,11 @@ class GamePage extends Component {
           filterInput={this.state.filterInput}
           onFilterKeyPress={this.onFilterKeyPress}
           onFilterChange={this.onFilterChange}
+          isCreateLobbyOpen={this.state.isCreateLobbyOpen}
+          onSubmitLobby={this.onSubmitLobby}
+          onLobbyCreateToggle={this.onLobbyCreateToggle}
+          onPasswordChange={this.onPasswordChange}
+          onLobbyNameChange={this.onLobbyNameChange}
         />
         <PlayerList
           players={this.state.players}

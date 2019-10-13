@@ -50,12 +50,12 @@
   }
 
   .server-filter {
-    height: 45px;
+    height: 60px;
     font-size: medium;
   }
 
   .server-list {
-    height: calc(100% - 45px);
+    height: calc(100% - 60px);
   }
 }
 
@@ -79,10 +79,10 @@
   }
 
   .server-filter {
-    height: 45px;
+    height: 60px;
   }
 
   .server-list {
-    height: calc(100% - 45px);
+    height: calc(100% - 60px);
   }
 }

@@ -29,11 +29,16 @@ class ServerBrowser extends Component {
     return (
       <div className='server-browser'>
         <ServerListFilter
-          checked={this.props.hideFullLobbies}
+          hideFullLobbies={this.props.hideFullLobbies}
           onLobbiesCheckChange={this.props.onLobbiesCheckChange}
           filterInput={this.props.filterInput}
           onFilterChange={this.props.onFilterChange}
           onFilterKeyPress={this.props.onFilterKeyPress}
+          onLobbyNameChange={this.props.onLobbyNameChange}
+          onPasswordChange={this.props.onPasswordChange}
+          onLobbyCreateToggle={this.props.onLobbyCreateToggle}
+          onSubmitLobby={this.props.onSubmitLobby}
+          isCreateLobbyOpen={this.props.isCreateLobbyOpen}
         />
         <ServerList
           rowTest={rowTest}
