@@ -20,6 +20,10 @@
   background-color: silver;
 }
 
+.chat-list {
+  text-align: center;
+}
+
 @media only screen and (min-width: 1025px) {
   .group-box {
     margin-left: 1%;
@@ -71,6 +75,7 @@
 
   .server-browser {
     height: 45vh;
+    margin-bottom: 5px;
   }
 
   .server-filter {

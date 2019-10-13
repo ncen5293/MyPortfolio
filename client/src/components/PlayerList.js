@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Button, Input } from 'semantic-ui-react';
+import { List, Segment, Comment, Header, Icon, Button, Input } from 'semantic-ui-react';
 import '../styles/Game.css';
 
 class PlayerList extends Component {
@@ -34,12 +34,20 @@ class PlayerList extends Component {
       );
     } else if (this.props.chatType === 'global') {
       const messageList = this.props.messages.map((message, i) => {
-        return (<List.Item key={i}>
-                  <List.Content>
-                    <List.Header>{message.name} ({message.time}) :</List.Header>
-                    {message.mess}
-                  </List.Content>
-                </List.Item>)
+        return (<Comment key={i}>
+                  <Comment.Content>
+                    <Comment.Author>
+                      {message.name}
+                      <Comment.Metadata>
+                        <div>{message.time}</div>
+                      </Comment.Metadata>
+                    </Comment.Author>
+
+                    <Comment.Text>
+                      {message.mess}
+                    </Comment.Text>
+                  </Comment.Content>
+                </Comment>)
       });
 
       return (
@@ -51,12 +59,10 @@ class PlayerList extends Component {
             </Button.Group>
           </div>
           <div className='player-list chat-list' >
-            <List divided>
-              <List.Item>
-                <List.Icon name='discussions' />
-              </List.Item>
+            <Comment.Group style={{'maxWidth': '100%'}}>
+              <Icon name='discussions' circular />
               {messageList}
-            </List>
+            </Comment.Group>
           </div>
           <div className='chat-input'>
             <Input
