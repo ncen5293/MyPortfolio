@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Menu, Icon, Checkbox, Sticky } from 'semantic-ui-react';
 import MenuButtons from './MenuButtons';
-import '../styles/Game.css';
 
 class NavBar extends Component {
   render() {

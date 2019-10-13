@@ -8,18 +8,18 @@ class Lobby extends Component {
     return (
       <Table.Row>
         <Table.Cell>
-          <Header as='h2' textAlign='center'>
+          <Header textAlign='center'>
             <Icon name={this.props.locked} />
           </Header>
         </Table.Cell>
-        <Table.Cell>{lobby.name}</Table.Cell>
-        <Table.Cell>
+        <Table.Cell textAlign='center'>{lobby.name}</Table.Cell>
+        <Table.Cell textAlign='center'>
           {lobby.type}
         </Table.Cell>
-        <Table.Cell textAlign='right'>
+        <Table.Cell textAlign='center'>
           {lobby.playerCount}/{lobby.lobbySize}
         </Table.Cell>
-        <Table.Cell>
+        <Table.Cell textAlign='center'>
           <Button onClick={() => this.props.joinLobby(lobby.id)}>
             Join
           </Button>

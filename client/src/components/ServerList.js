@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Table, Header, Icon, Button } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
 import Lobby from './Lobby';
 import '../styles/Game.css';
 
@@ -20,7 +20,30 @@ class ServerList extends Component {
     });
     return (
       <div className='server-list'>
-        {lobbies}
+        <Table celled padded size='small'>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell width={1}></Table.HeaderCell>
+              <Table.HeaderCell textAlign='center'>Name</Table.HeaderCell>
+              <Table.HeaderCell width={2} textAlign='center'>Type</Table.HeaderCell>
+              <Table.HeaderCell width={2} textAlign='center'>Players</Table.HeaderCell>
+              <Table.HeaderCell width={2}></Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          {lobbies}
+          {rowTest}
+          {rowTest}
+          {rowTest}
+          {rowTest}
+          {rowTest}
+          {rowTest}
+          {rowTest}
+          {rowTest}
+          {rowTest}
+          {rowTest}
+          {rowTest}
+          {rowTest}
+        </Table>
       </div>
     )
   }

@@ -6,18 +6,25 @@ import '../styles/Game.css';
 
 class ServerBrowser extends Component {
   render() {
-    const rowTest = <Card raised>
-      <Card.Content>
-        <Card.Header>Name</Card.Header>
-        <Card.Meta>type</Card.Meta>
-        <Card.Description>
-          stuff
-        </Card.Description>
-      </Card.Content>
-      <Card.Content extra>
-        <Button>Join</Button>
-      </Card.Content>
-    </Card>;
+    const rowTest = <Table.Row>
+      <Table.Cell>
+        <Header textAlign='center'>
+          <Icon name='lock open' />
+        </Header>
+      </Table.Cell>
+      <Table.Cell textAlign='center'>name</Table.Cell>
+      <Table.Cell textAlign='center'>
+        type
+      </Table.Cell>
+      <Table.Cell textAlign='center'>
+        1/4
+      </Table.Cell>
+      <Table.Cell textAlign='center'>
+        <Button>
+          Join
+        </Button>
+      </Table.Cell>
+    </Table.Row>;
 
     return (
       <div className='server-browser'>
