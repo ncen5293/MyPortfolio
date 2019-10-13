@@ -7,6 +7,7 @@ import ProjectsPage from './ProjectsPage';
 import HobbiesPage from './HobbiesPage';
 import MenuButtons from './MenuButtons';
 import Statement from './Statement';
+import NavBar from './NavBar';
 import profilepicture from '../images/profilepic2.0.png';
 import '../styles/Home.css';
 
@@ -193,37 +194,18 @@ class Home extends Component {
     const visibleMenu = onePagePortfolio ? onePagePortfolio : this.state.visibleMenu;
     return (
       <div className='App-header'>
-        <Menu widths={3}>
-          <Menu.Item>
-            <MenuButtons
-              visibleMenu={visibleMenu}
-              onMenuToggle={this.onMenuToggle}
-              open={this.state.isMenuOpen}
-              visibleProjectModalButton={visibleProjectModalButton}
-              visibleAbilitiesModalButton={visibleAbilitiesModalButton}
-              visibleHobbiesModalButton={visibleHobbiesModalButton}
-              onButtonClick={this.onMenuButtonClick}
-            />
-          </Menu.Item>
-          <Menu.Item>
-            <h2>
-              Nicky Cen
-              <a href='https://www.linkedin.com/in/nicky-cen/'>
-                <Icon link name='linkedin' />
-              </a>
-              <a href='https://github.com/ncen5293'>
-                <Icon link name='github' />
-              </a>
-            </h2>
-          </Menu.Item>
-          <Menu.Item>
-            <Checkbox
-              checked={onePagePortfolio}
-              label='On One Page'
-              onChange={this.handlePageChange}
-            />
-          </Menu.Item>
-        </Menu>
+        <NavBar
+          visibleMenu={visibleMenu}
+          onMenuToggle={this.onMenuToggle}
+          isMenuOpen={this.state.isMenuOpen}
+          visibleProjectModalButton={visibleProjectModalButton}
+          visibleAbilitiesModalButton={visibleAbilitiesModalButton}
+          visibleHobbiesModalButton={visibleHobbiesModalButton}
+          onMenuButtonClick={this.onMenuButtonClick}
+          onePagePortfolio={onePagePortfolio}
+          handlePageChange={this.handlePageChange}
+          page='home'
+        />
         <Statement
           visible={onePagePortfolio ? onePagePortfolio : visibleProjectButton}
         />

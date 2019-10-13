@@ -4,7 +4,7 @@ import '../styles/Game.css';
 
 class Lobby extends Component {
   render() {
-    const lobby=this.props.lobby;
+    const lobby = this.props.lobby;
     return (
       <Table.Row>
         <Table.Cell>

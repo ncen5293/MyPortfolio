@@ -20,9 +20,7 @@ class ServerList extends Component {
     });
     return (
       <div className='server-list'>
-        <Card.Group itemsPerRow={3}>
-
-        </Card.Group>
+        {lobbies}
       </div>
     )
   }

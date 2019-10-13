@@ -5,6 +5,7 @@ import MenuButtons from './MenuButtons';
 import Statement from './Statement';
 import CommentForm from './CommentForm';
 import Comments from './Comments';
+import NavBar from './NavBar';
 import '../styles/Home.css';
 
 class CommentsPage extends Component {
@@ -102,33 +103,16 @@ class CommentsPage extends Component {
     const comments = this.state.comments;
     return (
       <div className='App-header'>
-        <Menu widths={3}>
-          <Menu.Item>
-            <MenuButtons
-              visibleMenu={visibleMenu}
-              onMenuToggle={this.onMenuToggle}
-              open={this.state.isMenuOpen}
-              visibleProjectModalButton={visibleProjectModalButton}
-              visibleAbilitiesModalButton={visibleAbilitiesModalButton}
-              visibleHobbiesModalButton={visibleHobbiesModalButton}
-              onButtonClick={this.onMenuButtonClick}
-            />
-          </Menu.Item>
-          <Menu.Item>
-            <h2>
-              Nicky Cen
-              <a href='https://www.linkedin.com/in/nicky-cen/'>
-                <Icon link name='linkedin' />
-              </a>
-              <a href='https://github.com/ncen5293'>
-                <Icon link name='github' />
-              </a>
-            </h2>
-          </Menu.Item>
-          <Menu.Item>
-            <span>Comments Page</span>
-          </Menu.Item>
-        </Menu>
+        <NavBar
+          visibleMenu={visibleMenu}
+          onMenuToggle={this.onMenuToggle}
+          isMenuOpen={this.state.isMenuOpen}
+          visibleProjectModalButton={visibleProjectModalButton}
+          visibleAbilitiesModalButton={visibleAbilitiesModalButton}
+          visibleHobbiesModalButton={visibleHobbiesModalButton}
+          onMenuButtonClick={this.onMenuButtonClick}
+          page='comments'
+        />
         <Statement
           visible={true}
         />
