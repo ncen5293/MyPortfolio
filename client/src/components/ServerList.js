@@ -8,7 +8,7 @@ class ServerList extends Component {
     const rowTest = this.props.rowTest;
     const lobbies = this.props.lobbyList.map((lobby, i) => {
       let locked = 'lock open';
-      if (lobby.isLocked) {
+      if (lobby.password.length > 0) {
         locked = 'lock';
       }
       return (
@@ -25,8 +25,8 @@ class ServerList extends Component {
             <Table.Row>
               <Table.HeaderCell width={1}></Table.HeaderCell>
               <Table.HeaderCell textAlign='center'>Name</Table.HeaderCell>
-              <Table.HeaderCell width={2} textAlign='center'>Type</Table.HeaderCell>
-              <Table.HeaderCell width={2} textAlign='center'>Players</Table.HeaderCell>
+              <Table.HeaderCell width={2} textAlign='center'>Host</Table.HeaderCell>
+              <Table.HeaderCell width={2} textAlign='center'>Users</Table.HeaderCell>
               <Table.HeaderCell width={2}></Table.HeaderCell>
             </Table.Row>
           </Table.Header>

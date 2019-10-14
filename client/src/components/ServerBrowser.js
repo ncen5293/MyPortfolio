@@ -14,10 +14,10 @@ class ServerBrowser extends Component {
       </Table.Cell>
       <Table.Cell textAlign='center'>name</Table.Cell>
       <Table.Cell textAlign='center'>
-        type
+        joker
       </Table.Cell>
       <Table.Cell textAlign='center'>
-        1/4
+        1
       </Table.Cell>
       <Table.Cell textAlign='center'>
         <Button>

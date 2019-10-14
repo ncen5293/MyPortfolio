@@ -14,13 +14,13 @@ class Lobby extends Component {
         </Table.Cell>
         <Table.Cell textAlign='center'>{lobby.name}</Table.Cell>
         <Table.Cell textAlign='center'>
-          {lobby.type}
+          {lobby.host}
         </Table.Cell>
         <Table.Cell textAlign='center'>
-          {lobby.playerCount}/{lobby.lobbySize}
+          {lobby.users.length}
         </Table.Cell>
         <Table.Cell textAlign='center'>
-          <Button onClick={() => this.props.joinLobby(lobby.id)}>
+          <Button onClick={() => this.props.joinLobby(lobby)}>
             Join
           </Button>
         </Table.Cell>

@@ -1,4 +1,6 @@
 const { io } = require('../server');
+const mongoose = require("mongoose");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/socket");
 
 io.on('connection', (socket) => {
   console.log('connected');

@@ -95,7 +95,10 @@ class GamePage extends Component {
   }
 
   toggleChat = (type) => {
-    this.setState({ chatType: type });
+    this.setState(
+      { chatType: type },
+      this.scrollToBottom()
+    );
   }
 
   chatMessage = (event) => {
@@ -120,8 +123,8 @@ class GamePage extends Component {
     }
   }
 
-  joinLobby = (lobbyId) => {
-    this.socket.emit('joinLobby', lobbyId);
+  joinLobby = (lobbyInfo) => {
+    this.socket.emit('joinLobby', lobbyInfo);
   }
 
   onLobbiesCheckChange = () => {
@@ -142,6 +145,12 @@ class GamePage extends Component {
 
   onSubmitLobby = (event) => {
     console.log(this.state.lobbyName, this.state.lobbyPassword);
+    const lobbyInfo = {
+      name: this.state.lobbyName,
+      password: this.state.lobbyPassword,
+      host: localStorage.getItem('screenName')
+    }
+    this.socket.emit('CreateLobby', lobbyInfo);
     this.onLobbyCreateToggle();
   }
 
