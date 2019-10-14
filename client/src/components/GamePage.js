@@ -95,10 +95,10 @@ class GamePage extends Component {
   }
 
   toggleChat = (type) => {
-    this.setState(
-      { chatType: type },
-      this.scrollToBottom()
-    );
+    this.setState({ chatType: type });
+    setTimeout(() => {
+        this.scrollToBottom()
+    }, 0)
   }
 
   chatMessage = (event) => {
@@ -150,7 +150,7 @@ class GamePage extends Component {
       password: this.state.lobbyPassword,
       host: localStorage.getItem('screenName')
     }
-    this.socket.emit('CreateLobby', lobbyInfo);
+    this.socket.emit('createLobby', lobbyInfo);
     this.onLobbyCreateToggle();
   }
 

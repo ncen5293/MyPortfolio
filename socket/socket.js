@@ -1,9 +1,11 @@
 const { io } = require('../server');
-const mongoose = require("mongoose");
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/socket");
+const { router, connection, LobbyModel } = require("../routes/lobbies");
 
 io.on('connection', (socket) => {
   console.log('connected');
+  connection.then((db) => {
+    console.log('lobby server')
+  })
 
   const leavePreviousRooms = () => {
     const rooms = Object.keys(socket.rooms);
@@ -52,7 +54,7 @@ io.on('connection', (socket) => {
     socket.name = updatedName;
     const roomName = socket.currentRoom;
     io.in(roomName).emit('updateRoom', getAllPlayers(Object.keys(io.sockets.adapter.rooms[roomName].sockets)));
-  })
+  });
 
   socket.on('chatMessage', (message) => {
     const date = new Date();
@@ -67,10 +69,20 @@ io.on('connection', (socket) => {
       const roomName = socket.currentRoom;
       io.in(roomName).emit('chatMessage', message);
     }
-  })
+  });
+
+  socket.on('joinLobby', (lobbyInfo) => {
+    // router.route("/socket").put((req, res) => {
+    //
+    // })
+  });
+
+  socket.on('createLobby', (lobbyInfo) => {
+
+  });
 
   socket.on('disconnect', () => {
     delete socket.currentRoom;
     console.log('disconnected');
-  })
+  });
 })

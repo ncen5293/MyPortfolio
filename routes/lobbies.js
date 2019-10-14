@@ -8,7 +8,7 @@ router.get("/", function(req, res, next) {
     res.send(databaseConnection);
 });
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/socket");
+const connection = mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/socket", { useNewUrlParser: true  });
 const database = mongoose.connection;
 
 const Schema = mongoose.Schema;
@@ -96,4 +96,8 @@ database.once("open", () => {
     databaseConnection = "Connected to Database";
 });
 
-module.exports = router;
+module.exports = {
+  router,
+  connection,
+  LobbyModel
+};
