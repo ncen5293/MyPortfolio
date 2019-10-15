@@ -26,11 +26,11 @@ const LobbyModel = mongoose.model('lobby', LobbySchema);
 
 router.put("/lobbys", (req,res) => {
   console.log(req.body);
-  if (req.body.users.length === 0) {
+  if (req.body.lobbyInfo.users.length === 0) {
     LobbyModel.findOneAndDelete(
       {
-        "Name": req.body.name,
-        "Host": req.body.Host
+        "Name": req.body.lobbyInfo.name,
+        "Host": req.body.lobbyInfo.host
       },
       (err, lobby) => {
         if (err) {
@@ -42,10 +42,10 @@ router.put("/lobbys", (req,res) => {
   } else {
     LobbyModel.findOneAndUpdate(
       {
-        "Name": req.body.name,
-        "Host": req.body.host
+        "Name": req.body.lobbyInfo.name,
+        "Host": req.body.lobbyInfo.host
       },
-      { "Users": req.body.users },
+      { "Users": req.body.lobbyInfo.users },
       { new: true },
       (err, lobby) => {
         if (err) {
@@ -54,10 +54,10 @@ router.put("/lobbys", (req,res) => {
         if (!lobby) {
           console.log('creating new lobby');
           let newLobby = {
-            Name: req.body.name,
-            Password: req.body.password,
-            Host: req.query.host,
-            Users: req.body.users
+            Name: req.body.lobbyInfo.name,
+            Password: req.body.lobbyInfo.password,
+            Host: req.query.lobbyInfo.host,
+            Users: req.body.lobbyInfo.users
           };
           newLobby._id = mongoose.Types.ObjectId();
           let newLobbyModel = new LobbyModel(newLobby);
@@ -96,8 +96,4 @@ database.once("open", () => {
     databaseConnection = "Connected to Database";
 });
 
-module.exports = {
-  router,
-  connection,
-  LobbyModel
-};
+module.exports = router;

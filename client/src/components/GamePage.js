@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
 import { Icon, Menu, Button } from 'semantic-ui-react';
+import axios from 'axios';
 import ServerBrowser from './ServerBrowser';
 import CreateNameModal from './CreateNameModal';
 import PlayerList from './PlayerList';
@@ -41,12 +42,24 @@ class GamePage extends Component {
     })
   }
 
+  getLobbies = async () => {
+    await axios.get('/lobbys/lobby')
+      .then(res => {
+        console.log(res.data);
+        this.setState({ lobbyList: res.data.lobbies });
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
+
   componentDidMount = () => {
     const joinInfo = {
       screenName: localStorage.getItem('screenName'),
       roomName: 'world'
     }
     this.socket.emit('joinRoom', (joinInfo));
+    this.getLobbies();
     // localStorage.removeItem('screenName');
   }
 
@@ -124,7 +137,14 @@ class GamePage extends Component {
   }
 
   joinLobby = (lobbyInfo) => {
-    this.socket.emit('joinLobby', lobbyInfo);
+    axios.put('/lobbys/lobby',
+      { lobbyInfo })
+      .then(res => {
+        //join lobby
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   onLobbiesCheckChange = () => {
@@ -143,6 +163,17 @@ class GamePage extends Component {
     this.setState({ filterInput: event.target.value});
   }
 
+  createLobby = (lobbyInfo) => {
+    axios.put('/lobbys/lobby',
+      { lobbyInfo })
+      .then(res => {
+        //join lobby
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
+
   onSubmitLobby = (event) => {
     console.log(this.state.lobbyName, this.state.lobbyPassword);
     const lobbyInfo = {
@@ -150,7 +181,7 @@ class GamePage extends Component {
       password: this.state.lobbyPassword,
       host: localStorage.getItem('screenName')
     }
-    this.socket.emit('createLobby', lobbyInfo);
+    this.createLobby(lobbyInfo);
     this.onLobbyCreateToggle();
   }
 

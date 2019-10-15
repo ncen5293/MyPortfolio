@@ -1,11 +1,11 @@
 const { io } = require('../server');
-const { router, connection, LobbyModel } = require("../routes/lobbies");
+// const { router, connection, LobbyModel } = require("../routes/lobbies");
 
 io.on('connection', (socket) => {
   console.log('connected');
-  connection.then((db) => {
-    console.log('lobby server')
-  })
+  // connection.then((db) => {
+  //   console.log('lobby server')
+  // })
 
   const leavePreviousRooms = () => {
     const rooms = Object.keys(socket.rooms);
