@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react';
-import Lobby from './Lobby';
+import LobbyColumn from './LobbyColumn';
 import '../styles/Game.css';
 
 class ServerList extends Component {
@@ -11,7 +11,7 @@ class ServerList extends Component {
         locked = 'lock';
       }
       return (
-        <Lobby
+        <LobbyColumn
           locked={locked}
           lobby={lobby}
         />
