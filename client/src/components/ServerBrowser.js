@@ -6,26 +6,6 @@ import '../styles/Game.css';
 
 class ServerBrowser extends Component {
   render() {
-    const rowTest = <Table.Row>
-      <Table.Cell>
-        <Header textAlign='center'>
-          <Icon name='lock open' />
-        </Header>
-      </Table.Cell>
-      <Table.Cell textAlign='center'>name</Table.Cell>
-      <Table.Cell textAlign='center'>
-        joker
-      </Table.Cell>
-      <Table.Cell textAlign='center'>
-        1
-      </Table.Cell>
-      <Table.Cell textAlign='center'>
-        <Button>
-          Join
-        </Button>
-      </Table.Cell>
-    </Table.Row>;
-
     return (
       <div className='server-browser'>
         <ServerListFilter
@@ -41,7 +21,6 @@ class ServerBrowser extends Component {
           isCreateLobbyOpen={this.props.isCreateLobbyOpen}
         />
         <ServerList
-          rowTest={rowTest}
           lobbyList={this.props.lobbyList}
         />
       </div>

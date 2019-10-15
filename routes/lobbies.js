@@ -24,13 +24,14 @@ const LobbySchema = new Schema({
 
 const LobbyModel = mongoose.model('lobby', LobbySchema);
 
-router.put("/lobbys", (req,res) => {
+router.put("/lobby", (req,res) => {
   console.log(req.body);
   if (req.body.lobbyInfo.users.length === 0) {
     LobbyModel.findOneAndDelete(
       {
         "Name": req.body.lobbyInfo.name,
-        "Host": req.body.lobbyInfo.host
+        "Host": req.body.lobbyInfo.host,
+        "_id": req.body.lobbyInfo._id
       },
       (err, lobby) => {
         if (err) {
@@ -55,11 +56,12 @@ router.put("/lobbys", (req,res) => {
           console.log('creating new lobby');
           let newLobby = {
             Name: req.body.lobbyInfo.name,
-            Password: req.body.lobbyInfo.password,
-            Host: req.query.lobbyInfo.host,
+            Password: req.body.lobbyInfo.password ? req.body.lobbyInfo.password : '',
+            Host: req.body.lobbyInfo.host,
             Users: req.body.lobbyInfo.users
           };
           newLobby._id = mongoose.Types.ObjectId();
+          console.log(newLobby);
           let newLobbyModel = new LobbyModel(newLobby);
           newLobbyModel.save((err) => {
             if (err) {
@@ -74,14 +76,14 @@ router.put("/lobbys", (req,res) => {
   }
 })
 
-router.get("/lobbys", (req,res) => {
+router.get("/lobby", (req,res) => {
   console.log(req.query);
   LobbyModel.find({},
     (err, lobbies) => {
       if (err) {
         return handleError(err);
       }
-      res.send(lobbies);
+      res.send({ lobbies });
   });
 })
 

@@ -43,7 +43,7 @@ class GamePage extends Component {
   }
 
   getLobbies = async () => {
-    await axios.get('/lobbys/lobby')
+    await axios.get('http://localhost:8080/lobbys/lobby')
       .then(res => {
         console.log(res.data);
         this.setState({ lobbyList: res.data.lobbies });
@@ -137,8 +137,7 @@ class GamePage extends Component {
   }
 
   joinLobby = (lobbyInfo) => {
-    axios.put('/lobbys/lobby',
-      { lobbyInfo })
+    axios.put('http://localhost:8080/lobbys/lobby', { lobbyInfo })
       .then(res => {
         //join lobby
       })
@@ -164,10 +163,9 @@ class GamePage extends Component {
   }
 
   createLobby = (lobbyInfo) => {
-    axios.put('/lobbys/lobby',
-      { lobbyInfo })
+    axios.put('http://localhost:8080/lobbys/lobby', { lobbyInfo })
       .then(res => {
-        //join lobby
+        console.log('created lobby');
       })
       .catch(error => {
         console.error(error)
@@ -179,7 +177,8 @@ class GamePage extends Component {
     const lobbyInfo = {
       name: this.state.lobbyName,
       password: this.state.lobbyPassword,
-      host: localStorage.getItem('screenName')
+      host: localStorage.getItem('screenName'),
+      users: [localStorage.getItem('screenName')]
     }
     this.createLobby(lobbyInfo);
     this.onLobbyCreateToggle();

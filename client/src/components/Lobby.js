@@ -5,6 +5,7 @@ import '../styles/Game.css';
 class Lobby extends Component {
   render() {
     const lobby = this.props.lobby;
+    console.log(lobby);
     return (
       <Table.Row>
         <Table.Cell>
@@ -12,12 +13,12 @@ class Lobby extends Component {
             <Icon name={this.props.locked} />
           </Header>
         </Table.Cell>
-        <Table.Cell textAlign='center'>{lobby.name}</Table.Cell>
+        <Table.Cell textAlign='center'>{lobby.Name}</Table.Cell>
         <Table.Cell textAlign='center'>
-          {lobby.host}
+          {lobby.Host}
         </Table.Cell>
         <Table.Cell textAlign='center'>
-          {lobby.users.length}
+          {lobby.Users.length}
         </Table.Cell>
         <Table.Cell textAlign='center'>
           <Button onClick={() => this.props.joinLobby(lobby)}>

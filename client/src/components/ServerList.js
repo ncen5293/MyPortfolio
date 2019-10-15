@@ -5,10 +5,9 @@ import '../styles/Game.css';
 
 class ServerList extends Component {
   render() {
-    const rowTest = this.props.rowTest;
     const lobbies = this.props.lobbyList.map((lobby, i) => {
       let locked = 'lock open';
-      if (lobby.password.length > 0) {
+      if (lobby.Password.length > 0) {
         locked = 'lock';
       }
       return (
@@ -31,18 +30,6 @@ class ServerList extends Component {
             </Table.Row>
           </Table.Header>
           {lobbies}
-          {rowTest}
-          {rowTest}
-          {rowTest}
-          {rowTest}
-          {rowTest}
-          {rowTest}
-          {rowTest}
-          {rowTest}
-          {rowTest}
-          {rowTest}
-          {rowTest}
-          {rowTest}
         </Table>
       </div>
     )
