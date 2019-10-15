@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Icon } from 'semantic-ui-react';
 import axios from 'axios';
-import MenuButtons from './MenuButtons';
 import Statement from './Statement';
 import CommentForm from './CommentForm';
 import Comments from './Comments';

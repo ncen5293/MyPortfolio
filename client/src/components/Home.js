@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { Menu, Checkbox, Icon } from 'semantic-ui-react';
 import scrollToComponent from 'react-scroll-to-component';
 import HomeButtons from './HomeButtons';
 import AbilitiesPage from './AbilitiesPage';
 import ProjectsPage from './ProjectsPage';
 import HobbiesPage from './HobbiesPage';
-import MenuButtons from './MenuButtons';
 import Statement from './Statement';
 import NavBar from './NavBar';
 import profilepicture from '../images/profilepic2.0.png';

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Header, Table, Icon, Button, Card } from 'semantic-ui-react';
 import ServerListFilter from './ServerListFilter';
 import ServerList from './ServerList';
 import '../styles/Game.css';
