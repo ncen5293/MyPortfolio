@@ -165,6 +165,7 @@ class GamePage extends Component {
   createLobby = (lobbyInfo) => {
     axios.post('http://localhost:8080/lobbys/lobby', { lobbyInfo })
       .then(res => {
+        localStorage.setItem('reason', 'createLobby');
         this.props.history.push(`/watch/${res.data.newLobby.RoomId}`);
       })
       .catch(error => {
@@ -178,7 +179,7 @@ class GamePage extends Component {
       name: this.state.lobbyName,
       password: this.state.lobbyPassword,
       host: localStorage.getItem('screenName'),
-      users: [localStorage.getItem('screenName')]
+      users: localStorage.getItem('screenName')
     }
     this.createLobby(lobbyInfo);
   }

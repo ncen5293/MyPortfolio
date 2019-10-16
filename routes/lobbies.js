@@ -16,11 +16,7 @@ const ObjectId = Schema.ObjectId;
 
 const LobbySchema = new Schema({
   _id: ObjectId,
-  RoomId: {
-    type: Number,
-    required: true,
-    unique: true,
-  },
+  RoomId: Number,
   Name: String,
   Password: String,
   Host: String,
@@ -36,7 +32,7 @@ router.post("/lobby", (req,res) => {
     Name: req.body.lobbyInfo.name,
     Password: req.body.lobbyInfo.password,
     Host: req.body.lobbyInfo.host,
-    Users: req.body.lobbyInfo.users
+    Users: [req.body.lobbyInfo.users]
   };
   console.log(newLobby);
   LobbyModel.findOne(
@@ -56,41 +52,51 @@ router.post("/lobby", (req,res) => {
       });
       res.send({ newLobby });
   });
-
 })
 
 router.put("/lobby", (req,res) => {
   console.log(req.body);
-  if (req.body.lobbyInfo.users.length === 0) {
-    LobbyModel.findOneAndDelete(
-      {
-        "Name": req.body.lobbyInfo.Name,
-        "Host": req.body.lobbyInfo.Host,
-        "RoomId": req.body.lobbyInfo.RoomId
-      },
-      (err, lobby) => {
-        if (err) {
-          console.log(err);
-        }
-        res.send({ exists: false });
+  LobbyModel.findOne({ "RoomId": req.body.roomId },
+    (err, lobby) => {
+      if (err) {
+        console.log(err);
       }
-    )
-  } else {
-    LobbyModel.findOneAndUpdate(
-      { "RoomId": req.body.lobbyInfo.RoomId },
-      { "Users": req.body.lobbyInfo.Users },
-      { new: true },
-      (err, lobby) => {
-        if (err) {
-          console.log(err);
-        }
-        if (!lobby) {
-          res.send({ exists: false });
+      if (!lobby) {
+        res.send({ exists: false });
+      } else {
+        if (req.body.reason === 'join') {
+          lobby.Users.push(req.body.user);
         } else {
-          res.send({ exists: true });
+          for (let i=0; i< lobby.Users.length; i++) {
+            if (lobby.Users[i] === req.body.user) {
+              lobby.Users.splice(i, 1);
+            }
+          }
         }
-    });
-  }
+        console.log(lobby);
+        lobby.save((err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.send({ exists: true, lobby });
+      }
+  });
+})
+
+router.delete("/lobby", (req,res) => {
+  LobbyModel.findOneAndDelete(
+    {
+      "RoomId": req.query.roomId
+    },
+    (err, lobby) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(lobby);
+      res.send({ exists: false });
+    }
+  )
 })
 
 router.get("/lobby", (req,res) => {
