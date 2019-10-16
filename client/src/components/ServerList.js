@@ -18,6 +18,7 @@ class ServerList extends Component {
             locked={locked}
             lobby={lobby}
             joinLobby={this.props.joinLobby}
+            key={i}
           />
         )
       } else {
@@ -36,7 +37,9 @@ class ServerList extends Component {
               <Table.HeaderCell width={2}></Table.HeaderCell>
             </Table.Row>
           </Table.Header>
-          {lobbies}
+          <Table.Body>
+            {lobbies}
+          </Table.Body>
         </Table>
       </div>
     )

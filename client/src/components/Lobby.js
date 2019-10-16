@@ -5,6 +5,12 @@ import axios from 'axios';
 import '../styles/Game.css';
 
 class Lobby extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      lobby: {}
+    }
+  }
 
   componentDidMount = () => {
     console.log(this.props.match.params.roomId);
@@ -15,7 +21,7 @@ class Lobby extends Component {
     axios.get('http://localhost:8080/lobbys/lobby', {params: { roomId: this.props.match.params.roomId }})
       .then(res => {
         console.log(res.data);
-        this.setState({ lobbyList: res.data.lobbies });
+        this.setState({ lobby: res.data.lobby });
       })
       .catch(error => {
         console.error(error)

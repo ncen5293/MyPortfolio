@@ -163,9 +163,9 @@ class GamePage extends Component {
   }
 
   createLobby = (lobbyInfo) => {
-    axios.put('http://localhost:8080/lobbys/lobby', { lobbyInfo })
+    axios.post('http://localhost:8080/lobbys/lobby', { lobbyInfo })
       .then(res => {
-        console.log('created lobby');
+        this.props.history.push(`/watch/${res.data.newLobby.RoomId}`);
       })
       .catch(error => {
         console.error(error)
@@ -181,7 +181,6 @@ class GamePage extends Component {
       users: [localStorage.getItem('screenName')]
     }
     this.createLobby(lobbyInfo);
-    this.onLobbyCreateToggle();
   }
 
   onLobbyCreateToggle = (event) => {
@@ -199,7 +198,7 @@ class GamePage extends Component {
   }
 
   joinLobby = (roomInfo) => {
-    this.props.history.push(`/watch/${roomInfo._id}`);
+    this.props.history.push(`/watch/${roomInfo.RoomId}`);
   }
 
   render() {
