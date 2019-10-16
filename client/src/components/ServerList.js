@@ -6,16 +6,23 @@ import '../styles/Game.css';
 class ServerList extends Component {
   render() {
     const lobbies = this.props.lobbyList.map((lobby, i) => {
-      let locked = 'lock open';
-      if (lobby.Password.length > 0) {
-        locked = 'lock';
+      var regex = RegExp(this.props.filterInput);
+      console.log(regex.test(lobby.Name))
+      if (regex.test(lobby.Name)) {
+        let locked = 'lock open';
+        if (lobby.Password.length > 0) {
+          locked = 'lock';
+        }
+        return (
+          <LobbyColumn
+            locked={locked}
+            lobby={lobby}
+            joinLobby={this.props.joinLobby}
+          />
+        )
+      } else {
+        return ''
       }
-      return (
-        <LobbyColumn
-          locked={locked}
-          lobby={lobby}
-        />
-      )
     });
     return (
       <div className='server-list'>

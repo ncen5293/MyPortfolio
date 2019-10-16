@@ -42,10 +42,7 @@ router.put("/lobby", (req,res) => {
     )
   } else {
     LobbyModel.findOneAndUpdate(
-      {
-        "Name": req.body.lobbyInfo.name,
-        "Host": req.body.lobbyInfo.host
-      },
+      { "_id": req.body.lobbyInfo._id },
       { "Users": req.body.lobbyInfo.users },
       { new: true },
       (err, lobby) => {
@@ -78,13 +75,24 @@ router.put("/lobby", (req,res) => {
 
 router.get("/lobby", (req,res) => {
   console.log(req.query);
-  LobbyModel.find({},
-    (err, lobbies) => {
-      if (err) {
-        return handleError(err);
-      }
-      res.send({ lobbies });
-  });
+  const roomId = req.query.roomId;
+  if (roomId.length > 0) {
+    LobbyModel.findOne({ "_id": req.query.roomId },
+      (err, lobbies) => {
+        if (err) {
+          return handleError(err);
+        }
+        res.send({ lobbies });
+    });
+  } else {
+    LobbyModel.find({},
+      (err, lobbies) => {
+        if (err) {
+          return handleError(err);
+        }
+        res.send({ lobbies });
+    });
+  }
 })
 
 database.on("error", error => {

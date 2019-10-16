@@ -43,7 +43,7 @@ class GamePage extends Component {
   }
 
   getLobbies = async () => {
-    await axios.get('http://localhost:8080/lobbys/lobby')
+    await axios.get('http://localhost:8080/lobbys/lobby', {params: { roomId: '' }})
       .then(res => {
         console.log(res.data);
         this.setState({ lobbyList: res.data.lobbies });
@@ -198,6 +198,10 @@ class GamePage extends Component {
     this.setState({ lobbyName: event.target.value});
   }
 
+  joinLobby = (roomInfo) => {
+    this.props.history.push(`/watch/${roomInfo._id}`);
+  }
+
   render() {
     const hasSetName = localStorage.getItem('screenName') !== null;
     return (
@@ -234,6 +238,7 @@ class GamePage extends Component {
           onLobbyCreateToggle={this.onLobbyCreateToggle}
           onPasswordChange={this.onPasswordChange}
           onLobbyNameChange={this.onLobbyNameChange}
+          joinLobby={this.joinLobby}
         />
         <PlayerList
           players={this.state.players}

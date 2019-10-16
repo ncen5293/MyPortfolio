@@ -83,7 +83,9 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     const roomName = socket.currentRoom;
-    io.in(roomName).emit('updateRoom', getAllPlayers(Object.keys(io.sockets.adapter.rooms[roomName].sockets)));
+    if (io.sockets.adapter.rooms[roomName] != undefined) {
+      io.in(roomName).emit('updateRoom', getAllPlayers(Object.keys(io.sockets.adapter.rooms[roomName].sockets)));
+    }
     delete socket.currentRoom;
     console.log('disconnected');
   });

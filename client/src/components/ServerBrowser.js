@@ -21,6 +21,9 @@ class ServerBrowser extends Component {
         />
         <ServerList
           lobbyList={this.props.lobbyList}
+          hideFullLobbies={this.props.hideFullLobbies}
+          filterInput={this.props.filterInput}
+          joinLobby={this.props.joinLobby}
         />
       </div>
     )
