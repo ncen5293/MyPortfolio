@@ -4,6 +4,11 @@ import '../styles/Game.css';
 
 class PlayerList extends Component {
   render() {
+    const inLobby = this.props.inLobby;
+    let lobbyChatButton = '';
+    if (inLobby) {
+      lobbyChatButton = <Button onClick={() => this.props.toggleChat('chat')}>Chat</Button>;
+    }
     if (this.props.chatType === 'players') {
       const playerList = this.props.players.map((player, i) => {
         return (<List.Item key={i}>
@@ -15,6 +20,7 @@ class PlayerList extends Component {
         <div className='group-box'>
           <div className='list-buttons'>
             <Button.Group basic size='mini'>
+              {lobbyChatButton}
               <Button onClick={() => this.props.toggleChat('global')}>Global</Button>
               <Button active onClick={() => this.props.toggleChat('players')}>Players</Button>
             </Button.Group>
@@ -54,7 +60,55 @@ class PlayerList extends Component {
         <div className='group-box'>
           <div className='list-buttons'>
             <Button.Group basic size='mini'>
+              {lobbyChatButton}
               <Button active onClick={() => this.props.toggleChat('global')}>Global</Button>
+              <Button onClick={() => this.props.toggleChat('players')}>Players</Button>
+            </Button.Group>
+          </div>
+          <div className='player-list chat-list' >
+            <Comment.Group style={{'maxWidth': '100%'}}>
+              <Icon name='discussions' circular />
+              {messageList}
+            </Comment.Group>
+          </div>
+          <div className='chat-input'>
+            <Input
+              size='mini'
+              icon='chat'
+              placeholder='Chat'
+              style={{'width': '95%'}}
+              onChange={this.props.chatChange}
+              onKeyPress={this.props.chatMessage}
+              value={this.props.chatInput}
+            />
+          </div>
+        </div>
+      );
+    } else {
+      lobbyChatButton = <Button active onClick={() => this.props.toggleChat('chat')}>Chat</Button>;
+      const messageList = this.props.messages.map((message, i) => {
+        return (<Comment key={i}>
+                  <Comment.Content>
+                    <Comment.Author>
+                      {message.name}
+                      <Comment.Metadata>
+                        <div>{message.time}</div>
+                      </Comment.Metadata>
+                    </Comment.Author>
+
+                    <Comment.Text>
+                      {message.mess}
+                    </Comment.Text>
+                  </Comment.Content>
+                </Comment>)
+      });
+
+      return (
+        <div className='group-box'>
+          <div className='list-buttons'>
+            <Button.Group basic size='mini'>
+              {lobbyChatButton}
+              <Button onClick={() => this.props.toggleChat('global')}>Global</Button>
               <Button onClick={() => this.props.toggleChat('players')}>Players</Button>
             </Button.Group>
           </div>

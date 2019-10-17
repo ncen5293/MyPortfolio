@@ -24,15 +24,18 @@ io.on('connection', (socket) => {
         socket.name = screenName;
       }
       socket.currentRoom = roomName;
+      console.log(roomName, 'wtf');
+      console.log(io.sockets.adapter.rooms, 'wtf');
       io.in(roomName).emit('updateRoom', getAllPlayers(Object.keys(io.sockets.adapter.rooms[roomName].sockets)));
     })
   }
 
   const getAllPlayers = (playerIds) => {
     let playerNames = [];
-    playerIds.forEach((playerId, i) => {
-      playerNames.push(io.sockets.connected[playerId].name);
-    });
+    // playerIds.forEach((playerId, i) => {
+    //   playerNames.push(io.sockets.connected[playerId].name);
+    // });
+    playerNames = playerIds.map((playerId, i) => io.sockets.connected[playerId].name);
 
     return playerNames;
   }
@@ -45,7 +48,7 @@ io.on('connection', (socket) => {
   }
 
   socket.on('joinRoom', (joinInfo) => {
-    console.log(joinInfo)
+    console.log(joinInfo, 'wtf');
     leavePreviousRooms();
     joinCurrentRoom(joinInfo.roomName, joinInfo.screenName);
   });

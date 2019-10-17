@@ -248,6 +248,7 @@ class GamePage extends Component {
           chatChange={this.chatChange}
           chatInput={this.state.chatInput}
           messages={this.state.messages}
+          inLobby={false}
         />
         <CreateNameModal
           open={!hasSetName}
