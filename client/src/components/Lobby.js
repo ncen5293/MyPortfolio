@@ -17,13 +17,13 @@ class Lobby extends Component {
       localMessages: []
     }
 
-    if (window.performance) {
-      if (performance.navigation.type == 1) {
-        alert( "This page is reloaded" );
-      } else {
-        alert( "This page is not reloaded");
-      }
-    }
+    // if (window.performance) {
+    //   if (performance.navigation.type == 1) {
+    //     alert( "This page is reloaded" );
+    //   } else {
+    //     alert( "This page is not reloaded");
+    //   }
+    // }
 
     this.socket = socketIOClient('http://localhost:8080');
 

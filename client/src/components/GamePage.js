@@ -59,7 +59,7 @@ class GamePage extends Component {
       roomName: 'world'
     }
     this.socket.emit('joinRoom', (joinInfo));
-    this.getLobbies();
+    window.setTimeout(() => {this.getLobbies();}, 10);
     // localStorage.removeItem('screenName');
   }
 
