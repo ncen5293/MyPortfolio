@@ -65,6 +65,9 @@ class GamePage extends Component {
 
   componentWillUnmount = () => {
     this.socket.disconnect();
+    this.setState((prevState) => ({
+      lobbyList: []
+    }));
   }
 
   onNameModalClose = () => {
@@ -136,16 +139,6 @@ class GamePage extends Component {
     }
   }
 
-  joinLobby = (lobbyInfo) => {
-    axios.put('http://localhost:8080/lobbys/lobby', { lobbyInfo })
-      .then(res => {
-        //join lobby
-      })
-      .catch(error => {
-        console.error(error)
-      })
-  }
-
   onLobbiesCheckChange = () => {
     this.setState((prevState) => ({
       hideFullLobbies: !prevState.hideFullLobbies
@@ -199,6 +192,7 @@ class GamePage extends Component {
   }
 
   joinLobby = (roomInfo) => {
+    localStorage.setItem('reason', 'joinLobby');
     this.props.history.push(`/watch/${roomInfo.RoomId}`);
   }
 
@@ -227,7 +221,6 @@ class GamePage extends Component {
         </Menu>
         <ServerBrowser
           lobbyList={this.state.lobbyList}
-          joinLobby={this.joinLobby}
           hideFullLobbies={this.state.hideFullLobbies}
           onLobbiesCheckChange={this.onLobbiesCheckChange}
           filterInput={this.state.filterInput}

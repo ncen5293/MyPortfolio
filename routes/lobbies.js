@@ -108,7 +108,11 @@ router.get("/lobby", (req,res) => {
         if (err) {
           console.log(err);
         }
-        res.send({ lobby });
+        if (!lobby) {
+          res.send({ lobby, exists: false });
+        } else {
+          res.send({ lobby, exists: true });
+        }
     });
   } else {
     LobbyModel.find({},

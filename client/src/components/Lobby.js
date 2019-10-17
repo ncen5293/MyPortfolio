@@ -17,6 +17,14 @@ class Lobby extends Component {
       localMessages: []
     }
 
+    if (window.performance) {
+      if (performance.navigation.type == 1) {
+        alert( "This page is reloaded" );
+      } else {
+        alert( "This page is not reloaded");
+      }
+    }
+
     this.socket = socketIOClient('http://localhost:8080');
 
     this.socket.on('updateRoom', (players) => {
@@ -48,47 +56,48 @@ class Lobby extends Component {
   }
 
   componentDidMount = () => {
-    this.joinChatLobby();
-    if (localStorage.getItem('reason') === 'createLobby') {
+    if (localStorage.getItem('reason') === 'joinLobby') {
+      console.log('joining');
+      this.joinLobby();
+    } else {
       console.log('hosting');
       localStorage.removeItem('reason');
       this.getLobbyInfo();
-    } else {
-      console.log('joining');
-      this.joinLobby();
     }
   }
 
   componentWillUnmount = () => {
-    // this.socket.disconnect();
+    this.socket.disconnect();
     this.leaveLobby();
   }
 
   leaveLobby = () => {
     const roomId = this.props.match.params.roomId;
-    if (this.state.lobby.Users.length === 1) {
-      axios.delete('http://localhost:8080/lobbys/lobby', {params: { roomId }})
-        .then(res => {
-          //join lobby
-          console.log(res);
-        })
-        .catch(error => {
-          console.error(error)
-        })
-    } else {
-      axios.put('http://localhost:8080/lobbys/lobby',
-        {
-          roomId,
-          user: localStorage.getItem('screenName'),
-          reason: 'disconnect'
-        })
-        .then(res => {
-          //join lobby
-          console.log(res);
-        })
-        .catch(error => {
-          console.error(error)
-        })
+    if (Object.entries(this.state.lobby).length !== 0) {
+      if (this.state.lobby.Users.length === 1) {
+        axios.delete('http://localhost:8080/lobbys/lobby', {params: { roomId }})
+          .then(res => {
+            //join lobby
+            console.log(res);
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      } else {
+        axios.put('http://localhost:8080/lobbys/lobby',
+          {
+            roomId,
+            user: localStorage.getItem('screenName'),
+            reason: 'disconnect'
+          })
+          .then(res => {
+            //join lobby
+            console.log(res);
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      }
     }
   }
 
@@ -115,7 +124,12 @@ class Lobby extends Component {
       .then(res => {
         //join lobby
         console.log(res.data);
-        this.setState({ lobby: res.data.lobby });
+        if (res.data.exists) {
+          this.joinChatLobby();
+          this.setState({ lobby: res.data.lobby });
+        } else {
+          this.props.history.goBack();
+        }
       })
       .catch(error => {
         console.error(error)
@@ -126,7 +140,12 @@ class Lobby extends Component {
     axios.get('http://localhost:8080/lobbys/lobby', {params: { roomId: this.props.match.params.roomId }})
       .then(res => {
         console.log(res.data);
-        this.setState({ lobby: res.data.lobby });
+        if (res.data.exists) {
+          this.joinChatLobby();
+          this.setState({ lobby: res.data.lobby });
+        } else {
+          this.props.history.goBack();
+        }
       })
       .catch(error => {
         console.error(error)
