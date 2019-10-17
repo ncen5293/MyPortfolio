@@ -36,7 +36,7 @@ class CommentsPage extends Component {
       this.props.history.push('/comments');
     } else if (type === 'Portfolio Page') {
       this.props.history.push('/');
-    } else if (type === 'Coming Soon') {
+    } else if (type === 'Chat (W.I.P)') {
       this.props.history.push('/soon');
     } else {
       return false;
