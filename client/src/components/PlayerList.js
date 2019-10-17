@@ -86,7 +86,7 @@ class PlayerList extends Component {
       );
     } else {
       lobbyChatButton = <Button active onClick={() => this.props.toggleChat('chat')}>Chat</Button>;
-      const messageList = this.props.messages.map((message, i) => {
+      const messageList = this.props.localMessages.map((message, i) => {
         return (<Comment key={i}>
                   <Comment.Content>
                     <Comment.Author>

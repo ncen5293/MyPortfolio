@@ -27,9 +27,15 @@ class Lobby extends Component {
     });
 
     this.socket.on('chatMessage', (message) => {
-      this.setState((prevState) => ({
-        messages: prevState.messages.concat(message)
-      }));
+      if (message.where === 'world') {
+        this.setState((prevState) => ({
+          messages: prevState.messages.concat(message)
+        }));
+      } else {
+        this.setState((prevState) => ({
+          localMessages: prevState.localMessages.concat(message)
+        }));
+      }
       this.scrollToBottom();
     })
   }
