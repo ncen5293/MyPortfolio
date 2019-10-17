@@ -220,7 +220,7 @@ class Home extends Component {
             visibleButton={visibleAbilitiesButton}
             onButtonClick={this.onButtonClick}
             leftButton='My Hobbies'
-            rightButton='Coming Soon'
+            rightButton='Chat (W.I.P)'
             position='middle'
           />
           <HomeButtons

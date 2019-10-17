@@ -25,7 +25,7 @@ class GamePage extends Component {
       lobbyPassword: '',
       lobbyName: ''
     }
-    this.socket = socketIOClient('http://localhost:8080');
+    this.socket = socketIOClient();
 
     this.socket.on('updateRoom', (players) => {
       this.setState((prevState) => ({
@@ -59,7 +59,9 @@ class GamePage extends Component {
       roomName: 'world'
     }
     this.socket.emit('joinRoom', (joinInfo));
-    window.setTimeout(() => {this.getLobbies();}, 10);
+    window.setTimeout(() => {
+      this.getLobbies();
+    }, 10);
     // localStorage.removeItem('screenName');
   }
 
