@@ -8,7 +8,7 @@
   "author": "Nicky Cen <nickycen74@gmail.com>",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "heroku-postbuild": "cd client && npm install && npm audit fix && npm run build"
   },
   "dependencies": {

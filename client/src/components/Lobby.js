@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
-import { Icon, Menu, Button } from 'semantic-ui-react';
+import { Icon, Menu, Button, Input } from 'semantic-ui-react';
 import axios from 'axios';
 import PlayerList from './PlayerList';
+import Searchbar from './Searchbar';
 import '../styles/Game.css';
 
 class Lobby extends Component {
@@ -14,7 +15,9 @@ class Lobby extends Component {
       chatType: 'global',
       chatInput: '',
       messages: [],
-      localMessages: []
+      localMessages: [],
+      searchValue: '',
+      videoIds: ''
     }
 
     // if (window.performance) {
@@ -46,6 +49,10 @@ class Lobby extends Component {
       }
       this.scrollToBottom();
     })
+
+    this.socket.on('getYoutubeData', (searchValue) => {
+      this.getYoutubeData(searchValue)
+    })
   }
 
   scrollToBottom = () => {
@@ -67,18 +74,24 @@ class Lobby extends Component {
     this.getYoutubeData();
   }
 
-  getYoutubeData = () => {
+  getYoutubeData = (searchValue) => {
     const KEY = 'AIzaSyD2yIRUZp5tQxt8o06cIRuGgKTJbNksNjA';
     axios.get('https://www.googleapis.com/youtube/v3/search', {
       params: {
-          q: 'jojo',
+          q: searchValue,
           part: 'snippet',
-          maxResults: 5,
+          maxResults: 1,
           key: KEY
       }
     })
     .then(res => {
-      console.log(res);
+      if (res.data.items[0]) {
+        this.setState((prevState) => ({
+          videoIds: prevState.videoIds.concat(res.data.items[0].id.videoId)
+        }));
+        console.log(res.data.items[0]);
+      }
+
     })
   }
 
@@ -194,9 +207,44 @@ class Lobby extends Component {
     this.setState({ chatInput: event.target.value});
   }
 
+  onSearchChange = (event) => {
+    this.setState({ searchValue: event.target.value});
+  }
+
+  onSearchKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      const searchValue = this.state.searchValue;
+      this.socket.emit('getYoutubeData', searchValue);
+      this.setState({ searchValue: '' });
+    }
+  }
+
   render() {
     return (
       <div>
+        <Menu widths={3}>
+          <Menu.Item>
+            <Button primary onClick={() => {this.props.history.push('/soon')} }>Leave</Button>
+          </Menu.Item>
+          <Menu.Item>
+            <h2>
+              Nicky Cen
+              <a href='https://www.linkedin.com/in/nicky-cen/'>
+                <Icon link name='linkedin' />
+              </a>
+              <a href='https://github.com/ncen5293'>
+                <Icon link name='github' />
+              </a>
+            </h2>
+          </Menu.Item>
+          <Menu.Item>
+            <Searchbar
+              onChange={this.onSearchChange}
+              onKeyPress={this.onSearchKeyPress}
+              value={this.state.searchValue}
+            />
+          </Menu.Item>
+        </Menu>
         <PlayerList
           players={this.state.players}
           toggleChat={this.toggleChat}
