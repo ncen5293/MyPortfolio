@@ -25,7 +25,7 @@ class Lobby extends Component {
     //   }
     // }
 
-    this.socket = socketIOClient();
+    this.socket = socketIOClient('http://localhost:8080');
 
     this.socket.on('updateRoom', (players) => {
       this.setState((prevState) => ({
@@ -64,6 +64,22 @@ class Lobby extends Component {
       localStorage.removeItem('reason');
       this.getLobbyInfo();
     }
+    this.getYoutubeData();
+  }
+
+  getYoutubeData = () => {
+    const KEY = 'AIzaSyD2yIRUZp5tQxt8o06cIRuGgKTJbNksNjA';
+    axios.get('https://www.googleapis.com/youtube/v3/search', {
+      params: {
+          q: 'jojo',
+          part: 'snippet',
+          maxResults: 5,
+          key: KEY
+      }
+    })
+    .then(res => {
+      console.log(res);
+    })
   }
 
   componentWillUnmount = () => {

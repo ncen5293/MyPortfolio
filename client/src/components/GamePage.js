@@ -25,7 +25,7 @@ class GamePage extends Component {
       lobbyPassword: '',
       lobbyName: ''
     }
-    this.socket = socketIOClient();
+    this.socket = socketIOClient('http://localhost:8080');
 
     this.socket.on('updateRoom', (players) => {
       this.setState((prevState) => ({
