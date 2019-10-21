@@ -12,8 +12,11 @@ class CreateNameModal extends Component {
                  </Message>);
     }
 
+    const goBack = !this.props.rename ? this.props.onCancelNameClick : this.props.toggleRenameModal;
+    const open = this.props.open || this.props.rename;
+
     return (
-      <Modal size="mini" open={this.props.open} closeOnEscape={false} closeOnDimmerClick={false} onClose={this.props.onClose} >
+      <Modal size="mini" open={open} closeOnEscape={false} closeOnDimmerClick={false} onClose={this.props.onClose} >
         <Modal.Header>Create a Screen Name</Modal.Header>
         <Modal.Content>
           {warning}
@@ -26,7 +29,7 @@ class CreateNameModal extends Component {
         </Modal.Content>
         <Modal.Actions>
           <Button.Group>
-            <Button onClick={this.props.onCancelNameClick} >Go Back</Button>
+            <Button onClick={goBack} >Go Back</Button>
             <Button.Or />
             <Button positive onClick={this.props.onSubmitName} >Set Name</Button>
           </Button.Group>

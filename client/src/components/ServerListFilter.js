@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Checkbox, Menu } from 'semantic-ui-react';
+import { Input, Checkbox, Menu, Button, Icon } from 'semantic-ui-react';
 import CreateLobby from './CreateLobby';
 import '../styles/Game.css';
 
@@ -20,11 +20,12 @@ class ServerListFilter extends Component {
             />
           </Menu.Item>
           <Menu.Item>
-            <Checkbox
-              label="Hide Full"
-              checked={this.props.hideFullLobbies}
-              onChange={this.props.onLobbiesCheckChange}
-            />
+            <div>
+              <Button icon labelPosition='right' size='mini' onClick={this.props.toggleRenameModal} >
+                Rename
+                <Icon name='edit outline' />
+              </Button>
+            </div>
           </Menu.Item>
           <Menu.Item>
             <CreateLobby

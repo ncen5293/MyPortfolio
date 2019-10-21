@@ -51,7 +51,7 @@ class Lobby extends Component {
     })
 
     this.socket.on('getYoutubeData', (searchValue) => {
-      this.getYoutubeData(searchValue)
+      this.getYoutubeData(searchValue);
     })
   }
 
@@ -71,7 +71,6 @@ class Lobby extends Component {
       localStorage.removeItem('reason');
       this.getLobbyInfo();
     }
-    this.getYoutubeData();
   }
 
   getYoutubeData = (searchValue) => {

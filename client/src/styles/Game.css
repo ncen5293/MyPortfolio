@@ -28,7 +28,7 @@
   .group-box {
     margin-left: 1%;
     width: 15%;
-    height: 80%;
+    height: 88%;
     position: fixed;
     font-size: small;
   }
@@ -41,11 +41,15 @@
     height: 87%;
   }
 
+  .chat-input {
+    margin-top: 3%;
+  }
+
   .server-browser {
     position: fixed;
     width: 75%;
     margin-left: 20%;
-    height: 80%;
+    height: 88%;
     font-size: small;
   }
 

@@ -8,8 +8,6 @@ class ServerBrowser extends Component {
     return (
       <div className='server-browser'>
         <ServerListFilter
-          hideFullLobbies={this.props.hideFullLobbies}
-          onLobbiesCheckChange={this.props.onLobbiesCheckChange}
           filterInput={this.props.filterInput}
           onFilterChange={this.props.onFilterChange}
           onFilterKeyPress={this.props.onFilterKeyPress}
@@ -18,6 +16,7 @@ class ServerBrowser extends Component {
           onLobbyCreateToggle={this.props.onLobbyCreateToggle}
           onSubmitLobby={this.props.onSubmitLobby}
           isCreateLobbyOpen={this.props.isCreateLobbyOpen}
+          toggleRenameModal={this.props.toggleRenameModal}
         />
         <ServerList
           lobbyList={this.props.lobbyList}

@@ -23,7 +23,8 @@ class GamePage extends Component {
       filterInput: '',
       isCreateLobbyOpen: false,
       lobbyPassword: '',
-      lobbyName: ''
+      lobbyName: '',
+      isRenameModalOpen: false
     }
     this.socket = socketIOClient('http://localhost:8080');
 
@@ -62,7 +63,6 @@ class GamePage extends Component {
     window.setTimeout(() => {
       this.getLobbies();
     }, 10);
-    // localStorage.removeItem('screenName');
   }
 
   componentWillUnmount = () => {
@@ -85,7 +85,7 @@ class GamePage extends Component {
         }
       })
       if (!nameInUse) {
-        this.setState({ badInfo: false });
+        this.setState({ badInfo: false, isRenameModalOpen: false });
         localStorage.setItem('screenName', screenName);
         this.socket.emit('updatePlayerName', localStorage.getItem('screenName'));
       }
@@ -198,6 +198,12 @@ class GamePage extends Component {
     this.props.history.push(`/watch/${roomInfo.RoomId}`);
   }
 
+  toggleRenameModal = (event) => {
+    this.setState((prevState) => ({
+      isRenameModalOpen: !prevState.isRenameModalOpen
+    }));
+  }
+
   render() {
     const hasSetName = localStorage.getItem('screenName') !== null;
     return (
@@ -234,6 +240,7 @@ class GamePage extends Component {
           onPasswordChange={this.onPasswordChange}
           onLobbyNameChange={this.onLobbyNameChange}
           joinLobby={this.joinLobby}
+          toggleRenameModal={this.toggleRenameModal}
         />
         <PlayerList
           players={this.state.players}
@@ -247,6 +254,7 @@ class GamePage extends Component {
         />
         <CreateNameModal
           open={!hasSetName}
+          rename={this.state.isRenameModalOpen}
           screenName={this.state.screenName}
           onNameChange={this.onNameChange}
           onNameSubmit={this.onNameSubmit}
@@ -255,6 +263,7 @@ class GamePage extends Component {
           onCancelNameClick={this.onCancelNameClick}
           badInfo={this.state.badInfo}
           badDesc={this.state.badDesc}
+          toggleRenameModal={this.toggleRenameModal}
         />
       </div>
     )
