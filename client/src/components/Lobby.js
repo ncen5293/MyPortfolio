@@ -233,6 +233,7 @@ class Lobby extends Component {
         playlist: this.state.videoIds
       }
     }
+    let videoId = this.state.videoIds[0] ? this.state.videoIds[0] : '';
     return (
       <div className='App-header'>
         <Menu widths={3}>
@@ -260,7 +261,7 @@ class Lobby extends Component {
         </Menu>
         <div className='server-browser video-player'>
           <YouTube
-            videoId={this.state.videoIds[0] ? this.state.videoIds[0] : ''}
+            videoId={videoId}
             opts={opts}
           />
         </div>
