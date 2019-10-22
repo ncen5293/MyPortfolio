@@ -32,7 +32,7 @@ class MenuButtons extends Component {
                   visibleButton={this.props.visibleAbilitiesModalButton}
                   onButtonClick={this.props.onButtonClick}
                   leftButton='My Hobbies'
-                  rightButton='Chat (W.I.P)'
+                  rightButton='Watch Together'
                   position='middle'
                   modal={true}
                 />

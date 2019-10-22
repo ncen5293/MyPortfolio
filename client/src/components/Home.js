@@ -146,8 +146,8 @@ class Home extends Component {
       this.props.history.push('/comments');
     } else if (type === 'Portfolio Page') {
       this.props.history.push('/');
-    } else if (type === 'Chat (W.I.P)') {
-      this.props.history.push('/soon');
+    } else if (type === 'Watch Together') {
+      this.props.history.push('/watch');
     } else {
       return false;
     }
@@ -220,7 +220,7 @@ class Home extends Component {
             visibleButton={visibleAbilitiesButton}
             onButtonClick={this.onButtonClick}
             leftButton='My Hobbies'
-            rightButton='Chat (W.I.P)'
+            rightButton='Watch Together'
             position='middle'
           />
           <HomeButtons

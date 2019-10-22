@@ -238,7 +238,7 @@ class Lobby extends Component {
       <div className='App-header'>
         <Menu widths={3}>
           <Menu.Item>
-            <Button primary onClick={() => {this.props.history.push('/soon')} }>Leave</Button>
+            <Button primary onClick={() => {this.props.history.push('/watch')} }>Leave</Button>
           </Menu.Item>
           <Menu.Item>
             <h2>
