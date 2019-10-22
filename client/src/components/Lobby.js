@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
 import { Icon, Menu, Button, Input } from 'semantic-ui-react';
 import axios from 'axios';
+import YouTube from 'react-youtube';
 import PlayerList from './PlayerList';
 import Searchbar from './Searchbar';
 import '../styles/Game.css';
@@ -12,12 +13,12 @@ class Lobby extends Component {
     this.state = {
       lobby: {},
       players: [],
-      chatType: 'global',
+      chatType: 'chat',
       chatInput: '',
       messages: [],
       localMessages: [],
       searchValue: '',
-      videoIds: ''
+      videoIds: []
     }
 
     // if (window.performance) {
@@ -88,7 +89,7 @@ class Lobby extends Component {
         this.setState((prevState) => ({
           videoIds: prevState.videoIds.concat(res.data.items[0].id.videoId)
         }));
-        console.log(res.data.items[0]);
+        console.log(res.data);
       }
 
     })
@@ -219,8 +220,21 @@ class Lobby extends Component {
   }
 
   render() {
+    let height = window.innerWidth > 1024 ? window.innerHeight * .88 : window.innerHeight * .45;
+    let width = window.innerWidth > 1024 ? window.innerWidth * .75 : window.innerWidth;
+    let opts = {
+      height,
+      width,
+      playerVars: {
+        autoplay: 1,
+        controls: 0,
+        disablekb: 1,
+        iv_load_policy: 3,
+        playlist: this.state.videoIds
+      }
+    }
     return (
-      <div>
+      <div className='App-header'>
         <Menu widths={3}>
           <Menu.Item>
             <Button primary onClick={() => {this.props.history.push('/soon')} }>Leave</Button>
@@ -244,6 +258,12 @@ class Lobby extends Component {
             />
           </Menu.Item>
         </Menu>
+        <div className='server-browser video-player'>
+          <YouTube
+            videoId={this.state.videoIds[0] ? this.state.videoIds[0] : ''}
+            opts={opts}
+          />
+        </div>
         <PlayerList
           players={this.state.players}
           toggleChat={this.toggleChat}

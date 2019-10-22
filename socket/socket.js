@@ -29,8 +29,7 @@ io.on('connection', (socket) => {
   }
 
   const getAllPlayers = (playerIds) => {
-    const playerNames = playerIds.map((playerId, i) => io.sockets.connected[playerId].name);
-    return playerNames;
+    return playerIds.map((playerId, i) => io.sockets.connected[playerId].name);
   }
 
   const toTwoDigitString = (number) => {

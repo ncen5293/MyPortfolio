@@ -24,6 +24,10 @@
   text-align: center;
 }
 
+.video-player {
+  pointer-events: none;
+}
+
 @media only screen and (min-width: 1025px) {
   .group-box {
     margin-left: 1%;
