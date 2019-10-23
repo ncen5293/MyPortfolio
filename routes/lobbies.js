@@ -20,7 +20,8 @@ const LobbySchema = new Schema({
   Name: String,
   Password: String,
   Host: String,
-  Users: []
+  Users: [],
+  VideoIds: []
 });
 
 const LobbyModel = mongoose.model('lobby', LobbySchema);
@@ -32,7 +33,8 @@ router.post("/lobby", (req,res) => {
     Name: req.body.lobbyInfo.name,
     Password: req.body.lobbyInfo.password,
     Host: req.body.lobbyInfo.host,
-    Users: [req.body.lobbyInfo.users]
+    Users: [req.body.lobbyInfo.users],
+    VideoIds: []
   };
   console.log(newLobby);
   LobbyModel.findOne(
@@ -123,6 +125,28 @@ router.get("/lobby", (req,res) => {
         res.send({ lobbies });
     });
   }
+})
+
+router.put("/video", (req,res) => {
+  console.log(req.body);
+  LobbyModel.findOne({ "RoomId": req.body.roomId },
+    (err, lobby) => {
+      if (err) {
+        console.log(err);
+      }
+      if (!lobby) {
+        res.send({ exists: false });
+      } else {
+        lobby.VideoIds.push(req.body.videoId);
+        console.log(lobby);
+        lobby.save((err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.send({ exists: true, lobby });
+      }
+  });
 })
 
 database.on("error", error => {

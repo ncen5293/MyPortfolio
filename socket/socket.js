@@ -65,9 +65,9 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('getYoutubeData', (searchValue) => {
+  socket.on('getYoutubeData', () => {
     const roomName = socket.currentRoom;
-    io.in(roomName).emit('getYoutubeData', searchValue);
+    io.in(roomName).emit('getYoutubeData');
   })
 
   socket.on('disconnect', () => {

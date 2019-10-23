@@ -51,8 +51,9 @@ class Lobby extends Component {
       this.scrollToBottom();
     })
 
-    this.socket.on('getYoutubeData', (searchValue) => {
-      this.getYoutubeData(searchValue);
+    this.socket.on('getYoutubeData', () => {
+      // this.getYoutubeData(searchValue);
+      this.getLobbyInfo();
     })
   }
 
@@ -86,13 +87,25 @@ class Lobby extends Component {
     })
     .then(res => {
       if (res.data.items[0]) {
-        this.setState((prevState) => ({
-          videoIds: prevState.videoIds.concat(res.data.items[0].id.videoId)
-        }));
+        // this.setState((prevState) => ({
+        //   videoIds: prevState.videoIds.concat(res.data.items[0].id.videoId)
+        // }));
+        this.setYoutubeData(res.data.items[0].id.videoId);
         console.log(res.data);
       }
-
     })
+  }
+
+  setYoutubeData = (videoId) => {
+    axios.put('http://localhost:8080/lobbys/video', { roomId: this.props.match.params.roomId, videoId: videoId })
+      .then(res => {
+        console.log(res.data);
+        // this.setState({ videoIds: res.data.lobby.videoIds });
+        this.socket.emit('getYoutubeData');
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   componentWillUnmount = () => {
@@ -155,7 +168,7 @@ class Lobby extends Component {
         console.log(res.data);
         if (res.data.exists) {
           this.joinChatLobby();
-          this.setState({ lobby: res.data.lobby });
+          this.setState({ lobby: res.data.lobby, videoIds: res.data.lobby.VideoIds });
         } else {
           this.props.history.goBack();
         }
@@ -171,7 +184,7 @@ class Lobby extends Component {
         console.log(res.data);
         if (res.data.exists) {
           this.joinChatLobby();
-          this.setState({ lobby: res.data.lobby });
+          this.setState({ lobby: res.data.lobby, videoIds: res.data.lobby.VideoIds });
         } else {
           this.props.history.goBack();
         }
@@ -214,7 +227,8 @@ class Lobby extends Component {
   onSearchKeyPress = (event) => {
     if (event.key === 'Enter') {
       const searchValue = this.state.searchValue;
-      this.socket.emit('getYoutubeData', searchValue);
+      // this.socket.emit('getYoutubeData', searchValue);
+      this.getYoutubeData(searchValue);
       this.setState({ searchValue: '' });
     }
   }
@@ -233,7 +247,7 @@ class Lobby extends Component {
         playlist: this.state.videoIds
       }
     }
-    let videoId = this.state.videoIds[0] ? this.state.videoIds[0] : '';
+    let videoId = this.state.videoIds.length > 0 ? this.state.videoIds[0] : '';
     return (
       <div className='App-header'>
         <Menu widths={3}>
