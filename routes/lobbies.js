@@ -149,6 +149,28 @@ router.put("/video", (req,res) => {
   });
 })
 
+router.delete("/video", (req,res) => {
+  console.log(req.query);
+  LobbyModel.findOne({ "RoomId": req.query.roomId },
+    (err, lobby) => {
+      if (err) {
+        console.log(err);
+      }
+      if (!lobby) {
+        res.send({ exists: false });
+      } else if (lobby.VideoIds[0] === req.query.videoId) {
+        lobby.VideoIds.shift();
+        console.log(lobby, 'delete');
+        lobby.save((err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+      }
+      res.send({ exists: true, lobby });
+  });
+})
+
 database.on("error", error => {
     console.log("Database connection error:", error);
     databaseConnection = "Error connecting to Database";
