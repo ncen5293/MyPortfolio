@@ -302,10 +302,6 @@ class Lobby extends Component {
     // event.target.seekTo(0);
   }
 
-  _onEnd = (event) => {
-    console.log(event.target);
-  }
-
   onLeaveClick = () => {
     this.leaveLobby();
     window.location.replace('/watch');
