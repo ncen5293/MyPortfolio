@@ -286,6 +286,31 @@ class Lobby extends Component {
     }
   }
 
+  _onPlay = (event) => {
+    console.log(event.target);
+    console.log(event.target.getVideoData());
+    const videoData = event.target.getVideoData();
+    const message = {
+      where: 'chat',
+      mess: `${videoData.title}`,
+      name: 'Now Playing',
+      time: event.target.getDuration()
+    }
+    this.setState((prevState) => ({
+      localMessages: prevState.localMessages.concat(message)
+    }));
+    // event.target.seekTo(0);
+  }
+
+  _onEnd = (event) => {
+    console.log(event.target);
+  }
+
+  onLeaveClick = () => {
+    this.leaveLobby();
+    window.location.replace('/watch');
+  }
+
   render() {
     let height = window.innerWidth > 1024 ? window.innerHeight * .88 : window.innerHeight * .45;
     let width = window.innerWidth > 1024 ? window.innerWidth * .75 : window.innerWidth;
@@ -304,7 +329,7 @@ class Lobby extends Component {
       <div className='App-header'>
         <Menu widths={3}>
           <Menu.Item>
-            <Button primary onClick={() => {this.props.history.push('/watch')} }>Leave</Button>
+            <Button primary onClick={this.onLeaveClick}>Leave</Button>
           </Menu.Item>
           <Menu.Item>
             <h2>
@@ -329,6 +354,7 @@ class Lobby extends Component {
           <YouTube
             videoId={videoId}
             opts={opts}
+            onPlay={this._onPlay}
           />
         </div>
         <PlayerList
