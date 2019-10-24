@@ -29,7 +29,7 @@ class Lobby extends Component {
     //   }
     // }
 
-    this.socket = socketIOClient('http://localhost:8080');
+    this.socket = socketIOClient();
 
     this.socket.on('updateRoom', (players) => {
       this.setState((prevState) => ({
@@ -97,7 +97,7 @@ class Lobby extends Component {
   }
 
   setYoutubeData = (videoId) => {
-    axios.put('http://localhost:8080/lobbys/video', { roomId: this.props.match.params.roomId, videoId: videoId })
+    axios.put('/lobbys/video', { roomId: this.props.match.params.roomId, videoId: videoId })
       .then(res => {
         console.log(res.data);
         // this.setState({ videoIds: res.data.lobby.videoIds });
@@ -117,7 +117,7 @@ class Lobby extends Component {
     const roomId = this.props.match.params.roomId;
     if (Object.entries(this.state.lobby).length !== 0) {
       if (this.state.lobby.Users.length === 1) {
-        axios.delete('http://localhost:8080/lobbys/lobby', {params: { roomId }})
+        axios.delete('/lobbys/lobby', {params: { roomId }})
           .then(res => {
             //join lobby
             console.log(res);
@@ -126,7 +126,7 @@ class Lobby extends Component {
             console.error(error)
           })
       } else {
-        axios.put('http://localhost:8080/lobbys/lobby',
+        axios.put('/lobbys/lobby',
           {
             roomId,
             user: localStorage.getItem('screenName'),
@@ -157,7 +157,7 @@ class Lobby extends Component {
   }
 
   joinLobby = () => {
-    axios.put('http://localhost:8080/lobbys/lobby',
+    axios.put('/lobbys/lobby',
       {
         roomId: this.props.match.params.roomId,
         user: localStorage.getItem('screenName'),
@@ -174,7 +174,7 @@ class Lobby extends Component {
   }
 
   getLobbyInfo = () => {
-    axios.get('http://localhost:8080/lobbys/lobby', {params: { roomId: this.props.match.params.roomId }})
+    axios.get('/lobbys/lobby', {params: { roomId: this.props.match.params.roomId }})
       .then(res => {
         console.log(res.data);
         this.storeLobbyInfo(res.data.exists, res.data.lobby);
@@ -220,7 +220,7 @@ class Lobby extends Component {
   }
 
   deleteWatchedId = () => {
-    axios.delete('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId, videoId: this.state.videoIds[0] }})
+    axios.delete('/lobbys/video', {params: { roomId: this.props.match.params.roomId, videoId: this.state.videoIds[0] }})
       .then(res => {
         console.log(res.data);
         // this.setState({ videoIds: res.data.lobby.videoIds });
