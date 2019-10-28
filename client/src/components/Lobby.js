@@ -19,7 +19,7 @@ class Lobby extends Component {
       localMessages: [],
       searchValue: '',
       videoIds: [],
-      elapsedTime: 0,
+      startTime: 0,
       player: null
     }
 
@@ -196,11 +196,12 @@ class Lobby extends Component {
           this.deleteWatchedId();
         }
       }
-      this.setState({
+      console.log(lobby.StartTime);
+      this.setState((prevState) => ({
         lobby: lobby,
-        videoIds: lobby.VideoIds,
-        elapsedTime: lobby.StartTime > 0 ? Date.now() - lobby.StartTime : 0
-      });
+        videoIds: lobby.VideoIds.length > 0 ? lobby.VideoIds : prevState.videoIds,
+        startTime: lobby.StartTime
+      }));
     } else {
       this.props.history.goBack();
     }
@@ -302,10 +303,11 @@ class Lobby extends Component {
   onPlay = (event) => {
     console.log(event.target.getVideoData());
     if (this.state.lobby.VideoIds[0] && this.state.player) {
-      console.log(this.state.elapsedTime);
+      console.log(this.getElapsedTime(this.state.startTime));
       console.log(this.state.player);
-      if (this.state.elapsedTime > this.state.player.getDuration() * 1000) {
+      if (this.state.startTime > 0 && this.getElapsedTime(this.state.startTime) > this.state.player.getDuration()) {
         this.deleteWatchedId();
+        this.setState({ startTime: 0 });
       }
     }
     const videoData = this.state.player.getVideoData();
@@ -318,17 +320,24 @@ class Lobby extends Component {
     this.setState((prevState) => ({
       localMessages: prevState.localMessages.concat(message)
     }));
-    // this.socket.emit('setVideoData', message.time * 1000);
   }
 
   onReady = (event) => {
     this.setState({ player: event.target });
-    this.state.player.seekTo(this.state.elapsedTime / 1000);
+  }
+
+  onEnd = (event) => {
+    this.deleteWatchedId();
+    this.setState({ startTime: 0 });
   }
 
   onLeaveClick = () => {
     this.leaveLobby();
     window.location.replace('/watch');
+  }
+
+  getElapsedTime = (startTime) => {
+    return (Date.now() - startTime) / 1000;
   }
 
   render() {
@@ -366,6 +375,7 @@ class Lobby extends Component {
             opts={opts}
             onPlay={this.onPlay}
             onReady={this.onReady}
+            onEnd={this.onEnd}
           />
         </div>
         <PlayerList
