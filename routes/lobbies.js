@@ -21,7 +21,8 @@ const LobbySchema = new Schema({
   Password: String,
   Host: String,
   Users: [],
-  VideoIds: []
+  VideoIds: [],
+  StartTime: Number
 });
 
 const LobbyModel = mongoose.model('lobby', LobbySchema);
@@ -34,7 +35,8 @@ router.post("/lobby", (req,res) => {
     Password: req.body.lobbyInfo.password,
     Host: req.body.lobbyInfo.host,
     Users: [req.body.lobbyInfo.users],
-    VideoIds: []
+    VideoIds: [],
+    StartTime: 0
   };
   console.log(newLobby);
   LobbyModel.findOne(
@@ -65,31 +67,37 @@ router.put("/lobby", (req,res) => {
       }
       if (!lobby) {
         res.send({ exists: false });
+      } else if (req.body.reason === 'join') {
+        lobby.Users.push(req.body.user);
+        console.log(lobby);
+        saveLobby(lobby,res);
+      } else if (lobby.Users.length === 1) {
+        this.deleteLobby(req.body.roomId, res);
       } else {
-        if (req.body.reason === 'join') {
-          lobby.Users.push(req.body.user);
-        } else {
-          for (let i=0; i< lobby.Users.length; i++) {
-            if (lobby.Users[i] === req.body.user) {
-              lobby.Users.splice(i, 1);
-            }
+        for (let i=0; i< lobby.Users.length; i++) {
+          if (lobby.Users[i] === req.body.user) {
+            lobby.Users.splice(i, 1);
           }
         }
         console.log(lobby);
-        lobby.save((err) => {
-          if (err) {
-            console.log(err);
-          }
-        });
-        res.send({ exists: true, lobby });
+        saveLobby(lobby, res);
       }
   });
 })
 
-router.delete("/lobby", (req,res) => {
+const saveLobby = (lobby, res) => {
+  lobby.save((err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+  res.send({ exists: true, lobby });
+}
+
+const deleteLobby = (roomId, res) => {
   LobbyModel.findOneAndDelete(
     {
-      "RoomId": req.query.roomId
+      "RoomId": roomId
     },
     (err, lobby) => {
       if (err) {
@@ -99,6 +107,10 @@ router.delete("/lobby", (req,res) => {
       res.send({ exists: false });
     }
   )
+}
+
+router.delete("/lobby", (req,res) => {
+  deleteLobby(req.query.roomId, res);
 })
 
 router.get("/lobby", (req,res) => {
@@ -127,7 +139,7 @@ router.get("/lobby", (req,res) => {
   }
 })
 
-router.put("/video", (req,res) => {
+router.post("/video", (req,res) => {
   console.log(req.body);
   LobbyModel.findOne({ "RoomId": req.body.roomId },
     (err, lobby) => {
@@ -138,6 +150,7 @@ router.put("/video", (req,res) => {
         res.send({ exists: false });
       } else {
         lobby.VideoIds.push(req.body.videoId);
+        lobby.StartTime = Date.now();
         console.log(lobby);
         lobby.save((err) => {
           if (err) {
@@ -160,6 +173,11 @@ router.delete("/video", (req,res) => {
         res.send({ exists: false });
       } else if (lobby.VideoIds[0] === req.query.videoId) {
         lobby.VideoIds.shift();
+        if (lobby.VideoIds > 0) {
+          lobby.StartTime = Date.now();
+        } else {
+          lobby.StartTime = 0;
+        }
         console.log(lobby, 'delete');
         lobby.save((err) => {
           if (err) {

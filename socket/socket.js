@@ -70,6 +70,20 @@ io.on('connection', (socket) => {
     io.in(roomName).emit('getYoutubeData');
   })
 
+  // socket.on('setVideoData', (length) => {
+  //   const roomName = socket.currentRoom;
+  //   let videoStart = io.sockets.adapter.rooms[roomName].videoStart;
+  //   let videoEnd = io.sockets.adapter.rooms[roomName].videoEnd;
+  //   if (io.sockets.adapter.rooms[roomName] && videoStart && videoEnd < Date.now()) {
+  //     let elapsedTime = Date.now() - io.sockets.adapter.rooms[roomName].videoStart;
+  //     socket.emit('setVideoData', elapsedTime);
+  //   } else if (io.sockets.adapter.rooms[roomName]) {
+  //     io.sockets.adapter.rooms[roomName].videoStart = Date.now();
+  //     io.sockets.adapter.rooms[roomName].videoEnd = Date.now() + length;
+  //     socket.emit('setVideoData', 0);
+  //   }
+  // })
+
   socket.on('disconnect', () => {
     const roomName = socket.currentRoom;
     if (io.sockets.adapter.rooms[roomName] != undefined) {

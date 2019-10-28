@@ -18,7 +18,9 @@ class Lobby extends Component {
       messages: [],
       localMessages: [],
       searchValue: '',
-      videoIds: []
+      videoIds: [],
+      elapsedTime: 0,
+      player: null
     }
 
     // if (window.performance) {
@@ -29,7 +31,7 @@ class Lobby extends Component {
     //   }
     // }
 
-    this.socket = socketIOClient();
+    this.socket = socketIOClient('http://localhost:8080');
 
     this.socket.on('updateRoom', (players) => {
       this.setState((prevState) => ({
@@ -97,7 +99,7 @@ class Lobby extends Component {
   }
 
   setYoutubeData = (videoId) => {
-    axios.put('/lobbys/video', { roomId: this.props.match.params.roomId, videoId: videoId })
+    axios.post('http://localhost:8080/lobbys/video', { roomId: this.props.match.params.roomId, videoId: videoId })
       .then(res => {
         console.log(res.data);
         // this.setState({ videoIds: res.data.lobby.videoIds });
@@ -117,7 +119,7 @@ class Lobby extends Component {
     const roomId = this.props.match.params.roomId;
     if (Object.entries(this.state.lobby).length !== 0) {
       if (this.state.lobby.Users.length === 1) {
-        axios.delete('/lobbys/lobby', {params: { roomId }})
+        axios.delete('http://localhost:8080/lobbys/lobby', {params: { roomId }})
           .then(res => {
             //join lobby
             console.log(res);
@@ -126,7 +128,7 @@ class Lobby extends Component {
             console.error(error)
           })
       } else {
-        axios.put('/lobbys/lobby',
+        axios.put('http://localhost:8080/lobbys/lobby',
           {
             roomId,
             user: localStorage.getItem('screenName'),
@@ -157,7 +159,7 @@ class Lobby extends Component {
   }
 
   joinLobby = () => {
-    axios.put('/lobbys/lobby',
+    axios.put('http://localhost:8080/lobbys/lobby',
       {
         roomId: this.props.match.params.roomId,
         user: localStorage.getItem('screenName'),
@@ -174,7 +176,7 @@ class Lobby extends Component {
   }
 
   getLobbyInfo = () => {
-    axios.get('/lobbys/lobby', {params: { roomId: this.props.match.params.roomId }})
+    axios.get('http://localhost:8080/lobbys/lobby', {params: { roomId: this.props.match.params.roomId }})
       .then(res => {
         console.log(res.data);
         this.storeLobbyInfo(res.data.exists, res.data.lobby);
@@ -187,40 +189,52 @@ class Lobby extends Component {
   storeLobbyInfo = (exists, lobby) => {
     if (exists) {
       this.joinChatLobby();
-      if (lobby.VideoIds[0]) {
-        this.getVideoLength(lobby.VideoIds[0]);
+      if (lobby.VideoIds[0] && this.state.player) {
+        // this.getVideoLength(lobby.VideoIds[0]);
+
+        if ((Date.now() > lobby.StartTime + this.state.player.getDuration()) && (lobby.StartTime > 0)) {
+          this.deleteWatchedId();
+        }
       }
-      this.setState({ lobby: lobby, videoIds: lobby.VideoIds });
+      this.setState({
+        lobby: lobby,
+        videoIds: lobby.VideoIds,
+        elapsedTime: lobby.StartTime > 0 ? Date.now() - lobby.StartTime : 0
+      });
     } else {
       this.props.history.goBack();
     }
   }
 
-  getVideoLength = (videoId) => {
-    const KEY = 'AIzaSyD2yIRUZp5tQxt8o06cIRuGgKTJbNksNjA';
-    axios.get('https://www.googleapis.com/youtube/v3/videos', {
-      params: {
-          id: videoId,
-          part: 'contentDetails',
-          maxResults: 1,
-          key: KEY
-      }
-    })
-    .then(res => {
-      if (res.data.items[0]) {
-        const duration = this.durationToSeconds(res.data.items[0].contentDetails.duration);
-        window.setTimeout(() => {
-          if (this.state.videoIds[0] === videoId) {
-            this.deleteWatchedId();
-          }
-        }, duration * 1000);
-        console.log(res.data);
-      }
-    })
+  // getVideoLength = (videoId) => {
+  //   const KEY = 'AIzaSyD2yIRUZp5tQxt8o06cIRuGgKTJbNksNjA';
+  //   axios.get('https://www.googleapis.com/youtube/v3/videos', {
+  //     params: {
+  //         id: videoId,
+  //         part: 'contentDetails',
+  //         maxResults: 1,
+  //         key: KEY
+  //     }
+  //   })
+  //   .then(res => {
+  //     if (res.data.items[0]) {
+  //       const duration = this.durationToSeconds(res.data.items[0].contentDetails.duration);
+  //       window.setTimeout(() => {
+  //         if (this.state.videoIds[0] === videoId) {
+  //           this.deleteWatchedId();
+  //         }
+  //       }, duration * 1000);
+  //       console.log(res.data);
+  //     }
+  //   })
+  // }
+
+  skipVideo = () => {
+    this.deleteWatchedId();
   }
 
   deleteWatchedId = () => {
-    axios.delete('/lobbys/video', {params: { roomId: this.props.match.params.roomId, videoId: this.state.videoIds[0] }})
+    axios.delete('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId, videoId: this.state.videoIds[0] }})
       .then(res => {
         console.log(res.data);
         // this.setState({ videoIds: res.data.lobby.videoIds });
@@ -231,21 +245,21 @@ class Lobby extends Component {
       })
   }
 
-  durationToSeconds = (duration) => {
-  var match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-
-  match = match.slice(1).map((x) => {
-    if (x != null) {
-        return x.replace(/\D/, '');
-    }
-  });
-
-  var hours = (parseInt(match[0]) || 0);
-  var minutes = (parseInt(match[1]) || 0);
-  var seconds = (parseInt(match[2]) || 0);
-
-  return hours * 3600 + minutes * 60 + seconds;
-}
+//   durationToSeconds = (duration) => {
+//   var match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+//
+//   match = match.slice(1).map((x) => {
+//     if (x != null) {
+//         return x.replace(/\D/, '');
+//     }
+//   });
+//
+//   var hours = (parseInt(match[0]) || 0);
+//   var minutes = (parseInt(match[1]) || 0);
+//   var seconds = (parseInt(match[2]) || 0);
+//
+//   return hours * 3600 + minutes * 60 + seconds;
+// }
 
   toggleChat = (type) => {
     this.setState({ chatType: type });
@@ -280,16 +294,21 @@ class Lobby extends Component {
   onSearchKeyPress = (event) => {
     if (event.key === 'Enter') {
       const searchValue = this.state.searchValue;
-      // this.socket.emit('getYoutubeData', searchValue);
       this.getYoutubeData(searchValue);
       this.setState({ searchValue: '' });
     }
   }
 
-  _onPlay = (event) => {
-    console.log(event.target);
+  onPlay = (event) => {
     console.log(event.target.getVideoData());
-    const videoData = event.target.getVideoData();
+    if (this.state.lobby.VideoIds[0] && this.state.player) {
+      console.log(this.state.elapsedTime);
+      console.log(this.state.player);
+      if (this.state.elapsedTime > this.state.player.getDuration() * 1000) {
+        this.deleteWatchedId();
+      }
+    }
+    const videoData = this.state.player.getVideoData();
     const message = {
       where: 'chat',
       mess: `${videoData.title}`,
@@ -299,7 +318,12 @@ class Lobby extends Component {
     this.setState((prevState) => ({
       localMessages: prevState.localMessages.concat(message)
     }));
-    // event.target.seekTo(0);
+    // this.socket.emit('setVideoData', message.time * 1000);
+  }
+
+  onReady = (event) => {
+    this.setState({ player: event.target });
+    this.state.player.seekTo(this.state.elapsedTime / 1000);
   }
 
   onLeaveClick = () => {
@@ -315,8 +339,6 @@ class Lobby extends Component {
       width,
       playerVars: {
         autoplay: 1,
-        controls: 0,
-        disablekb: 1,
         iv_load_policy: 3
       }
     }
@@ -328,29 +350,22 @@ class Lobby extends Component {
             <Button primary onClick={this.onLeaveClick}>Leave</Button>
           </Menu.Item>
           <Menu.Item>
-            <h2>
-              Nicky Cen
-              <a href='https://www.linkedin.com/in/nicky-cen/'>
-                <Icon link name='linkedin' />
-              </a>
-              <a href='https://github.com/ncen5293'>
-                <Icon link name='github' />
-              </a>
-            </h2>
-          </Menu.Item>
-          <Menu.Item>
             <Searchbar
               onChange={this.onSearchChange}
               onKeyPress={this.onSearchKeyPress}
               value={this.state.searchValue}
             />
           </Menu.Item>
+          <Menu.Item>
+            <Button negative onClick={this.skipVideo}>Skip</Button>
+          </Menu.Item>
         </Menu>
-        <div className='server-browser video-player'>
+        <div className='server-browser'>
           <YouTube
             videoId={videoId}
             opts={opts}
-            onPlay={this._onPlay}
+            onPlay={this.onPlay}
+            onReady={this.onReady}
           />
         </div>
         <PlayerList
