@@ -268,20 +268,28 @@ class Lobby extends Component {
       where: 'chat',
       mess: `${videoData.title}`,
       name: 'Now Playing',
-      time: event.target.getDuration()
+      time: `${event.target.getDuration()}s`
     }
     this.setState((prevState) => ({
       localMessages: prevState.localMessages.concat(message)
     }));
+    this.scrollToBottom();
   }
 
   onReady = (event) => {
     this.setState({ player: event.target });
+    event.target.pauseVideo();
+    console.log(event.target);
   }
 
   onEnd = (event) => {
     this.deleteWatchedId();
     this.setState({ startTime: 0 });
+  }
+
+  onPause = (event) => {
+    event.target.seekTo(this.getElapsedTime(this.state.startTime));
+    event.target.playVideo();
   }
 
   onLeaveClick = () => {
@@ -329,6 +337,7 @@ class Lobby extends Component {
             onPlay={this.onPlay}
             onReady={this.onReady}
             onEnd={this.onEnd}
+            onPause={this.onPause}
           />
         </div>
         <PlayerList
