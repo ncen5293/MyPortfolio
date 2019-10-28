@@ -54,7 +54,6 @@ class Lobby extends Component {
     })
 
     this.socket.on('getYoutubeData', () => {
-      // this.getYoutubeData(searchValue);
       this.getLobbyInfo();
     })
   }
@@ -89,9 +88,6 @@ class Lobby extends Component {
     })
     .then(res => {
       if (res.data.items[0]) {
-        // this.setState((prevState) => ({
-        //   videoIds: prevState.videoIds.concat(res.data.items[0].id.videoId)
-        // }));
         this.setYoutubeData(res.data.items[0].id.videoId);
         console.log(res.data);
       }
@@ -102,7 +98,6 @@ class Lobby extends Component {
     axios.post('http://localhost:8080/lobbys/video', { roomId: this.props.match.params.roomId, videoId: videoId })
       .then(res => {
         console.log(res.data);
-        // this.setState({ videoIds: res.data.lobby.videoIds });
         this.socket.emit('getYoutubeData');
       })
       .catch(error => {
@@ -190,8 +185,6 @@ class Lobby extends Component {
     if (exists) {
       this.joinChatLobby();
       if (lobby.VideoIds[0] && this.state.player) {
-        // this.getVideoLength(lobby.VideoIds[0]);
-
         if ((Date.now() > lobby.StartTime + this.state.player.getDuration()) && (lobby.StartTime > 0)) {
           this.deleteWatchedId();
         }
@@ -207,29 +200,6 @@ class Lobby extends Component {
     }
   }
 
-  // getVideoLength = (videoId) => {
-  //   const KEY = 'AIzaSyD2yIRUZp5tQxt8o06cIRuGgKTJbNksNjA';
-  //   axios.get('https://www.googleapis.com/youtube/v3/videos', {
-  //     params: {
-  //         id: videoId,
-  //         part: 'contentDetails',
-  //         maxResults: 1,
-  //         key: KEY
-  //     }
-  //   })
-  //   .then(res => {
-  //     if (res.data.items[0]) {
-  //       const duration = this.durationToSeconds(res.data.items[0].contentDetails.duration);
-  //       window.setTimeout(() => {
-  //         if (this.state.videoIds[0] === videoId) {
-  //           this.deleteWatchedId();
-  //         }
-  //       }, duration * 1000);
-  //       console.log(res.data);
-  //     }
-  //   })
-  // }
-
   skipVideo = () => {
     this.deleteWatchedId();
   }
@@ -238,29 +208,12 @@ class Lobby extends Component {
     axios.delete('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId, videoId: this.state.videoIds[0] }})
       .then(res => {
         console.log(res.data);
-        // this.setState({ videoIds: res.data.lobby.videoIds });
         this.socket.emit('getYoutubeData');
       })
       .catch(error => {
         console.error(error)
       })
   }
-
-//   durationToSeconds = (duration) => {
-//   var match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-//
-//   match = match.slice(1).map((x) => {
-//     if (x != null) {
-//         return x.replace(/\D/, '');
-//     }
-//   });
-//
-//   var hours = (parseInt(match[0]) || 0);
-//   var minutes = (parseInt(match[1]) || 0);
-//   var seconds = (parseInt(match[2]) || 0);
-//
-//   return hours * 3600 + minutes * 60 + seconds;
-// }
 
   toggleChat = (type) => {
     this.setState({ chatType: type });
