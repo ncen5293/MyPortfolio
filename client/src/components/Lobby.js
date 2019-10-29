@@ -278,7 +278,7 @@ class Lobby extends Component {
 
   onReady = (event) => {
     this.setState({ player: event.target });
-    event.target.pauseVideo();
+    window.setTimeout(() => {event.target.seekTo(this.getElapsedTime(this.state.startTime));}, 500);
     console.log(event.target);
   }
 
