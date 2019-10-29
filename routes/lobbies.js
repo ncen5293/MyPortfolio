@@ -174,7 +174,7 @@ router.delete("/video", (req,res) => {
         res.send({ exists: false });
       } else if (lobby.VideoIds[0] === req.query.videoId) {
         lobby.VideoIds.shift();
-        if (lobby.VideoIds > 0) {
+        if (lobby.VideoIds.length > 0) {
           lobby.StartTime = Date.now();
         } else {
           lobby.StartTime = 0;
@@ -201,4 +201,8 @@ database.once("open", () => {
     databaseConnection = "Connected to Database";
 });
 
-module.exports = router;
+const lobbyRouter = router;
+module.exports = {
+  lobbyRouter,
+  LobbyModel
+};

@@ -4,7 +4,7 @@ const path = require('path');
 const app = express();
 const hobbyRouter = require("./routes/hobbies");
 const commentsRouter = require("./routes/comments");
-const lobbyRouter = require("./routes/lobbies");
+const { lobbyRouter } = require("./routes/lobbies");
 
 const PORT = process.env.PORT || 8080;
 
@@ -29,5 +29,3 @@ module.exports = {
   app,
   io
 };
-
-require('./socket/socket');

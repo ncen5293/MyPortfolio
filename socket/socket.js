@@ -1,4 +1,5 @@
 const { io } = require('../server');
+const { LobbyModel } = require("../routes/lobbies");
 // const { router, connection, LobbyModel } = require("../routes/lobbies");
 
 io.on('connection', (socket) => {
@@ -83,4 +84,52 @@ io.on('connection', (socket) => {
     delete socket.currentRoom;
     console.log('disconnected');
   });
+
+  const updateLobbyCount = () => {
+    LobbyModel.findOne({ "RoomId": req.body.roomId },
+      (err, lobby) => {
+        if (err) {
+          console.log(err);
+        }
+        if (!lobby) {
+          res.send({ exists: false });
+        } else if (req.body.reason === 'join') {
+          lobby.Users.push(req.body.user);
+          console.log(lobby);
+          lobby.save((err) => {
+            if (err) {
+              console.log(err);
+            }
+          });
+          res.send({ exists: true, lobby });
+        } else if (lobby.Users.length === 1) {
+          LobbyModel.findOneAndDelete(
+            {
+              "RoomId": roomId
+            },
+            (err, lobby) => {
+              if (err) {
+                console.log(err);
+              }
+              console.log(lobby);
+              res.send({ exists: false });
+            }
+          )
+        } else {
+          for (let i=0; i< lobby.Users.length; i++) {
+            if (lobby.Users[i] === req.body.user) {
+              lobby.Users.splice(i, 1);
+              break;
+            }
+          }
+          console.log(lobby);
+          lobby.save((err) => {
+            if (err) {
+              console.log(err);
+            }
+          });
+          res.send({ exists: true, lobby });
+        }
+    });
+  }
 })

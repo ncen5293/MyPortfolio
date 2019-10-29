@@ -257,14 +257,14 @@ class Lobby extends Component {
 
   onPlay = (event) => {
     console.log(event.target.getVideoData());
-    if (this.state.lobby.VideoIds[0] && this.state.videoPlayer) {
-      console.log(this.getElapsedTime(this.state.startTime));
-      console.log(this.state.videoPlayer);
-      if (this.state.startTime > 0 && this.getElapsedTime(this.state.startTime) > this.state.videoPlayer.getDuration()) {
-        this.deleteWatchedId();
-        this.setState({ startTime: 0 });
-      }
-    }
+    // if (this.state.lobby.VideoIds[0] && this.state.videoPlayer) {
+    //   console.log(this.getElapsedTime(this.state.startTime));
+    //   console.log(this.state.videoPlayer);
+    //   if (this.state.startTime > 0 && this.getElapsedTime(this.state.startTime) > this.state.videoPlayer.getDuration()) {
+    //     this.deleteWatchedId();
+    //     this.setState({ startTime: 0 });
+    //   }
+    // }
     const videoData = this.state.videoPlayer.getVideoData();
     const message = {
       where: 'chat',
@@ -281,7 +281,19 @@ class Lobby extends Component {
   onReady = (event) => {
     this.setState({ videoPlayer: event.target });
     if (this.state.videoIds.length > 0) {
-      window.setTimeout(() => {event.target.seekTo(this.getElapsedTime(this.state.startTime));}, 500);
+      window.setTimeout(() => {
+        let elapsedTime = this.getElapsedTime(this.state.startTime) <= event.target.getDuration() ?
+                          this.getElapsedTime(this.state.startTime) : event.target.getDuration();
+
+        event.target.seekTo(elapsedTime);
+      }, 1000);
+
+      window.setTimeout(() => {
+        let elapsedTime = this.getElapsedTime(this.state.startTime);
+        if (event.target.getDuration() - elapsedTime > 5) {
+          event.target.seekTo(elapsedTime);
+        }
+      }, 5000);
     }
     console.log(event.target);
   }
@@ -292,7 +304,10 @@ class Lobby extends Component {
   }
 
   onPause = (event) => {
-    event.target.seekTo(this.getElapsedTime(this.state.startTime));
+    let elapsedTime = this.getElapsedTime(this.state.startTime) <= event.target.getDuration() ?
+                      this.getElapsedTime(this.state.startTime) : event.target.getDuration();
+
+    event.target.seekTo(elapsedTime);
     event.target.playVideo();
   }
 
