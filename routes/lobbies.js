@@ -77,6 +77,7 @@ router.put("/lobby", (req,res) => {
         for (let i=0; i< lobby.Users.length; i++) {
           if (lobby.Users[i] === req.body.user) {
             lobby.Users.splice(i, 1);
+            break;
           }
         }
         console.log(lobby);

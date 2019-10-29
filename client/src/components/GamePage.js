@@ -28,11 +28,11 @@ class GamePage extends Component {
     }
     this.socket = socketIOClient('http://localhost:8080');
 
-    this.socket.on('updateRoom', (players) => {
+    this.socket.on('updateRoom', (roomInfo) => {
       this.setState((prevState) => ({
-        players
+        players: roomInfo.players
       }));
-      console.log(players);
+      console.log(roomInfo);
     });
 
     this.socket.on('chatMessage', (message) => {
@@ -40,6 +40,11 @@ class GamePage extends Component {
         messages: prevState.messages.concat(message)
       }));
       this.scrollToBottom();
+    })
+
+    this.socket.on('updateLobbyList', () => {
+      this.getLobbies();
+      console.log('update lobby list');
     })
   }
 

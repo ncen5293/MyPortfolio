@@ -20,7 +20,7 @@ class Lobby extends Component {
       searchValue: '',
       videoIds: [],
       startTime: 0,
-      player: null
+      videoPlayer: null
     }
 
     // if (window.performance) {
@@ -33,11 +33,13 @@ class Lobby extends Component {
 
     this.socket = socketIOClient('http://localhost:8080');
 
-    this.socket.on('updateRoom', (players) => {
-      this.setState((prevState) => ({
-        players
-      }));
-      console.log(players);
+    this.socket.on('updateRoom', (roomInfo) => {
+      if (roomInfo.roomName !== 'world') {
+        this.setState((prevState) => ({
+          players: roomInfo.players
+        }));
+      }
+      console.log(roomInfo);
     });
 
     this.socket.on('chatMessage', (message) => {
@@ -184,8 +186,8 @@ class Lobby extends Component {
   storeLobbyInfo = (exists, lobby) => {
     if (exists) {
       this.joinChatLobby();
-      if (lobby.VideoIds[0] && this.state.player) {
-        if ((Date.now() > lobby.StartTime + this.state.player.getDuration()) && (lobby.StartTime > 0)) {
+      if (lobby.VideoIds[0] && this.state.videoPlayer) {
+        if ((Date.now() > lobby.StartTime + this.state.videoPlayer.getDuration()) && (lobby.StartTime > 0)) {
           this.deleteWatchedId();
         }
       }
@@ -255,15 +257,15 @@ class Lobby extends Component {
 
   onPlay = (event) => {
     console.log(event.target.getVideoData());
-    if (this.state.lobby.VideoIds[0] && this.state.player) {
+    if (this.state.lobby.VideoIds[0] && this.state.videoPlayer) {
       console.log(this.getElapsedTime(this.state.startTime));
-      console.log(this.state.player);
-      if (this.state.startTime > 0 && this.getElapsedTime(this.state.startTime) > this.state.player.getDuration()) {
+      console.log(this.state.videoPlayer);
+      if (this.state.startTime > 0 && this.getElapsedTime(this.state.startTime) > this.state.videoPlayer.getDuration()) {
         this.deleteWatchedId();
         this.setState({ startTime: 0 });
       }
     }
-    const videoData = this.state.player.getVideoData();
+    const videoData = this.state.videoPlayer.getVideoData();
     const message = {
       where: 'chat',
       mess: `${videoData.title}`,
@@ -277,8 +279,10 @@ class Lobby extends Component {
   }
 
   onReady = (event) => {
-    this.setState({ player: event.target });
-    window.setTimeout(() => {event.target.seekTo(this.getElapsedTime(this.state.startTime));}, 500);
+    this.setState({ videoPlayer: event.target });
+    if (this.state.videoIds.length > 0) {
+      window.setTimeout(() => {event.target.seekTo(this.getElapsedTime(this.state.startTime));}, 500);
+    }
     console.log(event.target);
   }
 
