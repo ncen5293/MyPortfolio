@@ -29,3 +29,5 @@ module.exports = {
   app,
   io
 };
+
+require('./socket/socket');

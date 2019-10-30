@@ -24,7 +24,9 @@ io.on('connection', (socket) => {
       } else {
         socket.name = screenName;
       }
-      socket.currentRoom = roomName;
+      if (socket.currentRoom && roomName !== 'world' || !socket.currentRoom) {
+        socket.currentRoom = roomName;
+      }
       const roomInfo = {
         players: getAllPlayers(Object.keys(io.sockets.adapter.rooms[roomName].sockets)),
         roomName
@@ -78,6 +80,11 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     const roomName = socket.currentRoom;
+    const user = socket.name;
+    if (roomName !== 'world') {
+      console.log(`leaving ${roomName}`);
+      updateLobbyCount(roomName, user);
+    }
     if (io.sockets.adapter.rooms[roomName] != undefined) {
       io.in(roomName).emit('updateRoom', getAllPlayers(Object.keys(io.sockets.adapter.rooms[roomName].sockets)));
     }
@@ -85,23 +92,14 @@ io.on('connection', (socket) => {
     console.log('disconnected');
   });
 
-  const updateLobbyCount = () => {
-    LobbyModel.findOne({ "RoomId": req.body.roomId },
+  const updateLobbyCount = (roomId, user) => {
+    LobbyModel.findOne({ "RoomId": roomId },
       (err, lobby) => {
         if (err) {
           console.log(err);
         }
         if (!lobby) {
-          res.send({ exists: false });
-        } else if (req.body.reason === 'join') {
-          lobby.Users.push(req.body.user);
-          console.log(lobby);
-          lobby.save((err) => {
-            if (err) {
-              console.log(err);
-            }
-          });
-          res.send({ exists: true, lobby });
+          console.log('lobby does not exist!');
         } else if (lobby.Users.length === 1) {
           LobbyModel.findOneAndDelete(
             {
@@ -112,12 +110,11 @@ io.on('connection', (socket) => {
                 console.log(err);
               }
               console.log(lobby);
-              res.send({ exists: false });
             }
           )
         } else {
           for (let i=0; i< lobby.Users.length; i++) {
-            if (lobby.Users[i] === req.body.user) {
+            if (lobby.Users[i] === user) {
               lobby.Users.splice(i, 1);
               break;
             }
@@ -128,7 +125,6 @@ io.on('connection', (socket) => {
               console.log(err);
             }
           });
-          res.send({ exists: true, lobby });
         }
     });
   }
