@@ -68,12 +68,12 @@ class Lobby extends Component {
   }
 
   componentDidMount = () => {
-    if (localStorage.getItem('reason') === 'joinLobby') {
-      console.log('joining');
-      this.joinLobby();
-    } else {
+    if (localStorage.getItem('reason') === 'createLobby') {
       console.log('hosting');
       this.getLobbyInfo();
+    } else {
+      console.log('joining');
+      this.joinLobby();
     }
     localStorage.removeItem('reason');
   }
@@ -186,11 +186,11 @@ class Lobby extends Component {
   storeLobbyInfo = (exists, lobby) => {
     if (exists) {
       this.joinChatLobby();
-      if (lobby.VideoIds[0] && this.state.videoPlayer) {
-        if ((Date.now() > lobby.StartTime + this.state.videoPlayer.getDuration()) && (lobby.StartTime > 0)) {
-          this.deleteWatchedId();
-        }
-      }
+      // if (lobby.VideoIds[0] && this.state.videoPlayer) {
+      //   if ((Date.now() > lobby.StartTime + this.state.videoPlayer.getDuration()) && (lobby.StartTime > 0)) {
+      //     this.deleteWatchedId();
+      //   }
+      // }
       console.log(lobby.StartTime);
       this.setState((prevState) => ({
         lobby: lobby,
