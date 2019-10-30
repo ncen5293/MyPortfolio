@@ -81,7 +81,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     const roomName = socket.currentRoom;
     const user = socket.name;
-    if (roomName !== 'world') {
+    if (roomName && roomName !== 'world') {
       console.log(`leaving ${roomName}`);
       updateLobbyCount(roomName, user);
     }
@@ -100,7 +100,7 @@ io.on('connection', (socket) => {
         }
         if (!lobby) {
           console.log('lobby does not exist!');
-        } else if (lobby.Users.length === 1) {
+        } else if (lobby.Users.length === 1 && lobby.Users[0] === user) {
           LobbyModel.findOneAndDelete(
             {
               "RoomId": roomId

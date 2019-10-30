@@ -34,7 +34,7 @@ class Lobby extends Component {
     this.socket = socketIOClient('');
 
     this.socket.on('updateRoom', (roomInfo) => {
-      if (roomInfo.roomName !== 'world') {
+      if (roomInfo.roomName !== 'world' && roomInfo.players) {
         this.setState((prevState) => ({
           players: roomInfo.players
         }));
