@@ -4,9 +4,6 @@ const { LobbyModel } = require("../routes/lobbies");
 
 io.on('connection', (socket) => {
   console.log('connected');
-  // connection.then((db) => {
-  //   console.log('lobby server')
-  // })
 
   const leavePreviousRooms = () => {
     const rooms = Object.keys(socket.rooms);
@@ -55,7 +52,11 @@ io.on('connection', (socket) => {
   socket.on('updatePlayerName', (updatedName) => {
     socket.name = updatedName;
     const roomName = socket.currentRoom;
-    io.in(roomName).emit('updateRoom', getAllPlayers(Object.keys(io.sockets.adapter.rooms[roomName].sockets)));
+    const roomInfo = {
+      players: getAllPlayers(Object.keys(io.sockets.adapter.rooms[roomName].sockets)),
+      roomName
+    }
+    io.in(roomName).emit('updateRoom', roomInfo);
   });
 
   socket.on('chatMessage', (message) => {
@@ -82,14 +83,17 @@ io.on('connection', (socket) => {
     const roomName = socket.currentRoom;
     const user = socket.name;
     if (roomName && roomName !== 'world') {
-      console.log(`leaving ${roomName}`);
       updateLobbyCount(roomName, user);
     }
     if (io.sockets.adapter.rooms[roomName] != undefined) {
-      io.in(roomName).emit('updateRoom', getAllPlayers(Object.keys(io.sockets.adapter.rooms[roomName].sockets)));
+      const roomInfo = {
+        players: getAllPlayers(Object.keys(io.sockets.adapter.rooms[roomName].sockets)),
+        roomName
+      }
+      io.in(roomName).emit('updateRoom', roomInfo);
     }
     delete socket.currentRoom;
-    console.log('disconnected');
+    console.log(`${user} disconnected`);
   });
 
   const updateLobbyCount = (roomId, user) => {
