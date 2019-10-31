@@ -74,6 +74,11 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('enqueueMessage', (message) => {
+    const roomName = socket.currentRoom;
+    io.in(roomName).emit('enqueueMessage', message);
+  });
+
   socket.on('getYoutubeData', () => {
     const roomName = socket.currentRoom;
     io.in(roomName).emit('getYoutubeData');

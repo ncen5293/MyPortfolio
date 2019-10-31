@@ -23,14 +23,6 @@ class Lobby extends Component {
       videoPlayer: null
     }
 
-    // if (window.performance) {
-    //   if (performance.navigation.type == 1) {
-    //     alert( "This page is reloaded" );
-    //   } else {
-    //     alert( "This page is not reloaded");
-    //   }
-    // }
-
     this.socket = socketIOClient('');
 
     this.socket.on('updateRoom', (roomInfo) => {
@@ -57,6 +49,10 @@ class Lobby extends Component {
 
     this.socket.on('getYoutubeData', () => {
       this.getLobbyInfo();
+    })
+
+    this.socket.on('enqueueMessage', (message) => {
+      this.setVideoPlayerMessage(message.mess, message.name, '');
     })
   }
 
@@ -92,6 +88,8 @@ class Lobby extends Component {
       if (res.data.items[0]) {
         this.setYoutubeData(res.data.items[0].id.videoId);
         console.log(res.data);
+      } else {
+        this.setVideoPlayerMessage('Try searching for something else!', 'No Videos Found', '');
       }
     })
   }
@@ -101,46 +99,37 @@ class Lobby extends Component {
       .then(res => {
         console.log(res.data);
         this.socket.emit('getYoutubeData');
+        this.queuedVideoMessage(videoId);
       })
       .catch(error => {
         console.error(error)
       })
   }
 
-  componentWillUnmount = () => {
-    this.socket.disconnect();
-    // this.leaveLobby();
+  queuedVideoMessage = (videoId) => {
+    const KEY = 'AIzaSyD2yIRUZp5tQxt8o06cIRuGgKTJbNksNjA';
+    axios.get('https://www.googleapis.com/youtube/v3/videos', {
+      params: {
+          id: videoId,
+          part: 'snippet',
+          key: KEY
+      }
+    })
+    .then(res => {
+      const videoData = res.data.items[0];
+      if (videoData) {
+        const message = {
+          mess: videoData.snippet.title,
+          name: 'Enqueue'
+        }
+        this.socket.emit('enqueueMessage', message);
+      }
+    })
   }
 
-  // leaveLobby = () => {
-  //   const roomId = this.props.match.params.roomId;
-  //   if (Object.entries(this.state.lobby).length !== 0) {
-  //     if (this.state.lobby.Users.length === 1) {
-  //       axios.delete('/lobbys/lobby', {params: { roomId }})
-  //         .then(res => {
-  //           //join lobby
-  //           console.log(res);
-  //         })
-  //         .catch(error => {
-  //           console.error(error)
-  //         })
-  //     } else {
-  //       axios.put('/lobbys/lobby',
-  //         {
-  //           roomId,
-  //           user: localStorage.getItem('screenName'),
-  //           reason: 'disconnect'
-  //         })
-  //         .then(res => {
-  //           //join lobby
-  //           console.log(res);
-  //         })
-  //         .catch(error => {
-  //           console.error(error)
-  //         })
-  //     }
-  //   }
-  // }
+  componentWillUnmount = () => {
+    this.socket.disconnect();
+  }
 
   joinChatLobby = () => {
     const globalInfo = {
@@ -186,11 +175,6 @@ class Lobby extends Component {
   storeLobbyInfo = (exists, lobby) => {
     if (exists) {
       this.joinChatLobby();
-      // if (lobby.VideoIds[0] && this.state.videoPlayer) {
-      //   if ((Date.now() > lobby.StartTime + this.state.videoPlayer.getDuration()) && (lobby.StartTime > 0)) {
-      //     this.deleteWatchedId();
-      //   }
-      // }
       console.log(lobby.StartTime);
       this.setState((prevState) => ({
         lobby: lobby,
@@ -255,16 +239,20 @@ class Lobby extends Component {
     }
   }
 
+  setVideoPlayerMessage = (mess, name, time) => {
+    const message = {
+      where: 'chat',
+      mess,
+      name,
+      time
+    }
+    this.setState((prevState) => ({
+      localMessages: prevState.localMessages.concat(message)
+    }));
+  }
+
   onPlay = (event) => {
     console.log(event.target.getVideoData());
-    // if (this.state.lobby.VideoIds[0] && this.state.videoPlayer) {
-    //   console.log(this.getElapsedTime(this.state.startTime));
-    //   console.log(this.state.videoPlayer);
-    //   if (this.state.startTime > 0 && this.getElapsedTime(this.state.startTime) > this.state.videoPlayer.getDuration()) {
-    //     this.deleteWatchedId();
-    //     this.setState({ startTime: 0 });
-    //   }
-    // }
     const videoData = this.state.videoPlayer.getVideoData();
     const message = {
       where: 'chat',
@@ -275,6 +263,7 @@ class Lobby extends Component {
     this.setState((prevState) => ({
       localMessages: prevState.localMessages.concat(message)
     }));
+    this.setVideoPlayerMessage(`${videoData.title}`, 'Now Playing', `${event.target.getDuration()}s`);
     this.scrollToBottom();
   }
 
@@ -312,7 +301,6 @@ class Lobby extends Component {
   }
 
   onLeaveClick = () => {
-    // this.leaveLobby();
     this.socket.disconnect();
     window.location.replace('/watch');
   }

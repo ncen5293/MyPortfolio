@@ -26,13 +26,13 @@ class GamePage extends Component {
       lobbyName: '',
       isRenameModalOpen: false
     }
-    this.socket = socketIOClient('');
+    this.socket = socketIOClient('http://localhost:8080');
 
     this.socket.on('updateRoom', (roomInfo) => {
       this.setState((prevState) => ({
         players: roomInfo.players
       }));
-      console.log(roomInfo);
+      console.log(players);
     });
 
     this.socket.on('chatMessage', (message) => {
@@ -49,7 +49,7 @@ class GamePage extends Component {
   }
 
   getLobbies = async () => {
-    await axios.get('/lobbys/lobby', {params: { roomId: '' }})
+    await axios.get('http://localhost:8080/lobbys/lobby', {params: { roomId: '' }})
       .then(res => {
         console.log(res.data);
         this.setState({ lobbyList: res.data.lobbies });
@@ -163,7 +163,7 @@ class GamePage extends Component {
   }
 
   createLobby = (lobbyInfo) => {
-    axios.post('/lobbys/lobby', { lobbyInfo })
+    axios.post('http://localhost:8080/lobbys/lobby', { lobbyInfo })
       .then(res => {
         localStorage.setItem('reason', 'createLobby');
         this.props.history.push(`/watch/${res.data.newLobby.RoomId}`);
