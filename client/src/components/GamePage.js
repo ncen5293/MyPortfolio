@@ -32,7 +32,7 @@ class GamePage extends Component {
       this.setState((prevState) => ({
         players: roomInfo.players
       }));
-      console.log(players);
+      console.log(roomInfo);
     });
 
     this.socket.on('chatMessage', (message) => {
