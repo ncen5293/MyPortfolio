@@ -7,7 +7,7 @@ import CreateNameModal from './CreateNameModal';
 import PlayerList from './PlayerList';
 import '../styles/Game.css';
 
-class GamePage extends Component {
+class LobbiesPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,7 +26,7 @@ class GamePage extends Component {
       lobbyName: '',
       isRenameModalOpen: false
     }
-    this.socket = socketIOClient('');
+    this.socket = socketIOClient('http://localhost:8080');
 
     this.socket.on('updateRoom', (roomInfo) => {
       this.setState((prevState) => ({
@@ -49,7 +49,7 @@ class GamePage extends Component {
   }
 
   getLobbies = async () => {
-    await axios.get('/lobbys/lobby', {params: { roomId: '' }})
+    await axios.get('http://localhost:8080/lobbys/lobby', {params: { roomId: '' }})
       .then(res => {
         console.log(res.data);
         this.setState({ lobbyList: res.data.lobbies });
@@ -163,7 +163,7 @@ class GamePage extends Component {
   }
 
   createLobby = (lobbyInfo) => {
-    axios.post('/lobbys/lobby', { lobbyInfo })
+    axios.post('http://localhost:8080/lobbys/lobby', { lobbyInfo })
       .then(res => {
         localStorage.setItem('reason', 'createLobby');
         this.props.history.push(`/watch/${res.data.newLobby.RoomId}`);
@@ -275,4 +275,4 @@ class GamePage extends Component {
   }
 }
 
-export default GamePage;
+export default LobbiesPage;
