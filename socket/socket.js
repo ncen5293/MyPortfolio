@@ -21,13 +21,26 @@ io.on('connection', (socket) => {
       } else {
         socket.name = screenName;
       }
+
       if (socket.currentRoom && roomName !== 'world' || !socket.currentRoom) {
         socket.currentRoom = roomName;
       }
+
       const roomInfo = {
         players: getAllPlayers(Object.keys(io.sockets.adapter.rooms[roomName].sockets)),
         roomName
       }
+
+      if (roomName !== 'world') {
+        const message = {
+          where: roomName,
+          name: screenName,
+          time: getCurrentTime(),
+          mess: 'joined the lobby'
+        }
+        io.in(roomName).emit('chatMessage', message);
+      }
+
       io.in(roomName).emit('updateRoom', roomInfo);
       io.in('world').emit('updateLobbyList');
     })
@@ -59,13 +72,16 @@ io.on('connection', (socket) => {
     io.in(roomName).emit('updateRoom', roomInfo);
   });
 
-  socket.on('chatMessage', (message) => {
+  const getCurrentTime = () => {
     const date = new Date();
     const min = toTwoDigitString(date.getMinutes());
     const sec = toTwoDigitString(date.getSeconds());
-    const time = `${date.getHours()}:${min}:${sec}`;
+    return `${date.getHours()}:${min}:${sec}`;
+  }
+
+  socket.on('chatMessage', (message) => {
     message.name = socket.name;
-    message.time = time;
+    message.time = getCurrentTime();
     if (message.where === 'world') {
       io.in('world').emit('chatMessage', message);
     } else {
@@ -89,6 +105,13 @@ io.on('connection', (socket) => {
     const user = socket.name;
     if (roomName && roomName !== 'world') {
       updateLobbyCount(roomName, user);
+      const message = {
+        where: roomName,
+        name: user,
+        time: getCurrentTime(),
+        mess: 'left the lobby'
+      }
+      io.in(roomName).emit('chatMessage', message);
     }
     if (io.sockets.adapter.rooms[roomName] != undefined) {
       const roomInfo = {
