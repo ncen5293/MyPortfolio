@@ -100,6 +100,11 @@ io.on('connection', (socket) => {
     io.in(roomName).emit('getYoutubeData');
   })
 
+  socket.on('getNextYoutubeData', () => {
+    const roomName = socket.currentRoom;
+    io.in(roomName).emit('getNextYoutubeData');
+  })
+
   socket.on('disconnect', () => {
     const roomName = socket.currentRoom;
     const user = socket.name;

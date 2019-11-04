@@ -48,12 +48,50 @@ class Lobby extends Component {
     })
 
     this.socket.on('getYoutubeData', () => {
-      this.getLobbyInfo();
+      this.getVideoIds();
+    })
+
+    this.socket.on('getNextYoutubeData', () => {
+      axios.get('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
+        .then(res => {
+          console.log(res.data);
+          this.setState((prevState) => ({
+            videoIds: res.data.videoIds,
+            startTime: res.data.startTime
+          }));
+          const videoPlayer = this.state.videoPlayer;
+          this.playNextVideo(this.state.videoPlayer, res.data.videoIds);
+          if (videoPlayer.getPlayerState() === 1 && res.data.videoIds.length === 0) {
+            this.getCorrectTimestamp(videoPlayer);
+          }
+        })
+        .catch(error => {
+          console.error(error)
+        })
     })
 
     this.socket.on('enqueueMessage', (message) => {
       this.setVideoPlayerMessage(message.mess, message.name, '');
     })
+  }
+
+  getVideoIds = () => {
+    axios.get('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
+      .then(res => {
+        console.log(res.data);
+        this.setState((prevState) => ({
+          videoIds: res.data.videoIds,
+          startTime: res.data.startTime
+        }));
+        const videoPlayer = this.state.videoPlayer;
+        console.log(videoPlayer.getPlayerState());
+        if (videoPlayer && videoPlayer.getPlayerState() !== 1) {
+          this.playNextVideo(this.state.videoPlayer, res.data.videoIds);
+        }
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   scrollToBottom = () => {
@@ -64,17 +102,10 @@ class Lobby extends Component {
   }
 
   componentDidMount = () => {
-    if (localStorage.getItem('reason') === 'createLobby') {
-      console.log('hosting');
-      this.getLobbyInfo();
-    } else {
-      console.log('joining');
-      this.joinLobby();
-    }
-    localStorage.removeItem('reason');
+    this.joinLobby();
   }
 
-  getYoutubeData = (searchValue) => {
+  getSearchData = (searchValue) => {
     const KEY = 'AIzaSyD2yIRUZp5tQxt8o06cIRuGgKTJbNksNjA';
     axios.get('https://www.googleapis.com/youtube/v3/search', {
       params: {
@@ -85,7 +116,7 @@ class Lobby extends Component {
       }
     })
     .then(res => {
-      if (res.data.items[0]) {
+      if (res.data.items[0] !== null) {
         this.setYoutubeData(res.data.items[0].id.videoId);
         console.log(res.data);
       } else {
@@ -131,19 +162,6 @@ class Lobby extends Component {
     this.socket.disconnect();
   }
 
-  joinChatLobby = () => {
-    const globalInfo = {
-      screenName: localStorage.getItem('screenName'),
-      roomName: 'world'
-    }
-    const joinInfo = {
-      screenName: localStorage.getItem('screenName'),
-      roomName: this.props.match.params.roomId
-    }
-    this.socket.emit('joinRoom', (globalInfo));
-    this.socket.emit('joinRoom', (joinInfo));
-  }
-
   joinLobby = () => {
     axios.put('http://localhost:8080/lobbys/lobby',
       {
@@ -161,24 +179,13 @@ class Lobby extends Component {
       })
   }
 
-  getLobbyInfo = () => {
-    axios.get('http://localhost:8080/lobbys/lobby', {params: { roomId: this.props.match.params.roomId }})
-      .then(res => {
-        console.log(res.data);
-        this.storeLobbyInfo(res.data.exists, res.data.lobby);
-      })
-      .catch(error => {
-        console.error(error)
-      })
-  }
-
   storeLobbyInfo = (exists, lobby) => {
     if (exists) {
       this.joinChatLobby();
       console.log(lobby.StartTime);
       this.setState((prevState) => ({
         lobby: lobby,
-        videoIds: lobby.VideoIds.length > 0 ? lobby.VideoIds : prevState.videoIds,
+        videoIds: lobby.VideoIds,
         startTime: lobby.StartTime
       }));
     } else {
@@ -186,15 +193,30 @@ class Lobby extends Component {
     }
   }
 
+  joinChatLobby = () => {
+    const globalInfo = {
+      screenName: localStorage.getItem('screenName'),
+      roomName: 'world'
+    }
+    const joinInfo = {
+      screenName: localStorage.getItem('screenName'),
+      roomName: this.props.match.params.roomId
+    }
+    this.socket.emit('joinRoom', (globalInfo));
+    this.socket.emit('joinRoom', (joinInfo));
+  }
+
   skipVideo = () => {
-    this.deleteWatchedId();
+    if (this.state.videoIds.length > 0) {
+      this.deleteWatchedId();
+    }
   }
 
   deleteWatchedId = () => {
     axios.delete('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId, videoId: this.state.videoIds[0] }})
       .then(res => {
         console.log(res.data);
-        this.socket.emit('getYoutubeData');
+        this.socket.emit('getNextYoutubeData');
       })
       .catch(error => {
         console.error(error)
@@ -234,7 +256,7 @@ class Lobby extends Component {
   onSearchKeyPress = (event) => {
     if (event.key === 'Enter') {
       const searchValue = this.state.searchValue;
-      this.getYoutubeData(searchValue);
+      this.getSearchData(searchValue);
       this.setState({ searchValue: '' });
     }
   }
@@ -249,41 +271,26 @@ class Lobby extends Component {
     this.setState((prevState) => ({
       localMessages: prevState.localMessages.concat(message)
     }));
+    this.scrollToBottom();
   }
 
   onPlay = (event) => {
     console.log(event.target.getVideoData());
     const videoData = this.state.videoPlayer.getVideoData();
-    const message = {
-      where: 'chat',
-      mess: `${videoData.title}`,
-      name: 'Now Playing',
-      time: `${event.target.getDuration()}s`
-    }
-    this.setState((prevState) => ({
-      localMessages: prevState.localMessages.concat(message)
-    }));
     this.setVideoPlayerMessage(`${videoData.title}`, 'Now Playing', `${event.target.getDuration()}s`);
-    this.scrollToBottom();
   }
 
-  onReady = (event) => {
-    this.setState({ videoPlayer: event.target });
-    if (this.state.videoIds.length > 0) {
-      window.setTimeout(() => {
-        let elapsedTime = this.getElapsedTime(this.state.startTime) <= event.target.getDuration() ?
-                          this.getElapsedTime(this.state.startTime) : event.target.getDuration();
-
-        event.target.seekTo(elapsedTime);
-      }, 1000);
-
-      window.setTimeout(() => {
-        let elapsedTime = this.getElapsedTime(this.state.startTime);
-        if (event.target.getDuration() - elapsedTime > 5) {
-          event.target.seekTo(elapsedTime);
-        }
-      }, 5000);
+  playNextVideo = (videoPlayer, videoIds) => {
+    if (videoIds.length > 0) {
+      console.log('playing video');
+      let elapsedTime = this.getElapsedTime(this.state.startTime);
+      videoPlayer.loadVideoById(videoIds[0], elapsedTime);
     }
+  }
+
+  onReady = async (event) => {
+    this.setState({ videoPlayer: event.target });
+    this.getVideoIds();
     console.log(event.target);
   }
 
@@ -293,11 +300,14 @@ class Lobby extends Component {
   }
 
   onPause = (event) => {
-    let elapsedTime = this.getElapsedTime(this.state.startTime) <= event.target.getDuration() ?
-                      this.getElapsedTime(this.state.startTime) : event.target.getDuration();
+    this.getCorrectTimestamp(event.target);
+  }
 
-    event.target.seekTo(elapsedTime);
-    event.target.playVideo();
+  getCorrectTimestamp = (videoPlayer) => {
+    let elapsedTime = this.state.startTime != 0 ? this.getElapsedTime(this.state.startTime) : videoPlayer.getDuration() - 1;
+    console.log(elapsedTime, this.state.startTime);
+    videoPlayer.seekTo(elapsedTime);
+    videoPlayer.playVideo();
   }
 
   onLeaveClick = () => {
@@ -314,13 +324,8 @@ class Lobby extends Component {
     let width = window.innerWidth > 1024 ? window.innerWidth * .75 : window.innerWidth;
     let opts = {
       height,
-      width,
-      playerVars: {
-        autoplay: 1,
-        iv_load_policy: 3
-      }
+      width
     }
-    let videoId = (this.state.videoIds && this.state.videoIds.length > 0) ? this.state.videoIds[0] : '';
     return (
       <div className='App-header'>
         <Menu widths={3}>
@@ -340,7 +345,6 @@ class Lobby extends Component {
         </Menu>
         <div className='server-browser'>
           <YouTube
-            videoId={videoId}
             opts={opts}
             onPlay={this.onPlay}
             onReady={this.onReady}

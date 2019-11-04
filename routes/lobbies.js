@@ -34,7 +34,7 @@ router.post("/lobby", (req,res) => {
     Name: req.body.lobbyInfo.name,
     Password: req.body.lobbyInfo.password,
     Host: req.body.lobbyInfo.host,
-    Users: [req.body.lobbyInfo.users],
+    Users: [],
     VideoIds: [],
     StartTime: 0
   };
@@ -140,6 +140,22 @@ router.get("/lobby", (req,res) => {
   }
 })
 
+router.get("/video", (req,res) => {
+  console.log(req.query);
+  const roomId = req.query.roomId;
+  LobbyModel.findOne({ "RoomId": req.query.roomId },
+    (err, lobby) => {
+      if (err) {
+        console.log(err);
+      }
+      if (!lobby) {
+        res.send({ exists: false });
+      } else {
+        res.send({ videoIds: lobby.VideoIds, startTime: lobby.StartTime, exists: true });
+      }
+  });
+})
+
 router.post("/video", (req,res) => {
   console.log(req.body);
   LobbyModel.findOne({ "RoomId": req.body.roomId },
@@ -151,7 +167,9 @@ router.post("/video", (req,res) => {
         res.send({ exists: false });
       } else {
         lobby.VideoIds.push(req.body.videoId);
-        lobby.StartTime = Date.now();
+        if (lobby.StartTime === 0) {
+          lobby.StartTime = Date.now();
+        }
         console.log(lobby);
         lobby.save((err) => {
           if (err) {
