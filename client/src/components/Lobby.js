@@ -23,7 +23,7 @@ class Lobby extends Component {
       videoPlayer: null
     }
 
-    this.socket = socketIOClient('http://localhost:8080');
+    this.socket = socketIOClient('');
 
     this.socket.on('updateRoom', (roomInfo) => {
       if (roomInfo.roomName !== 'world' && roomInfo.players) {
@@ -52,7 +52,7 @@ class Lobby extends Component {
     })
 
     this.socket.on('getNextYoutubeData', () => {
-      axios.get('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
+      axios.get('/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
         .then(res => {
           console.log(res.data);
           this.setState((prevState) => ({
@@ -76,7 +76,7 @@ class Lobby extends Component {
   }
 
   getVideoIds = () => {
-    axios.get('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
+    axios.get('/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
       .then(res => {
         console.log(res.data);
         this.setState((prevState) => ({
@@ -126,7 +126,7 @@ class Lobby extends Component {
   }
 
   setYoutubeData = (videoId) => {
-    axios.post('http://localhost:8080/lobbys/video', { roomId: this.props.match.params.roomId, videoId: videoId })
+    axios.post('/lobbys/video', { roomId: this.props.match.params.roomId, videoId: videoId })
       .then(res => {
         console.log(res.data);
         this.socket.emit('getYoutubeData');
@@ -163,7 +163,7 @@ class Lobby extends Component {
   }
 
   joinLobby = () => {
-    axios.put('http://localhost:8080/lobbys/lobby',
+    axios.put('/lobbys/lobby',
       {
         roomId: this.props.match.params.roomId,
         user: localStorage.getItem('screenName'),
@@ -213,7 +213,7 @@ class Lobby extends Component {
   }
 
   deleteWatchedId = () => {
-    axios.delete('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId, videoId: this.state.videoIds[0] }})
+    axios.delete('/lobbys/video', {params: { roomId: this.props.match.params.roomId, videoId: this.state.videoIds[0] }})
       .then(res => {
         console.log(res.data);
         this.socket.emit('getNextYoutubeData');
@@ -235,7 +235,11 @@ class Lobby extends Component {
       const message = {
         mess: this.state.chatInput
       }
-      if (this.state.chatType === 'global') {
+      if (this.state.chatInput === '!queue') {
+
+      } else if (this.state.chatInput === '!help') {
+
+      } else if (this.state.chatType === 'global') {
         message.where = 'world';
       } else {
         message.where = this.props.match.params.roomId;
@@ -243,6 +247,10 @@ class Lobby extends Component {
       this.socket.emit('chatMessage', message);
       this.setState({ chatInput: '' })
     }
+  }
+
+  getVideoQueue = () => {
+
   }
 
   chatChange = (event) => {
