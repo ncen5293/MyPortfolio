@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Input, Checkbox, Menu, Button, Icon } from 'semantic-ui-react';
 import CreateLobby from './CreateLobby';
-import '../styles/Game.css';
+import '../styles/Watch.css';
 
 class ServerListFilter extends Component {
   render() {

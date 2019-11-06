@@ -5,7 +5,7 @@ import axios from 'axios';
 import ServerBrowser from './ServerBrowser';
 import CreateNameModal from './CreateNameModal';
 import PlayerList from './PlayerList';
-import '../styles/Game.css';
+import '../styles/Watch.css';
 
 class LobbiesPage extends Component {
   constructor(props) {

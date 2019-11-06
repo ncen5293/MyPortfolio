@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react';
 import LobbyColumn from './LobbyColumn';
-import '../styles/Game.css';
+import '../styles/Watch.css';
 
 class ServerList extends Component {
   render() {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { List, Comment, Icon, Button, Input } from 'semantic-ui-react';
-import '../styles/Game.css';
+import '../styles/Watch.css';
 
 class PlayerList extends Component {
   render() {

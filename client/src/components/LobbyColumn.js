@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Header, Icon, Button } from 'semantic-ui-react';
-import '../styles/Game.css';
+import '../styles/Watch.css';
 
 class LobbyColumn extends Component {
   render() {

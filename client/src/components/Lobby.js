@@ -5,7 +5,7 @@ import axios from 'axios';
 import YouTube from 'react-youtube';
 import PlayerList from './PlayerList';
 import Searchbar from './Searchbar';
-import '../styles/Game.css';
+import '../styles/Watch.css';
 
 class Lobby extends Component {
   constructor(props) {
@@ -376,7 +376,20 @@ class Lobby extends Component {
             />
           </Menu.Item>
           <Menu.Item>
-            <Button negative onClick={this.skipVideo}>Skip</Button>
+            <Button.Group>
+              <Button icon onClick={this.skipVideo} className='video-buttons'>
+                <Icon name='backward' />
+                <span className='video-button-usage'>Go back 10 seconds</span>
+              </Button>
+              <Button icon onClick={this.skipVideo} className='video-buttons'>
+                <Icon name='forward' />
+                <span className='video-button-usage'>Skip 10 seconds</span>
+              </Button>
+              <Button icon onClick={this.skipVideo} className='video-buttons'>
+                <Icon name='fast forward' />
+                <span className='video-button-usage'>Skip Video</span>
+              </Button>
+            </Button.Group>
           </Menu.Item>
         </Menu>
         <div className='server-browser'>

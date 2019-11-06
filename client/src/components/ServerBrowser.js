@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ServerListFilter from './ServerListFilter';
 import ServerList from './ServerList';
-import '../styles/Game.css';
+import '../styles/Watch.css';
 
 class ServerBrowser extends Component {
   render() {

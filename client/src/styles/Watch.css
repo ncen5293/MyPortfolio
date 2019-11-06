@@ -24,6 +24,17 @@
   text-align: center;
 }
 
+.video-buttons .video-button-usage {
+  visibility: hidden;
+  margin-top: 25px;
+  margin-left: -25px;
+  position: absolute;
+}
+
+.video-buttons:hover .video-button-usage {
+  visibility: visible;
+}
+
 @media only screen and (min-width: 1025px) {
   .group-box {
     margin-left: 1%;

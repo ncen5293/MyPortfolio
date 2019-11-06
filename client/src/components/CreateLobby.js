@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Icon, Modal, Input } from 'semantic-ui-react';
-import '../styles/Game.css';
+import '../styles/Watch.css';
 
 class CreateLobby extends Component {
   render() {
