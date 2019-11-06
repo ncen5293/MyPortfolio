@@ -165,7 +165,6 @@ class LobbiesPage extends Component {
   createLobby = (lobbyInfo) => {
     axios.post('http://localhost:8080/lobbys/lobby', { lobbyInfo })
       .then(res => {
-        localStorage.setItem('reason', 'createLobby');
         this.props.history.push(`/watch/${res.data.newLobby.RoomId}`);
       })
       .catch(error => {

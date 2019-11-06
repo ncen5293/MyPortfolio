@@ -308,9 +308,10 @@ class Lobby extends Component {
   }
 
   onPlay = (event) => {
-    console.log(event.target.getVideoData());
-    const videoData = this.state.videoPlayer.getVideoData();
-    this.setVideoPlayerMessage(`${videoData.title}`, 'Now Playing', `${event.target.getDuration()}s`);
+    if (event.target.getCurrentTime() < 1) {
+      const videoData = this.state.videoPlayer.getVideoData();
+      this.setVideoPlayerMessage(`${videoData.title}`, 'Now Playing', `${event.target.getDuration()}s`);
+    }
   }
 
   playNextVideo = (videoPlayer, videoIds) => {
