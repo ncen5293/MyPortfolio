@@ -31,7 +31,6 @@ class Lobby extends Component {
           players: roomInfo.players
         }));
       }
-      console.log(roomInfo);
     });
 
     this.socket.on('chatMessage', (message) => {
@@ -54,7 +53,6 @@ class Lobby extends Component {
     this.socket.on('getNextYoutubeData', () => {
       axios.get('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
         .then(res => {
-          console.log(res.data);
           this.setState((prevState) => ({
             videoIds: res.data.videoIds,
             startTime: res.data.startTime
@@ -78,16 +76,14 @@ class Lobby extends Component {
   getVideoIds = () => {
     axios.get('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
       .then(res => {
-        console.log(res.data);
+        const videoPlayer = this.state.videoPlayer;
+        if (videoPlayer && (videoPlayer.getPlayerState() !== 1 || this.state.startTime === 0)) {
+          this.playNextVideo(this.state.videoPlayer, res.data.videoIds);
+        }
         this.setState((prevState) => ({
           videoIds: res.data.videoIds,
           startTime: res.data.startTime
         }));
-        const videoPlayer = this.state.videoPlayer;
-        console.log(videoPlayer.getPlayerState());
-        if (videoPlayer && videoPlayer.getPlayerState() !== 1) {
-          this.playNextVideo(this.state.videoPlayer, res.data.videoIds);
-        }
       })
       .catch(error => {
         console.error(error)
@@ -119,7 +115,6 @@ class Lobby extends Component {
     .then(res => {
       if (res.data.items[0] !== null) {
         this.setYoutubeData(res.data.items[0].id.videoId);
-        console.log(res.data);
       } else {
         this.setVideoPlayerMessage('Try searching for something else!', 'No Videos Found', '');
       }
@@ -129,7 +124,6 @@ class Lobby extends Component {
   setYoutubeData = (videoId) => {
     axios.post('http://localhost:8080/lobbys/video', { roomId: this.props.match.params.roomId, videoId: videoId })
       .then(res => {
-        console.log(res.data);
         this.socket.emit('getYoutubeData');
         this.queuedVideoMessage(videoId);
       })
@@ -172,7 +166,6 @@ class Lobby extends Component {
       })
       .then(res => {
         //join lobby
-        console.log(res.data);
         this.storeLobbyInfo(res.data.exists, res.data.lobby);
       })
       .catch(error => {
@@ -183,7 +176,6 @@ class Lobby extends Component {
   storeLobbyInfo = (exists, lobby) => {
     if (exists) {
       this.joinChatLobby();
-      console.log(lobby.StartTime);
       this.setState((prevState) => ({
         lobby: lobby,
         videoIds: lobby.VideoIds,
@@ -216,7 +208,6 @@ class Lobby extends Component {
   deleteWatchedId = () => {
     axios.delete('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId, videoId: this.state.videoIds[0] }})
       .then(res => {
-        console.log(res.data);
         this.socket.emit('getNextYoutubeData');
       })
       .catch(error => {
