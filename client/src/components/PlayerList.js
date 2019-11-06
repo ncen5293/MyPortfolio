@@ -41,6 +41,13 @@ class PlayerList extends Component {
       );
     } else if (this.props.chatType === 'global') {
       const messageList = this.props.messages.map((message, i) => {
+        let mess = message.mess.split('\n');
+        let messArr = [];
+        mess.forEach((item) => {
+          if (item.length > 0) {
+            messArr.push(<span>{item}<br/></span>)
+          }
+        })
         return (<Comment key={i}>
                   <Comment.Content>
                     <Comment.Author>
@@ -49,9 +56,8 @@ class PlayerList extends Component {
                         <div>{message.time}</div>
                       </Comment.Metadata>
                     </Comment.Author>
-
                     <Comment.Text>
-                      {message.mess}
+                      {messArr}
                     </Comment.Text>
                   </Comment.Content>
                 </Comment>)

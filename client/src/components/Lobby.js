@@ -232,7 +232,7 @@ class Lobby extends Component {
   }
 
   chatMessage = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && this.state.chatInput.length > 0) {
       const message = {
         mess: this.state.chatInput
       }
@@ -299,14 +299,20 @@ class Lobby extends Component {
 
   setVideoPlayerMessage = (mess, name, time) => {
     const message = {
-      where: 'chat',
       mess,
       name,
       time
     }
-    this.setState((prevState) => ({
-      localMessages: prevState.localMessages.concat(message)
-    }));
+    if (this.state.chatType === 'chat') {
+      this.setState((prevState) => ({
+        localMessages: prevState.localMessages.concat(message)
+      }));
+    } else {
+      this.setState((prevState) => ({
+        messages: prevState.messages.concat(message)
+      }));
+    }
+
     this.scrollToBottom();
   }
 

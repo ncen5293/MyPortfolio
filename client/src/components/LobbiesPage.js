@@ -125,7 +125,7 @@ class LobbiesPage extends Component {
   }
 
   chatMessage = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && this.state.chatInput.length > 0) {
       const message = {
         mess: this.state.chatInput,
         where: 'world'
