@@ -53,15 +53,31 @@ class Lobby extends Component {
     this.socket.on('getNextYoutubeData', () => {
       axios.get('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
         .then(res => {
+          console.log(res.data.startTime, this.state.startTime);
           this.setState((prevState) => ({
             videoIds: res.data.videoIds,
             startTime: res.data.startTime
           }));
           const videoPlayer = this.state.videoPlayer;
-          this.playNextVideo(this.state.videoPlayer, res.data.videoIds);
+          this.playNextVideo(this.state.videoPlayer, res.data.videoIds, res.data.startTime);
           if (videoPlayer.getPlayerState() === 1 && res.data.videoIds.length === 0) {
             this.getCorrectTimestamp(videoPlayer);
           }
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    })
+
+    this.socket.on('changeTimestamp', () => {
+      axios.get('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
+        .then(res => {
+          console.log(res.data.startTime, this.state.startTime);
+          this.setState((prevState) => ({
+            videoIds: res.data.videoIds,
+            startTime: res.data.startTime
+          }));
+          this.getCorrectTimestamp(this.state.videoPlayer);
         })
         .catch(error => {
           console.error(error)
@@ -78,7 +94,7 @@ class Lobby extends Component {
       .then(res => {
         const videoPlayer = this.state.videoPlayer;
         if (videoPlayer && (videoPlayer.getPlayerState() !== 1 || this.state.startTime === 0)) {
-          this.playNextVideo(this.state.videoPlayer, res.data.videoIds);
+          this.playNextVideo(this.state.videoPlayer, res.data.videoIds, res.data.startTime);
         }
         this.setState((prevState) => ({
           videoIds: res.data.videoIds,
@@ -314,10 +330,11 @@ class Lobby extends Component {
     }
   }
 
-  playNextVideo = (videoPlayer, videoIds) => {
+  playNextVideo = (videoPlayer, videoIds, startTime) => {
     if (videoIds.length > 0) {
       console.log('playing video');
-      let elapsedTime = this.getElapsedTime(this.state.startTime);
+      let elapsedTime = this.getElapsedTime(startTime);
+      console.log(elapsedTime);
       videoPlayer.loadVideoById(videoIds[0], elapsedTime);
     }
   }
@@ -338,7 +355,7 @@ class Lobby extends Component {
   }
 
   getCorrectTimestamp = (videoPlayer) => {
-    let elapsedTime = this.state.startTime != 0 ? this.getElapsedTime(this.state.startTime) : videoPlayer.getDuration() - 1;
+    let elapsedTime = this.state.startTime != 0 ? this.getElapsedTime(this.state.startTime, videoPlayer) : videoPlayer.getDuration() - 1;
     console.log(elapsedTime, this.state.startTime);
     videoPlayer.seekTo(elapsedTime);
     videoPlayer.playVideo();
@@ -349,8 +366,35 @@ class Lobby extends Component {
     window.location.replace('/watch');
   }
 
-  getElapsedTime = (startTime) => {
-    return (Date.now() - startTime) / 1000;
+  getElapsedTime = (startTime, videoPlayer) => {
+    let elapsedTime = (Date.now() - startTime) / 1000;
+    if (videoPlayer) {
+      if (elapsedTime < 0) {
+        elapsedTime = 0;
+      } else if (elapsedTime >= videoPlayer.getDuration()) {
+        elapsedTime = videoPlayer.getDuration() - 1;
+      }
+    }
+    return elapsedTime;
+  }
+
+  changeTimestamp = (timeToSkip) => {
+    const videoPlayer = this.state.videoPlayer;
+    if (videoPlayer) {
+      axios.put('http://localhost:8080/lobbys/video',
+        {
+          roomId: this.props.match.params.roomId,
+          videoDuration: videoPlayer.getDuration(),
+          timeToSkip
+        })
+        .then(res => {
+          console.log(res.data.lobby.StartTime, this.state.startTime);
+          this.socket.emit('changeTimestamp');
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    }
   }
 
   render() {
@@ -375,11 +419,11 @@ class Lobby extends Component {
           </Menu.Item>
           <Menu.Item>
             <Button.Group>
-              <Button icon onClick={this.skipVideo} className='video-buttons'>
+              <Button icon onClick={() => this.changeTimestamp(-10)} className='video-buttons'>
                 <Icon name='backward' />
                 <span className='video-button-usage'>Go back 10 seconds</span>
               </Button>
-              <Button icon onClick={this.skipVideo} className='video-buttons'>
+              <Button icon onClick={() => this.changeTimestamp(10)} className='video-buttons'>
                 <Icon name='forward' />
                 <span className='video-button-usage'>Skip 10 seconds</span>
               </Button>

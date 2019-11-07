@@ -72,7 +72,7 @@ router.put("/lobby", (req,res) => {
         console.log(lobby);
         saveLobby(lobby,res);
       } else if (lobby.Users.length === 1) {
-        this.deleteLobby(req.body.roomId, res);
+        deleteLobby(req.body.roomId, res);
       } else {
         for (let i=0; i< lobby.Users.length; i++) {
           if (lobby.Users[i] === req.body.user) {
@@ -170,6 +170,28 @@ router.post("/video", (req,res) => {
         if (lobby.StartTime === 0) {
           lobby.StartTime = Date.now();
         }
+        console.log(lobby);
+        lobby.save((err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        res.send({ exists: true, lobby });
+      }
+  });
+})
+
+router.put("/video", (req,res) => {
+  console.log(req.body);
+  LobbyModel.findOne({ "RoomId": req.body.roomId },
+    (err, lobby) => {
+      if (err) {
+        console.log(err);
+      }
+      if (!lobby) {
+        res.send({ exists: false });
+      } else {
+        lobby.StartTime -= req.body.timeToSkip * 1000;
         console.log(lobby);
         lobby.save((err) => {
           if (err) {

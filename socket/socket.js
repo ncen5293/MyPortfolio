@@ -105,6 +105,11 @@ io.on('connection', (socket) => {
     io.in(roomName).emit('getNextYoutubeData');
   })
 
+  socket.on('changeTimestamp', () => {
+    const roomName = socket.currentRoom;
+    io.in(roomName).emit('changeTimestamp');
+  })
+
   socket.on('disconnect', () => {
     const roomName = socket.currentRoom;
     const user = socket.name;
