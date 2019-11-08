@@ -26,7 +26,7 @@ class LobbiesPage extends Component {
       lobbyName: '',
       isRenameModalOpen: false
     }
-    this.socket = socketIOClient('http://localhost:8080');
+    this.socket = socketIOClient('');
 
     this.socket.on('updateRoom', (roomInfo) => {
       this.setState((prevState) => ({
@@ -49,7 +49,7 @@ class LobbiesPage extends Component {
   }
 
   getLobbies = async () => {
-    await axios.get('http://localhost:8080/lobbys/lobby', {params: { roomId: '' }})
+    await axios.get('/lobbys/lobby', {params: { roomId: '' }})
       .then(res => {
         console.log(res.data);
         this.setState({ lobbyList: res.data.lobbies });
@@ -163,7 +163,7 @@ class LobbiesPage extends Component {
   }
 
   createLobby = (lobbyInfo) => {
-    axios.post('http://localhost:8080/lobbys/lobby', { lobbyInfo })
+    axios.post('/lobbys/lobby', { lobbyInfo })
       .then(res => {
         this.props.history.push(`/watch/${res.data.newLobby.RoomId}`);
       })

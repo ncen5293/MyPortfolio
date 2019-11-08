@@ -23,7 +23,7 @@ class Lobby extends Component {
       videoPlayer: null
     }
 
-    this.socket = socketIOClient('http://localhost:8080');
+    this.socket = socketIOClient('');
 
     this.socket.on('updateRoom', (roomInfo) => {
       if (roomInfo.roomName !== 'world' && roomInfo.players) {
@@ -51,7 +51,7 @@ class Lobby extends Component {
     })
 
     this.socket.on('getNextYoutubeData', () => {
-      axios.get('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
+      axios.get('/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
         .then(res => {
           console.log(res.data.startTime, this.state.startTime);
           this.setState((prevState) => ({
@@ -70,7 +70,7 @@ class Lobby extends Component {
     })
 
     this.socket.on('changeTimestamp', () => {
-      axios.get('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
+      axios.get('/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
         .then(res => {
           console.log(res.data.startTime, this.state.startTime);
           this.setState((prevState) => ({
@@ -90,7 +90,7 @@ class Lobby extends Component {
   }
 
   getVideoIds = () => {
-    axios.get('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
+    axios.get('/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
       .then(res => {
         const videoPlayer = this.state.videoPlayer;
         if (videoPlayer && (videoPlayer.getPlayerState() !== 1 || this.state.startTime === 0)) {
@@ -138,7 +138,7 @@ class Lobby extends Component {
   }
 
   setYoutubeData = (videoId) => {
-    axios.post('http://localhost:8080/lobbys/video', { roomId: this.props.match.params.roomId, videoId: videoId })
+    axios.post('/lobbys/video', { roomId: this.props.match.params.roomId, videoId: videoId })
       .then(res => {
         this.socket.emit('getYoutubeData');
         this.queuedVideoMessage(videoId);
@@ -174,7 +174,7 @@ class Lobby extends Component {
   }
 
   joinLobby = () => {
-    axios.put('http://localhost:8080/lobbys/lobby',
+    axios.put('/lobbys/lobby',
       {
         roomId: this.props.match.params.roomId,
         user: localStorage.getItem('screenName'),
@@ -222,7 +222,7 @@ class Lobby extends Component {
   }
 
   deleteWatchedId = () => {
-    axios.delete('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId, videoId: this.state.videoIds[0] }})
+    axios.delete('/lobbys/video', {params: { roomId: this.props.match.params.roomId, videoId: this.state.videoIds[0] }})
       .then(res => {
         this.socket.emit('getNextYoutubeData');
       })
@@ -289,9 +289,16 @@ class Lobby extends Component {
 
   outputCommands = () => {
     const message = `!help for all commands
+                     -
                      !queue for list of video queue
+                     -
                      !forward[number] to skip forward that many seconds
-                     !backward[number] to go back that many seconds`;
+                     -
+                     !backward[number] to go back that many seconds
+                     -
+                     search for videos by name in the top search bar
+                     -
+                     /[video_id] in the top search bar to queue specific video`;
     this.setVideoPlayerMessage(message, 'System', '');
   }
 
@@ -305,8 +312,26 @@ class Lobby extends Component {
 
   onSearchKeyPress = (event) => {
     if (event.key === 'Enter') {
+      const KEY = 'AIzaSyD2yIRUZp5tQxt8o06cIRuGgKTJbNksNjA';
       const searchValue = this.state.searchValue;
-      this.getSearchData(searchValue);
+      if (searchValue[0] === '/') {
+        axios.get('https://www.googleapis.com/youtube/v3/videos', {
+          params: {
+              id: searchValue.substring(1),
+              part: 'snippet',
+              key: KEY
+          }
+        })
+        .then(res => {
+          if (res.data.items[0]) {
+            this.setYoutubeData(searchValue.substring(1));
+          } else {
+            this.setVideoPlayerMessage('Video ID does not exist!', 'System', '');
+          }
+        })
+      } else {
+        this.getSearchData(searchValue);
+      }
       this.setState({ searchValue: '' });
     }
   }
@@ -388,7 +413,7 @@ class Lobby extends Component {
   changeTimestamp = (timeToSkip) => {
     const videoPlayer = this.state.videoPlayer;
     if (videoPlayer) {
-      axios.put('http://localhost:8080/lobbys/video',
+      axios.put('/lobbys/video',
         {
           roomId: this.props.match.params.roomId,
           videoDuration: videoPlayer.getDuration(),
