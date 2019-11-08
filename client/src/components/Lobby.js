@@ -251,6 +251,10 @@ class Lobby extends Component {
         this.outputCommands();
         this.setState({ chatInput: '' })
         return;
+      } else if (this.state.chatInput.substring(0,8) === '!forward' && /^-{0,1}\d+$/.test(this.state.chatInput.substring(8))) {
+        this.changeTimestamp(this.state.chatInput.substring(8));
+      } else if (this.state.chatInput.substring(0,9) === '!backward' && /^-{0,1}\d+$/.test(this.state.chatInput.substring(9))) {
+        this.changeTimestamp(-this.state.chatInput.substring(9));
       } else if (this.state.chatType === 'global') {
         message.where = 'world';
       } else {
@@ -284,7 +288,10 @@ class Lobby extends Component {
   }
 
   outputCommands = () => {
-    const message = '!help for all commands\n!queue for list of video queue\n';
+    const message = `!help for all commands
+                     !queue for list of video queue
+                     !forward[number] to skip forward that many seconds
+                     !backward[number] to go back that many seconds`;
     this.setVideoPlayerMessage(message, 'System', '');
   }
 
