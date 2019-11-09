@@ -17,7 +17,6 @@ class ServerList extends Component {
           <LobbyColumn
             locked={locked}
             lobby={lobby}
-            joinLobby={this.props.joinLobby}
             key={i}
           />
         )

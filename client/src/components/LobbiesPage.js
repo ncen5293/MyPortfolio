@@ -24,9 +24,10 @@ class LobbiesPage extends Component {
       isCreateLobbyOpen: false,
       lobbyPassword: '',
       lobbyName: '',
-      isRenameModalOpen: false
+      isRenameModalOpen: false,
+      isPasswordModalOpen: false
     }
-    this.socket = socketIOClient('');
+    this.socket = socketIOClient('http://localhost:8080');
 
     this.socket.on('updateRoom', (roomInfo) => {
       this.setState((prevState) => ({
@@ -49,7 +50,7 @@ class LobbiesPage extends Component {
   }
 
   getLobbies = async () => {
-    await axios.get('/lobbys/lobby', {params: { roomId: '' }})
+    await axios.get('http://localhost:8080/lobbys/lobby', {params: { roomId: '' }})
       .then(res => {
         console.log(res.data);
         this.setState({ lobbyList: res.data.lobbies });
@@ -163,7 +164,7 @@ class LobbiesPage extends Component {
   }
 
   createLobby = (lobbyInfo) => {
-    axios.post('/lobbys/lobby', { lobbyInfo })
+    axios.post('http://localhost:8080/lobbys/lobby', { lobbyInfo })
       .then(res => {
         this.props.history.push(`/watch/${res.data.newLobby.RoomId}`);
       })
@@ -195,11 +196,6 @@ class LobbiesPage extends Component {
 
   onLobbyNameChange = (event) => {
     this.setState({ lobbyName: event.target.value});
-  }
-
-  joinLobby = (roomInfo) => {
-    localStorage.setItem('reason', 'joinLobby');
-    this.props.history.push(`/watch/${roomInfo.RoomId}`);
   }
 
   toggleRenameModal = (event) => {
@@ -243,7 +239,6 @@ class LobbiesPage extends Component {
           onLobbyCreateToggle={this.onLobbyCreateToggle}
           onPasswordChange={this.onPasswordChange}
           onLobbyNameChange={this.onLobbyNameChange}
-          joinLobby={this.joinLobby}
           toggleRenameModal={this.toggleRenameModal}
         />
         <PlayerList

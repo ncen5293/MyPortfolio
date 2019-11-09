@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Input } from 'semantic-ui-react';
+import { Input } from 'semantic-ui-react';
 import '../styles/Watch.css';
 
 class Searchbar extends Component {

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Table, Header, Icon, Button } from 'semantic-ui-react';
+import { Table, Header, Icon } from 'semantic-ui-react';
+import JoinLobbyButton from './JoinLobbyButton';
 import '../styles/Watch.css';
 
 class LobbyColumn extends Component {
   render() {
     const lobby = this.props.lobby;
-    console.log(lobby);
     return (
       <Table.Row>
         <Table.Cell>
@@ -21,9 +21,7 @@ class LobbyColumn extends Component {
           {lobby.Users.length}
         </Table.Cell>
         <Table.Cell textAlign='center'>
-          <Button onClick={() => this.props.joinLobby(lobby)}>
-            Join
-          </Button>
+          <JoinLobbyButton lobby={lobby} />
         </Table.Cell>
       </Table.Row>
     )

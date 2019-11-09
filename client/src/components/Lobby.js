@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
-import { Icon, Menu, Button, Input } from 'semantic-ui-react';
+import { Icon, Menu, Button } from 'semantic-ui-react';
 import axios from 'axios';
 import YouTube from 'react-youtube';
 import PlayerList from './PlayerList';
@@ -23,7 +23,7 @@ class Lobby extends Component {
       videoPlayer: null
     }
 
-    this.socket = socketIOClient('');
+    this.socket = socketIOClient('http://localhost:8080');
 
     this.socket.on('updateRoom', (roomInfo) => {
       if (roomInfo.roomName !== 'world' && roomInfo.players) {
@@ -51,7 +51,7 @@ class Lobby extends Component {
     })
 
     this.socket.on('getNextYoutubeData', () => {
-      axios.get('/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
+      axios.get('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
         .then(res => {
           console.log(res.data.startTime, this.state.startTime);
           this.setState((prevState) => ({
@@ -70,7 +70,7 @@ class Lobby extends Component {
     })
 
     this.socket.on('changeTimestamp', () => {
-      axios.get('/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
+      axios.get('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
         .then(res => {
           console.log(res.data.startTime, this.state.startTime);
           this.setState((prevState) => ({
@@ -90,7 +90,7 @@ class Lobby extends Component {
   }
 
   getVideoIds = () => {
-    axios.get('/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
+    axios.get('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId }})
       .then(res => {
         const videoPlayer = this.state.videoPlayer;
         if (videoPlayer && (videoPlayer.getPlayerState() !== 1 || this.state.startTime === 0)) {
@@ -138,7 +138,7 @@ class Lobby extends Component {
   }
 
   setYoutubeData = (videoId) => {
-    axios.post('/lobbys/video', { roomId: this.props.match.params.roomId, videoId: videoId })
+    axios.post('http://localhost:8080/lobbys/video', { roomId: this.props.match.params.roomId, videoId: videoId })
       .then(res => {
         this.socket.emit('getYoutubeData');
         this.queuedVideoMessage(videoId);
@@ -174,7 +174,7 @@ class Lobby extends Component {
   }
 
   joinLobby = () => {
-    axios.put('/lobbys/lobby',
+    axios.put('http://localhost:8080/lobbys/lobby',
       {
         roomId: this.props.match.params.roomId,
         user: localStorage.getItem('screenName'),
@@ -222,7 +222,7 @@ class Lobby extends Component {
   }
 
   deleteWatchedId = () => {
-    axios.delete('/lobbys/video', {params: { roomId: this.props.match.params.roomId, videoId: this.state.videoIds[0] }})
+    axios.delete('http://localhost:8080/lobbys/video', {params: { roomId: this.props.match.params.roomId, videoId: this.state.videoIds[0] }})
       .then(res => {
         this.socket.emit('getNextYoutubeData');
       })
@@ -267,7 +267,7 @@ class Lobby extends Component {
 
   getVideoQueue = async () => {
     const KEY = 'AIzaSyD2yIRUZp5tQxt8o06cIRuGgKTJbNksNjA';
-    let message = '';
+    let systemMess = '';
     for (let i=1; i<this.state.videoIds.length; i++) {
       await axios.get('https://www.googleapis.com/youtube/v3/videos', {
         params: {
@@ -279,12 +279,12 @@ class Lobby extends Component {
       .then(res => {
         const videoData = res.data.items[0];
         if (videoData) {
-          message += `${i}) ` + videoData.snippet.title + '\n';
+          systemMess += `${i}) ` + videoData.snippet.title + '\n';
         }
       })
     }
-    message = message.length > 0 ? message : 'There are no videos in queue!'
-    this.setVideoPlayerMessage(message, 'Queue', '');
+    systemMess = systemMess.length > 0 ? systemMess : 'There are no videos in queue!'
+    this.setVideoPlayerMessage(systemMess, 'Queue', '');
   }
 
   outputCommands = () => {
@@ -387,7 +387,7 @@ class Lobby extends Component {
   }
 
   getCorrectTimestamp = (videoPlayer) => {
-    let elapsedTime = this.state.startTime != 0 ? this.getElapsedTime(this.state.startTime, videoPlayer) : videoPlayer.getDuration() - 1;
+    let elapsedTime = this.state.startTime !== 0 ? this.getElapsedTime(this.state.startTime, videoPlayer) : videoPlayer.getDuration() - 1;
     console.log(elapsedTime, this.state.startTime);
     videoPlayer.seekTo(elapsedTime);
     videoPlayer.playVideo();
@@ -413,7 +413,7 @@ class Lobby extends Component {
   changeTimestamp = (timeToSkip) => {
     const videoPlayer = this.state.videoPlayer;
     if (videoPlayer) {
-      axios.put('/lobbys/video',
+      axios.put('http://localhost:8080/lobbys/video',
         {
           roomId: this.props.match.params.roomId,
           videoDuration: videoPlayer.getDuration(),

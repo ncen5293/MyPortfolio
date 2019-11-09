@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Checkbox, Menu, Button, Icon } from 'semantic-ui-react';
+import { Input, Menu, Button, Icon } from 'semantic-ui-react';
 import CreateLobby from './CreateLobby';
 import '../styles/Watch.css';
 
