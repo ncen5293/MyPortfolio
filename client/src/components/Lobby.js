@@ -178,7 +178,8 @@ class Lobby extends Component {
       {
         roomId: this.props.match.params.roomId,
         user: localStorage.getItem('screenName'),
-        reason: 'join'
+        reason: 'join',
+        password: localStorage.getItem('password')
       })
       .then(res => {
         //join lobby
@@ -198,7 +199,7 @@ class Lobby extends Component {
         startTime: lobby.StartTime
       }));
     } else {
-      this.props.history.goBack();
+      window.location.replace('/watch');
     }
   }
 
@@ -351,8 +352,7 @@ class Lobby extends Component {
         messages: prevState.messages.concat(message)
       }));
     }
-
-    this.scrollToBottom();
+    window.setTimeout(() => {this.scrollToBottom();}, 10);
   }
 
   onPlay = (event) => {

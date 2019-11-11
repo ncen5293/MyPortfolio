@@ -61,6 +61,7 @@ class LobbiesPage extends Component {
   }
 
   componentDidMount = () => {
+    localStorage.removeItem('password');
     const joinInfo = {
       screenName: localStorage.getItem('screenName'),
       roomName: 'world'
@@ -174,12 +175,14 @@ class LobbiesPage extends Component {
   }
 
   onSubmitLobby = (event) => {
-    console.log(this.state.lobbyName, this.state.lobbyPassword);
     const lobbyInfo = {
       name: this.state.lobbyName,
       password: this.state.lobbyPassword,
       host: localStorage.getItem('screenName'),
       users: localStorage.getItem('screenName')
+    }
+    if (lobbyInfo.password.length > 0) {
+      localStorage.setItem('password', lobbyInfo.password);
     }
     this.createLobby(lobbyInfo);
   }

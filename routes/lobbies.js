@@ -65,7 +65,11 @@ router.put("/lobby", (req,res) => {
       if (err) {
         console.log(err);
       }
+      console.log(lobby.Password, req.body.password);
       if (!lobby) {
+        res.send({ exists: false });
+      } else if (lobby.Password.length > 0 && lobby.Password !== req.body.password) {
+        console.log(lobby.Password, req.body.password);
         res.send({ exists: false });
       } else if (req.body.reason === 'join') {
         lobby.Users.push(req.body.user);

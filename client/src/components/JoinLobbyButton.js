@@ -45,6 +45,7 @@ class JoinLobbyButton extends Component {
   onPasswordSubmit = (event) => {
     const lobby = this.props.lobby;
     if (this.state.passwordGuess === lobby.Password) {
+      localStorage.setItem('password', this.state.passwordGuess);
       this.props.history.push(`/watch/${lobby.RoomId}`);
     } else {
       this.setState((prevState) => ({
