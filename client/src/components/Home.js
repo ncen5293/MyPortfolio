@@ -147,7 +147,7 @@ class Home extends Component {
     } else if (type === 'Portfolio Page') {
       this.props.history.push('/');
     } else if (type === 'Watch Together') {
-      this.props.history.push('/watch');
+      window.open('https://videoswithothers.herokuapp.com/', '_blank');
     } else {
       return false;
     }
