@@ -15,6 +15,20 @@ class ProjectsPage extends Component {
           </Header>
           <Card.Group itemsPerRow={2}>
             <ProjectCard
+              title='Mentions Crawler'
+              timeWorked='Oct - Dec 2019'
+              desc='A Full-stack web application that enables a user to sign up for a starting bank of $5000 to buy and sell mock stocks from the IEX API to see how well they can do'
+              stack='React.Js, Node.Js, MongoDB, javascript, Material UI, socket.io, redis, sendgrid, JWT, Bcrypt'
+              link='https://mentionscrawler.herokuapp.com/login'
+            />
+            <ProjectCard
+              title='YouTube With Others'
+              timeWorked='Sep - Oct 2019'
+              desc='Let multiple users chat and watch YouTube videos together synchronously'
+              stack='React.Js, Node.Js, MongoDB, javascript, HTML, CSS, socket.io, Bcrypt'
+              link='https://videoswithothers.herokuapp.com/'
+            />
+            <ProjectCard
               title='Mock Stock Portfolio'
               timeWorked='Summer 2019'
               desc='A Full-stack web application that enables a user to sign up for a starting bank of $5000 to buy and sell mock stocks from the IEX API to see how well they can do'
