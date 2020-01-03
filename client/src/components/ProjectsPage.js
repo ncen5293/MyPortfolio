@@ -17,7 +17,7 @@ class ProjectsPage extends Component {
             <ProjectCard
               title='Mentions Crawler'
               timeWorked='Oct - Dec 2019'
-              desc='A Full-stack web application that enables a user to sign up for a starting bank of $5000 to buy and sell mock stocks from the IEX API to see how well they can do'
+              desc='Users can sign-up/log-in to find content about their company on different platforms like Reddit and Twitter'
               stack='React.Js, Node.Js, MongoDB, javascript, Material UI, socket.io, redis, sendgrid, JWT, Bcrypt'
               link='https://mentionscrawler.herokuapp.com/login'
             />
